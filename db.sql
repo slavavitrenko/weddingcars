@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Июн 07 2016 г., 12:48
+-- Время создания: Июн 07 2016 г., 16:43
 -- Версия сервера: 10.0.24-MariaDB-7
 -- Версия PHP: 7.0.4-7ubuntu2.1
 
@@ -191,6 +191,8 @@ CREATE TABLE `token` (
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `fio` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `phone` varchar(13) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password_hash` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `auth_key` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
@@ -207,10 +209,10 @@ CREATE TABLE `user` (
 -- Дамп данных таблицы `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `email`, `password_hash`, `auth_key`, `confirmed_at`, `unconfirmed_email`, `blocked_at`, `registration_ip`, `created_at`, `updated_at`, `flags`) VALUES
-(1, 'admin', 'mxuser@ya.ru', '$2y$10$WRys4CTjdFO74RyBpvs3k.kW/GtCjNXAm9pTPGyPsAx6H57YV/hca', 'BceQwFC8bTxXNf2kOOMCjJ7QoUzAvWlm', 1465284070, NULL, NULL, '127.0.0.1', 1465284070, 1465291311, 0),
-(2, 'manager', 'manager@mail.ru', '$2y$10$ZC0HpOhJvlEadtskPFT9ouV0YEVGqGNM9BYiu43Xq51vQfDh4bOFm', 'xK5nCmBH46M4FydLl_ezLaZjx7JRC9AK', 1465292278, NULL, NULL, '127.0.0.1', 1465292278, 1465292278, 0),
-(3, 'driver', 'driver@mail.ru', '$2y$10$27KrZRhsm4UbgUnui70d0OwJz81Q9fGBl33mUUHJ4VoLc03DIhmzq', 'URWmOHkQUlseHRyDk-TaVeuZFL6AfDVI', 1465292387, NULL, NULL, '127.0.0.1', 1465292387, 1465292387, 0);
+INSERT INTO `user` (`id`, `username`, `fio`, `phone`, `email`, `password_hash`, `auth_key`, `confirmed_at`, `unconfirmed_email`, `blocked_at`, `registration_ip`, `created_at`, `updated_at`, `flags`) VALUES
+(1, 'admin', 'Витренко Вячеслав Дмитриевич', '+380663564463', 'mxuser@ya.ru', '$2y$10$2hK2/qcovC./xXrzqXTVtOElx/hUIkMEJPH/b/Lmo61/6RE78zYNG', 'BceQwFC8bTxXNf2kOOMCjJ7QoUzAvWlm', 1465284070, NULL, NULL, '127.0.0.1', 1465284070, 1465305198, 0),
+(2, 'manager', '', '', 'manager@mail.ru', '$2y$10$ZC0HpOhJvlEadtskPFT9ouV0YEVGqGNM9BYiu43Xq51vQfDh4bOFm', 'xK5nCmBH46M4FydLl_ezLaZjx7JRC9AK', 1465292278, NULL, NULL, '127.0.0.1', 1465292278, 1465292278, 0),
+(3, 'driver', '', '', 'driver@mail.ru', '$2y$10$27KrZRhsm4UbgUnui70d0OwJz81Q9fGBl33mUUHJ4VoLc03DIhmzq', 'URWmOHkQUlseHRyDk-TaVeuZFL6AfDVI', 1465292387, NULL, NULL, '127.0.0.1', 1465292387, 1465292387, 0);
 
 --
 -- Индексы сохранённых таблиц
@@ -276,7 +278,9 @@ ALTER TABLE `token`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `user_unique_email` (`email`),
-  ADD UNIQUE KEY `user_unique_username` (`username`);
+  ADD UNIQUE KEY `user_unique_username` (`username`),
+  ADD KEY `fio` (`fio`),
+  ADD KEY `phone` (`phone`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
@@ -291,7 +295,7 @@ ALTER TABLE `social_account`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --

@@ -8,7 +8,7 @@ window.addEventListener("popstate", function(e) {
 
 $("a").on("click", function(e){
     var href = $(this).attr("href");
-    if(href && !~href.indexOf("#")){
+    if(href && !~href.indexOf("#") && !~href.indexOf("mailto")){
         e.preventDefault();
         getContent($(this).attr("href"), true);
         $("#main-navbar .active").removeClass("active");
@@ -16,15 +16,6 @@ $("a").on("click", function(e){
         $("body").removeClass("sidebar-open");
         return;
     }
-});
-
-$(document).on("click", "#main-layout a", function(e){
-    var href = $(this).attr("href");
-    if(href && !~href.indexOf("#")){
-        getContent($(this).attr("href"), true);
-    }
-    e.preventDefault();
-    return;
 });
 
 function getContent(url, addEntry) {
@@ -47,7 +38,7 @@ $this->registerJs($js, \yii\web\View::POS_READY);
 $items = [];
 
 $items[] = ['label' => Yii::t('app', 'Home'), 'icon' => 'fa fa-home', 'url' => ['/']];
-$items[] = ['label' => Yii::t('app', 'Profile'), 'icon' => 'fa fa-user', 'url' => ['/user/settings']];
+$items[] = ['label' => Yii::t('app', 'Profile'), 'icon' => 'fa fa-user', 'url' => ['/user/settings/account']];
 
 if(Yii::$app->user->can('manager')){
     $items[] = ['label' => Yii::t('user', 'Users'), 'url' => ['/user/admin'], 'icon' => 'fa fa-group'];

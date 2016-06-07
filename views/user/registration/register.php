@@ -11,6 +11,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\widgets\MaskedInput;
 
 /**
  * @var yii\web\View              $this
@@ -33,6 +34,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'enableAjaxValidation'   => true,
                     'enableClientValidation' => false,
                 ]); ?>
+
+                <?=$form->field($model, 'fio') ?>
+
+                <?= $form->field($model, 'phone')->widget(MaskedInput::className(), [
+                    'model' => $model,
+                    'attribute' => 'phone',
+                    'mask' => '+380999999999',
+                    ]) ?>
 
                 <?= $form->field($model, 'email') ?>
 

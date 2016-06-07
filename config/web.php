@@ -105,10 +105,14 @@ $config = [
             'controllerMap' => [
                 'settings' => 'app\controllers\user\SettingsController',
                 'profile' => 'app\controllers\user\ProfileController',
-                'admin' => 'app\controllers\user\AdminController'
+                'admin' => 'app\controllers\user\AdminController',
+                'registration' => 'app\controllers\user\RegistrationController',
+                'security' => 'app\controllers\user\SecurityController',
             ],
             'modelMap' => [
                 'User' => 'app\models\user\User',
+                'SettingsForm' => 'app\models\user\SettingsForm',
+                'RegistrationForm' => 'app\models\user\RegistrationForm'
             ],
         ],
         'rbac' => [
@@ -120,10 +124,10 @@ $config = [
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
-    ];
+    // $config['bootstrap'][] = 'debug';
+    // $config['modules']['debug'] = [
+    //     'class' => 'yii\debug\Module',
+    // ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [

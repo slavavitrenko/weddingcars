@@ -246,7 +246,7 @@ use yii\helpers\Html;
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <?=Html::a(Yii::t('app', 'Settings'), ['/user/settings/account'], ['class' => 'btn btn-default btn-flat'])?>
+                                <?=Html::a(Yii::t('app', 'My settings'), ['/user/settings/account'], ['class' => 'btn btn-default btn-flat'])?>
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(

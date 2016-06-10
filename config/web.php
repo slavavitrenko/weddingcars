@@ -4,6 +4,7 @@ $params = require(__DIR__ . '/params.php');
 
 $config = [
     'id' => 'basic',
+    'name' => Yii::t('app', 'Wedding Cars'),
     'language' => 'ru',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -128,6 +129,7 @@ $config = [
             ],
             'modelMap' => [
                 'User' => 'app\models\user\User',
+                'UserSearch' => 'app\models\user\UserSearch',
                 'SettingsForm' => 'app\models\user\SettingsForm',
                 'RegistrationForm' => 'app\models\user\RegistrationForm'
             ],

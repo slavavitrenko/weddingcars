@@ -3,6 +3,7 @@
 namespace app\models\user;
 
 use Yii;
+use app\models\Role;
 
 class User extends \dektrium\user\models\User
 {
@@ -39,6 +40,29 @@ class User extends \dektrium\user\models\User
 		$labels['fio'] = Yii::t('app', 'FIO');
 		$labels['phone'] = Yii::t('app', 'Phone');
 		$labels['type'] = Yii::t('app', 'Account type');
+        $labels['role'] = Yii::t('app', 'Role');
 		return $labels;
 	}
+
+    public function getAssignment(){
+        return $this->hasOne(Role::className(), ['user_id' => 'id']);
+    }
+
+    public function getRole(){
+        return $this->assignment ? $this->assignment->item_name : '';
+    }
+
+    public function afterSave($insert, $changedAttributes){
+        
+        parent::afterSave($insert, $changedAttributes);
+
+        if(!Role::find()->where(['user_id' => $this->id])->one()){
+            $role = new Role;
+            $role->user_id = $this->id;
+            $role->item_name = 'client';
+            print_r($role->save() ? '' : $role->errors);
+            die();
+        }
+    }
+
 }

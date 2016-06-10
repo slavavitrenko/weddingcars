@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Июн 07 2016 г., 16:43
--- Версия сервера: 10.0.24-MariaDB-7
+-- Время создания: Июн 10 2016 г., 20:28
+-- Версия сервера: 10.0.25-MariaDB-0ubuntu0.16.04.1
 -- Версия PHP: 7.0.4-7ubuntu2.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -37,7 +37,8 @@ CREATE TABLE `auth_assignment` (
 --
 
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
-('admin', '1', 1465286625);
+('admin', '1', 2147483647),
+('driver', '24', 2147483647);
 
 -- --------------------------------------------------------
 
@@ -61,6 +62,7 @@ CREATE TABLE `auth_item` (
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 ('admin', 2, 'Администратор', NULL, NULL, 1465284342, 1465292059),
+('client', 2, 'Клиент', NULL, NULL, 1465575302, 1465575309),
 ('driver', 2, 'Водитель', NULL, NULL, 1465286768, 1465292071),
 ('manager', 2, 'Менеджер', NULL, NULL, 1465286804, 1465292078);
 
@@ -95,6 +97,26 @@ CREATE TABLE `auth_rule` (
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `auto`
+--
+
+CREATE TABLE `auto` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `brand` varchar(255) NOT NULL,
+  `model` varchar(255) NOT NULL,
+  `year` year(4) NOT NULL,
+  `color` varchar(255) NOT NULL,
+  `body` varchar(255) NOT NULL,
+  `retro` int(1) NOT NULL,
+  `bus` int(1) NOT NULL,
+  `bus_type` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -148,8 +170,7 @@ CREATE TABLE `profile` (
 
 INSERT INTO `profile` (`user_id`, `name`, `public_email`, `gravatar_email`, `gravatar_id`, `location`, `website`, `bio`) VALUES
 (1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(24, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -182,6 +203,13 @@ CREATE TABLE `token` (
   `type` smallint(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Дамп данных таблицы `token`
+--
+
+INSERT INTO `token` (`user_id`, `code`, `created_at`, `type`) VALUES
+(1, 'dVN85LM4NEXAE7on7La5rMKdEiuxr1Mu', 1465564399, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -193,6 +221,7 @@ CREATE TABLE `user` (
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `fio` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(13) COLLATE utf8_unicode_ci NOT NULL,
+  `type` varchar(8) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'client',
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password_hash` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `auth_key` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
@@ -209,10 +238,9 @@ CREATE TABLE `user` (
 -- Дамп данных таблицы `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `fio`, `phone`, `email`, `password_hash`, `auth_key`, `confirmed_at`, `unconfirmed_email`, `blocked_at`, `registration_ip`, `created_at`, `updated_at`, `flags`) VALUES
-(1, 'admin', 'Витренко Вячеслав Дмитриевич', '+380663564463', 'mxuser@ya.ru', '$2y$10$2hK2/qcovC./xXrzqXTVtOElx/hUIkMEJPH/b/Lmo61/6RE78zYNG', 'BceQwFC8bTxXNf2kOOMCjJ7QoUzAvWlm', 1465284070, NULL, NULL, '127.0.0.1', 1465284070, 1465305198, 0),
-(2, 'manager', '', '', 'manager@mail.ru', '$2y$10$ZC0HpOhJvlEadtskPFT9ouV0YEVGqGNM9BYiu43Xq51vQfDh4bOFm', 'xK5nCmBH46M4FydLl_ezLaZjx7JRC9AK', 1465292278, NULL, NULL, '127.0.0.1', 1465292278, 1465292278, 0),
-(3, 'driver', '', '', 'driver@mail.ru', '$2y$10$27KrZRhsm4UbgUnui70d0OwJz81Q9fGBl33mUUHJ4VoLc03DIhmzq', 'URWmOHkQUlseHRyDk-TaVeuZFL6AfDVI', 1465292387, NULL, NULL, '127.0.0.1', 1465292387, 1465292387, 0);
+INSERT INTO `user` (`id`, `username`, `fio`, `phone`, `type`, `email`, `password_hash`, `auth_key`, `confirmed_at`, `unconfirmed_email`, `blocked_at`, `registration_ip`, `created_at`, `updated_at`, `flags`) VALUES
+(1, 'admin', 'Витренко Вячеслав Дмитриевич', '+380663564463', 'client', 'mxuser@ya.ru', '$2y$10$xynooLFjgpHpI2Wik6T/bOy4qTR7hobIdJeroKqVk00Eh3aHj2lKa', 'BceQwFC8bTxXNf2kOOMCjJ7QoUzAvWlm', 1465284070, NULL, NULL, '127.0.0.1', 1465284070, 1465566202, 0),
+(24, 'test', 'Витренко Вячеслав Дмитриевич', '+380663564463', 'client', 'slavavitrenko@gmail.com', '$2y$10$2HQjzpGt2KY1Gxy2Qme0FehngDJ0QVbWujbdyE8WKIvER9iQpXJqy', '5s-ZvQW6g1b-Tk3sLBkl44frVOf2ctju', 1465577424, NULL, NULL, '127.0.0.1', 1465577425, 1465577425, 0);
 
 --
 -- Индексы сохранённых таблиц
@@ -244,6 +272,12 @@ ALTER TABLE `auth_item_child`
 --
 ALTER TABLE `auth_rule`
   ADD PRIMARY KEY (`name`);
+
+--
+-- Индексы таблицы `auto`
+--
+ALTER TABLE `auto`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `migration`
@@ -280,22 +314,28 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `user_unique_email` (`email`),
   ADD UNIQUE KEY `user_unique_username` (`username`),
   ADD KEY `fio` (`fio`),
-  ADD KEY `phone` (`phone`);
+  ADD KEY `phone` (`phone`),
+  ADD KEY `type` (`type`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
 --
+-- AUTO_INCREMENT для таблицы `auto`
+--
+ALTER TABLE `auto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT для таблицы `social_account`
 --
 ALTER TABLE `social_account`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --

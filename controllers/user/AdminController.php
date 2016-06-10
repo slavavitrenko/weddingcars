@@ -5,6 +5,7 @@ namespace app\controllers\user;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use app\models\user\RegistrationForm;
 
 
 class AdminController extends \dektrium\user\controllers\AdminController
@@ -34,6 +35,25 @@ class AdminController extends \dektrium\user\controllers\AdminController
                 ],
             ],
         ];
+    }
+
+
+    public function actionCreate()
+    {
+
+        $model = Yii::createObject(RegistrationForm::className());
+
+        $this->performAjaxValidation($model);
+
+        if ($model->load(Yii::$app->request->post()) && $model->register()) {
+
+            return $this->redirect(['/user/admin/index']);
+        }
+
+        return $this->render('create', [
+            'user'  => $model,
+            'module' => $this->module,
+        ]);
     }
 
 	public function render($view, $params = [])

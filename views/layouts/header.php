@@ -239,14 +239,14 @@ use yii\helpers\Html;
                                  alt="User Image"/>
 
                             <p>
-                                <?=Yii::$app->user->identity->username; ?>
+                                <?=Yii::$app->user->identity->fio; ?>
                                 <small><?=Yii::t('app', 'Registered at')?> <?=Yii::t('user', '{0, date, MMMM dd, YYYY HH:mm}', [Yii::$app->user->identity->created_at]); ?></small>
                             </p>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <?=Html::a(Yii::t('app', 'Profile'), ['/user/settings'], ['class' => 'btn btn-default btn-flat'])?>
+                                <?=Html::a(Yii::t('app', 'Settings'), ['/user/settings/account'], ['class' => 'btn btn-default btn-flat'])?>
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(

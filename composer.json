@@ -20,7 +20,8 @@
         "yiisoft/yii2-swiftmailer": "*",
         "dektrium/yii2-user": "0.9.*@dev",
         "dektrium/yii2-rbac": "dev-master",
-        "dmstr/yii2-adminlte-asset": "*"
+        "dmstr/yii2-adminlte-asset": "*",
+        "kartik-v/yii2-widget-switchinput": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

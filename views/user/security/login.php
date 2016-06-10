@@ -41,6 +41,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'validateOnChange'       => false,
                 ]) ?>
 
+                <?= Connect::widget([
+                    'baseAuthUrl' => ['/user/security/auth'],
+                ]) ?>
+                <hr>
                 <?= $form->field($model, 'login', ['inputOptions' => ['autofocus' => 'autofocus', 'class' => 'form-control', 'tabindex' => '1']]) ?>
 
                 <?= $form->field($model, 'password', ['inputOptions' => ['class' => 'form-control', 'tabindex' => '2']])->passwordInput()->label(Yii::t('user', 'Password') . ($module->enablePasswordRecovery ? ' (' . Html::a(Yii::t('user', 'Forgot password?'), ['/user/recovery/request'], ['tabindex' => '5']) . ')' : '')) ?>
@@ -62,8 +66,5 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= Html::a(Yii::t('user', 'Don\'t have an account? Sign up!'), ['/user/registration/register']) ?>
             </p>
         <?php endif ?>
-        <?= Connect::widget([
-            'baseAuthUrl' => ['/user/security/auth'],
-        ]) ?>
     </div>
 </div>

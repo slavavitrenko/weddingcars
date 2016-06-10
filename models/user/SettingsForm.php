@@ -4,28 +4,31 @@ namespace app\models\user;
 
 use Yii;
 use dektrium\user\Mailer;
+use dektrium\user\Module;
 
 class SettingsForm extends \dektrium\user\models\SettingsForm
 {
 	public $fio;
     public $phone;
+    public $type;
 
     public function __construct(Mailer $mailer, $config = [])
     {
         $this->mailer = $mailer;
         $this->setAttributes([
             'fio' => $this->user->fio,
-            'phone' => $this->user->phone
+            'phone' => $this->user->phone,
+            'type' => $this->user->type,
         ], false);
         parent::__construct($mailer, $config);
     }
 
 	public function rules(){
 		$rules = parent::rules();
-		$rules[] = [['fio'], 'required'];
+		$rules[] = [['fio', 'phone', 'type'], 'required'];
 		$rules[] = [['fio'], 'match', 'pattern' => '/^[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+\s[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+\s[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+$/u', 'message' => Yii::t('app', 'You must enter data such as your passport')];
-        $rules[] = [['phone'], 'required'];
         $rules[] = [['phone'], 'match', 'pattern' => '/^\+380([0-9]{9})+$/', 'message' => Yii::t('app', 'Phone not correct')];
+        $rules[] = [['type'], 'match', 'pattern' => '/^(driver|client)$/', 'message' => Yii::t('app', 'You must select driver or client')];
 		return $rules;
 	}
 
@@ -33,6 +36,7 @@ class SettingsForm extends \dektrium\user\models\SettingsForm
 		$labels = parent::attributeLabels();
         $labels['fio'] = Yii::t('app', 'FIO');
 		$labels['phone'] = Yii::t('app', 'Phone');
+        $labels['type'] = Yii::t('app', 'Account type');
 		return $labels;
 	}
 
@@ -41,6 +45,7 @@ class SettingsForm extends \dektrium\user\models\SettingsForm
         if ($this->validate()) {
             $this->user->scenario = 'update';
             $this->user->username = $this->username;
+            $this->user->type = $this->type;
             $this->user->fio = $this->fio;
             $this->user->phone = $this->phone;
             $this->user->password = $this->new_password;

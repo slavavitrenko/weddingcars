@@ -7,7 +7,7 @@ $config = [
     'language' => 'ru',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    // 'defaultRoute' => '/user/profile',
+    'defaultRoute' => '/site/index',
     'components' => [
         'view' => [
             'theme' => [
@@ -35,18 +35,11 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        // 'user' => [
-        //     'identityClass' => 'app\models\User',
-        //     'enableAutoLogin' => true,
-        // ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
         'log' => [
@@ -59,7 +52,6 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -94,6 +86,31 @@ $config = [
                 ],
             ],
         ],
+        'authClientCollection' => [
+            'class'   => \yii\authclient\Collection::className(),
+            'clients' => [
+                'vkontakte' => [
+                    'class'        => 'dektrium\user\clients\VKontakte',
+                    'clientId'     => '5501958',
+                    'clientSecret' => 'fThdaGgLsZqhthOwyppU',
+                ],
+                'google' => [
+                    'class'        => 'dektrium\user\clients\Google',
+                    'clientId'     => '47666163515-l74vtmg2sfth5t7rru47nedhrank3lj0.apps.googleusercontent.com',
+                    'clientSecret' => 'kkJtv4T7gn89XQGA1wJeMG94',
+                ],
+                'yandex' => [
+                    'class'        => 'dektrium\user\clients\Yandex',
+                    'clientId'     => '852f88417fc84db48018e288de94c52b',
+                    'clientSecret' => 'fcf0313235e14b40b509dc3c007d0f25'
+                ],
+                'facebook' => [
+                    'class'        => 'dektrium\user\clients\Facebook',
+                    'clientId'     => '287710171567401',
+                    'clientSecret' => 'fe2fc254cb04c8f297715b6cfbc7de9b',
+                ],
+            ],
+        ],
     ],
     'modules' => [
         'user' => [
@@ -122,16 +139,19 @@ $config = [
     'params' => $params,
 ];
 
+
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
-    // $config['bootstrap'][] = 'debug';
-    // $config['modules']['debug'] = [
-    //     'class' => 'yii\debug\Module',
-    // ];
+    $config['bootstrap'][] = 'debug';
+    $config['modules']['debug'] = [
+        'class' => 'yii\debug\Module',
+        'allowedIPs' => ['127.0.0.1', '192.168.0.*', '93.78.238.18']
+    ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
+        'allowedIPs' => ['127.0.0.1', '192.168.0.*', '93.78.238.18'],
     ];
 }
 

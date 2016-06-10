@@ -11,6 +11,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\widgets\MaskedInput;
+use kartik\switchinput\SwitchInput;
 
 /**
  * @var yii\web\View $this
@@ -37,6 +39,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php $form = ActiveForm::begin([
                     'id' => 'connect-account-form',
                 ]); ?>
+
+                <?=$form->field($model, 'type')->widget(SwitchInput::classname(), [
+                    'type' => SwitchInput::RADIO,
+                    'items' => [
+                        ['label' => Yii::t('app', 'Client'), 'value' => 'client'],
+                        ['label' => Yii::t('app', 'Driver'), 'value' => 'driver'],
+                    ],
+                ]); ?>
+
+                <?=$form->field($model, 'fio') ?>
+                
+                <?= $form->field($model, 'phone')->widget(MaskedInput::className(), [
+                    'model' => $model,
+                    'attribute' => 'phone',
+                    'mask' => '+380999999999',
+                    ]) ?>
 
                 <?= $form->field($model, 'email') ?>
 

@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'MegaAuto';
+$this->title = 'Wedding Car Poltava';
 ?>
 <div class="site-index">
 

@@ -6,7 +6,7 @@ window.addEventListener("popstate", function(e) {
     getContent(location.pathname, false);
 });
 
-$("a").on("click", function(e){
+$(document).on("click", "a", function(e){
     var href = $(this).attr("href");
     if(href && !~href.indexOf("#") && !~href.indexOf("mailto")){
         e.preventDefault();
@@ -38,11 +38,12 @@ $this->registerJs($js, \yii\web\View::POS_READY);
 $items = [];
 
 $items[] = ['label' => Yii::t('app', 'Home'), 'icon' => 'fa fa-home', 'url' => ['/']];
-$items[] = ['label' => Yii::t('app', 'Profile'), 'icon' => 'fa fa-user', 'url' => ['/user/settings/account']];
 
 if(Yii::$app->user->can('manager')){
     $items[] = ['label' => Yii::t('user', 'Users'), 'url' => ['/user/admin'], 'icon' => 'fa fa-group'];
 }
+
+$items[] = ['label' => Yii::t('app', 'My settings'), 'icon' => 'fa fa-user', 'url' => ['/user/settings/account']];
 
 ?>
 
@@ -51,12 +52,10 @@ if(Yii::$app->user->can('manager')){
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                <img src="<?=Yii::$app->user->identity->profile->getAvatarUrl(50); ?>" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
                 <p><?=Yii::$app->user->identity->username; ?></p>
-
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
 

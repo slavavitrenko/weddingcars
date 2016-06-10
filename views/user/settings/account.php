@@ -12,6 +12,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\MaskedInput;
+use kartik\switchinput\SwitchInput;
 
 /*
  * @var $this  yii\web\View
@@ -51,6 +52,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'username') ?>
 
+                <?=$form->field($model, 'type')->widget(SwitchInput::classname(), [
+                    'type' => SwitchInput::RADIO,
+                    'items' => [
+                        ['label' => Yii::t('app', 'Client'), 'value' => 'client'],
+                        ['label' => Yii::t('app', 'Driver'), 'value' => 'driver'],
+                    ],
+                ]); ?>
+
                 <?= $form->field($model, 'new_password')->passwordInput() ?>
 
                 <hr />
@@ -66,5 +75,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php ActiveForm::end(); ?>
             </div>
         </div>
+    </div>
+    <div class="col-md-3">
+        <?= $this->render('_menu') ?>
     </div>
 </div>

@@ -2,7 +2,7 @@
 /* BEGIN PACE */
 /*============*/
 
-/*.pace {
+.pace {
   -webkit-pointer-events: none;
   pointer-events: none;
 
@@ -84,7 +84,7 @@
   0% { transform: none; transform: none; }
   100% { transform: translate(-32px, 0); transform: translate(-32px, 0); }
 }
-*/
+
 
 
 /*==============*/

@@ -61,8 +61,8 @@ $this->registerJs($js, \yii\web\View::POS_READY);
         ]) ?>
 
         <?= $form->field($model, 'body')->radioList([
-            'car' => Yii::t('app', 'Car'),
             'suv' => Yii::t('app', 'SUV'),
+            'car' => Yii::t('app', 'Car'),
         ], [
             'id' => 'body-type',
             'class' => 'btn-group form-group',
@@ -76,8 +76,8 @@ $this->registerJs($js, \yii\web\View::POS_READY);
         ]) ?>
 
         <?= $form->field($model, 'bus_type')->radioList([
-            'usual' => Yii::t('app', 'Usual'),
             'micro' => Yii::t('app', 'Micro'),
+            'usual' => Yii::t('app', 'Usual'),
         ], [
             'id' => 'bus-type',
             'class' => 'btn-group form-group',

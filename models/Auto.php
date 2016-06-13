@@ -5,6 +5,8 @@ namespace app\models;
 use Yii;
 use app\models\user\User;
 use app\models\Images;
+use app\models\Brands;
+use app\models\Models;
 
 class Auto extends \yii\db\ActiveRecord
 {
@@ -23,7 +25,6 @@ class Auto extends \yii\db\ActiveRecord
             'whenClient' => 'function(attribute, value){ return $("input[name=\'Auto[type]\']:checked").val() == "bus";}'],
             [['type', 'brand', 'model', 'year', 'color', 'retro'], 'required'],
             [['user_id', 'retro'], 'integer'],
-            [['year'], 'safe'],
             [['name', 'type', 'brand', 'model', 'color'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             [['type'], 'match', 'pattern' => '/^(car|limousine|bus)$/', 'message' => Yii::t('app', 'Please select car, limousine or bus')],
@@ -51,7 +52,17 @@ class Auto extends \yii\db\ActiveRecord
             'body' => Yii::t('app', 'Body'),
             'retro' => Yii::t('app', 'Retro'),
             'bus_type' => Yii::t('app', 'Bus Type'),
+            'images' => Yii::t('app', 'Images'),
+            'fio' => Yii::t('app', 'Fio')
         ];
+    }
+
+    public function getAutoBrand(){
+        return $this->hasOne(Brands::className(), ['id' => 'brand']);
+    }
+
+    public function getAutoModel(){
+        return $this->hasOne(Models::className(), ['id' => 'model']);
     }
 
     public function getUser()
@@ -63,13 +74,13 @@ class Auto extends \yii\db\ActiveRecord
         return $this->user ? $this->user->fio : Yii::t('app', 'Not set');
     }
 
-    public function getImages(){
+    public function getPictures(){
         return $this->hasMany(Images::className(), ['car_id' => 'id']);
     }
 
-    public function beforeValidate(){
+    public function beforeSave($insert){
         $this->user_id = Yii::$app->user->identity->id;
-        return parent::beforeValidate();
+        return parent::beforeSave($insert);
     }
 
     public function beforeDelete(){

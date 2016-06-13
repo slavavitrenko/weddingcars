@@ -56,7 +56,7 @@ $this->registerJs($js, \yii\web\View::POS_READY);
                         'prompt' => Yii::t('app', 'Choose...')
             ]),
             'value' => function($model){
-                if($model->role == 'driver'){return Yii::t('app', 'Driver');}
+                if($model->type == 'driver'){return Yii::t('app', 'Driver');}
                 return '<div class="btn-group">' .
                 Html::button('а', ['class' => $model->role == 'admin' ? 'btn btn-info btn-sm' : 'btn btn-success btn-sm ajax-btn', 'value' => Url::to(['/user/admin/change-role', 'id' => $model->id, 'role' => 'admin'])])
                 .

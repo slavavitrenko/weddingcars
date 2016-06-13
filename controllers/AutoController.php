@@ -9,6 +9,11 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use app\models\Images;
+use app\models\AutoRate;
+use yii\data\ActiveDataProvider;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
+use yii\filters\AccessControl;
 
 use yii\helpers\Json;
 
@@ -22,6 +27,15 @@ class AutoController extends \app\base\Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
@@ -40,16 +54,23 @@ class AutoController extends \app\base\Controller
 
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $rates = new ActiveDataProvider([
+                'query' => AutoRate::find()->where(['auto_id' => $model->id])
+            ]);
+        $rates->sort = false;
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'rates' => $rates
         ]);
     }
 
     public function actionCreate()
     {
         $model = new Auto();
-        $model->type = 'car';
-        $model->body = 'car';
+        $model->retro = 0;
+        // $model->type = 'car';
+        // $model->body = 'car';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
@@ -63,18 +84,18 @@ class AutoController extends \app\base\Controller
         }
     }
 
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
+    // public function actionUpdate($id)
+    // {
+    //     $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
+    //     if ($model->load(Yii::$app->request->post()) && $model->save()) {
+    //         return $this->redirect(['view', 'id' => $model->id]);
+    //     } else {
+    //         return $this->render('update', [
+    //             'model' => $model,
+    //         ]);
+    //     }
+    // }
 
     public function actionDelete($id)
     {
@@ -86,6 +107,46 @@ class AutoController extends \app\base\Controller
     protected function findModel($id)
     {
         if (($model = Auto::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionCreateRate($auto_id){
+        $model = new AutoRate;
+        $model->auto_id = $auto_id;
+
+        $this->performAjaxValidation($model);
+
+        if($model->load(Yii::$app->request->post()) && $model->save()){
+            return $this->redirect(['view', 'id' => $auto_id]);
+        }
+        return $this->render('_rate-form', ['model' => $model]);
+    }
+
+    public function actionUpdateRate($id, $auto_id){
+        $model = $this->findAutoRate($id);
+        $model->auto_id = $auto_id;
+
+        $this->performAjaxValidation($model);
+
+        if($model->load(Yii::$app->request->post()) && $model->save()){
+            return $this->redirect(['view', 'id' => $auto_id]);
+        }
+        return $this->render('_rate-form', ['model' => $model]);
+    }
+
+    public function actionDeleteRate($id){
+        $rate = $this->findAutoRate($id);
+        $id = $rate->auto_id;
+        $rate->delete();
+        return $this->redirect(['view', 'id' => $id]);
+    }
+
+    protected function findAutoRate($id)
+    {
+        if (($model = AutoRate::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -123,6 +184,17 @@ class AutoController extends \app\base\Controller
                 $imageModel->car_id = $car_id;
                 $imageModel->path = $filename . $car_id . '_' . $date . '.' . $image->extension;
                 $imageModel->save();
+            }
+        }
+    }
+
+    protected function performAjaxValidation($model)
+    {
+        if (Yii::$app->request->isAjax && !Yii::$app->request->isPjax) {
+            if ($model->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                echo json_encode(ActiveForm::validate($model));
+                Yii::$app->end();
             }
         }
     }

@@ -12,6 +12,8 @@ use app\models\Auto;
  */
 class AutoSearch extends Auto
 {
+
+    public $fio;
     /**
      * @inheritdoc
      */
@@ -19,7 +21,7 @@ class AutoSearch extends Auto
     {
         return [
             [['id', 'user_id', 'retro', 'bus_type'], 'integer'],
-            [['name', 'type', 'brand', 'model', 'year', 'color', 'body'], 'safe'],
+            [['name', 'type', 'brand', 'model', 'year', 'color', 'body', 'fio'], 'safe'],
         ];
     }
 
@@ -49,6 +51,11 @@ class AutoSearch extends Auto
             'query' => $query,
         ]);
 
+        $dataProvider->sort->attributes['fio'] = [
+            'asc' => ['user.fio' => SORT_ASC],
+            'desc' => ['user.fio' => SORT_DESC],
+        ];
+
         $this->load($params);
 
         if (!$this->validate()) {
@@ -57,6 +64,8 @@ class AutoSearch extends Auto
             return $dataProvider;
         }
 
+        $query->joinWith('user');
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -64,18 +73,23 @@ class AutoSearch extends Auto
             'year' => $this->year,
             'retro' => $this->retro,
             'bus_type' => $this->bus_type,
+            'brand' => $this->brand,
+            'model' => $this->model,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'brand', $this->brand])
-            ->andFilterWhere(['like', 'model', $this->model])
+            // ->andFilterWhere(['like', 'brand', $this->brand])
+            // ->andFilterWhere(['like', 'model', $this->model])
             ->andFilterWhere(['like', 'color', $this->color])
             ->andFilterWhere(['like', 'body', $this->body]);
 
-            if(!Yii::$app->user->can('manager')){
+            if(!Yii::$app->user->can('manager') && !Yii::$app->user->can('admin')){
                 $query->andFilterWhere(['auto.user_id' => Yii::$app->user->identity->id]);
             }
+
+        $query->andFilterWhere(['like', 'user.username', $this->fio])
+        ->orFilterwhere(['like', 'user.fio', $this->fio]);;
 
         return $dataProvider;
     }

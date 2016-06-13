@@ -53,16 +53,15 @@ class User extends \dektrium\user\models\User
     }
 
     public function afterSave($insert, $changedAttributes){
-        
-        parent::afterSave($insert, $changedAttributes);
 
         if(!Role::find()->where(['user_id' => $this->id])->one()){
             $role = new Role;
             $role->user_id = $this->id;
             $role->item_name = 'client';
-            print_r($role->save() ? '' : $role->errors);
-            die();
+            $role->save();
         }
+
+        return parent::afterSave($insert, $changedAttributes);
     }
 
 }

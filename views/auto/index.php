@@ -1,40 +1,85 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use kartik\select2\Select2;
+use app\models\Models;
+use app\models\Brands;
+use yii\helpers\ArrayHelper;
+use yii\bootstrap\Modal;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\AutoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Autos');
+$this->title = Yii::$app->user->can('manager') ? Yii::t('app', 'Autos') : Yii::t('app', 'My Autos');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="auto-index">
 
     <h1>
-        <?= Html::encode($this->title) ?>
         <?= Html::a('<i class="fa fa-plus"></i>', ['/auto/create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::encode($this->title) ?>
     </h1>
 
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            // ['class' => 'yii\grid\SerialColumn'],
-            'user_id',
-            'name',
-            'type',
-            'brand',
-            // 'model',
+            [
+                'attribute' => 'fio',
+                'visible' => Yii::$app->user->can('manager'),
+                'value' => 'fio'
+            ],
+            // 'name',
+            // 'type',
+            [
+                'attribute' => 'brand',
+                'value' => 'autoBrand.name',
+                'filter' => Select2::widget([
+                        'model' => $searchModel,
+                        'attribute' => 'brand',
+                        'data' => ArrayHelper::map(Brands::find()->all(), 'id', 'name'),
+                        'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                        'pluginOptions' => ['allowClear' => true],
+                    ])
+            ],
+            [
+                'attribute' => 'model',
+                'value' => 'autoModel.name',
+                'filter' => Select2::widget([
+                        'model' => $searchModel,
+                        'attribute' => 'model',
+                        'data' => ArrayHelper::map(Models::find()->all(), 'id', 'name'),
+                        'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                        'pluginOptions' => ['allowClear' => true]
+                    ])
+            ],
             // 'year',
             // 'color',
-            // 'body',
+            // [
+            //     'attribute' => 'body',
+            //     'value' => function($model){return Yii::t('app', ucfirst($model->body));},
+            //     'filter' => Html::activeDropDownList($searchModel, 'body', ['car' => Yii::t('app', 'Car'), 'suv' => Yii::t('app', 'SUV')],['class'=>'form-control','prompt' => Yii::t('app', 'Choose...')])
+            // ],
             // 'retro',
             // 'bus',
             // 'bus_type',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '<div class="btn-group">{view} {delete}</div>',
+                'buttons' => [
+                    'view' => function($url, $model, $key){
+                        return Html::a('<i class="glyphicon glyphicon-eye-open"></i>', ['view', 'id' => $key], ['class' => 'btn btn-sm btn-primary', 'data-pjax' => 0]);
+                    },
+                    'delete' => function($url, $model, $key){
+                        return Html::a('<i class="glyphicon glyphicon-trash"></i>', ['delete', 'id' => $key], ['class' => 'btn btn-sm btn-danger', 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'), 'data-method' => 'post']);
+                    }
+                ]
+            ],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>

@@ -5,20 +5,19 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "brands".
+ * This is the model class for table "rate".
  *
  * @property integer $id
  * @property string $name
- * @property string $picture
  */
-class Brands extends \yii\db\ActiveRecord
+class Rate extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'brands';
+        return 'rate';
     }
 
     /**
@@ -28,7 +27,7 @@ class Brands extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name', 'picture'], 'string', 'max' => 255],
+            [['name'], 'string', 'max' => 255],
         ];
     }
 
@@ -40,7 +39,7 @@ class Brands extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
-            'picture' => Yii::t('app', 'Picture'),
         ];
     }
+
 }

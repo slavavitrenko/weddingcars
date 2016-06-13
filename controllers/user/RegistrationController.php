@@ -3,6 +3,7 @@
 namespace app\controllers\user;
 
 use Yii;
+use dektrium\user\Finder;
 
 
 class Registrationcontroller extends \dektrium\user\controllers\RegistrationController

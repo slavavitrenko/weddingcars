@@ -49,4 +49,9 @@ class Images extends \yii\db\ActiveRecord
         @unlink('uploads/cars/' . $this->path);
         return true;
     }
+
+    public function getSrc(){
+        return '/uploads/cars/' . $this->path;
+    }
+
 }

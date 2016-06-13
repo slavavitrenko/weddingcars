@@ -8,8 +8,15 @@ window.addEventListener("popstate", function(e) {
 
 $(document).on("click", "a", function(e){
     var href = $(this).attr("href");
-    console.log(location.protocol + "//" + location.host + href);
-    if(href && !~href.indexOf("#") && !~href.indexOf("mailto") && !~href.indexOf("://")){
+    if(
+            href && !~href.indexOf("sort")
+            && !~href.indexOf("#")
+            && !~href.indexOf("mailto")
+            && !~href.indexOf("://")
+            && !~href.indexOf("delete")
+            && !~href.indexOf("uploads")
+            && !~href.indexOf("debug")
+        ){
         e.preventDefault();
         getContent(location.protocol + "//" + location.host + $(this).attr("href"), true);
         $("#main-navbar .active").removeClass("active");
@@ -43,9 +50,21 @@ $items[] = ['label' => Yii::t('app', 'Home'), 'icon' => 'fa fa-home', 'url' => [
 if(Yii::$app->user->can('manager')){
     $items[] = ['label' => Yii::t('user', 'Users'), 'url' => ['/user/admin'], 'icon' => 'fa fa-group'];
     $items[] = ['label' => Yii::t('app', 'Autos'), 'url'=> ['/auto/index'], 'icon' => 'fa fa-car'];
+    $items[] = ['icon' => 'fa fa-tachometer', 'label' => Yii::t('app', 'Settings'), 'url' => '#', 'items' => [
+        ['label' => Yii::t('app', 'Brands'), 'icon' => 'fa fa-car', 'url' => ['/brands/index']],
+        ['label' => Yii::t('app', 'Models'), 'icon' => 'fa fa-bars', 'url' => ['/models/index']],
+        ['label' => Yii::t('app', 'Rates'), 'icon' => 'fa fa-money', 'url' => ['/rate/index']]
+    ]];
+}
+if(Yii::$app->user->identity->type == 'driver'){
+    $items[] = ['label' => yii::t('app', 'My autos'), 'icon' => 'fa fa-car', 'url' => ['/auto/index']];
 }
 
-$items[] = ['label' => Yii::t('app', 'My settings'), 'icon' => 'fa fa-user', 'url' => ['/user/settings/account']];
+$items[] = ['label' => Yii::t('app', 'My settings'), 'icon' => 'fa fa-user', 'url' => '#', 'items' => [
+    ['label' => Yii::t('user', 'Account'), 'url' => ['/user/settings/account']],
+    ['label' => Yii::t('user', 'Profile'), 'url' => ['/user/settings/profile']],
+    ['label' => Yii::t('user', 'Networks'), 'url' => ['/user/settings/networks']],
+]];
 
 ?>
 

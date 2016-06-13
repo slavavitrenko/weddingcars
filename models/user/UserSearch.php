@@ -57,6 +57,8 @@ class UserSearch extends \dektrium\user\models\UserSearch
             'query' => $query,
         ]);
 
+        $query->joinWith('assignment');
+
         $dataProvider->sort->attributes['role'] = [
             'asc' => ['auth_assignment.item_name' => SORT_ASC],
             'desc' => ['auth_assignment.item_name' => SORT_DESC],
@@ -66,7 +68,6 @@ class UserSearch extends \dektrium\user\models\UserSearch
             return $dataProvider;
         }
 
-        $query->joinWith('assignment');
 
         if ($this->created_at !== null) {
             $date = strtotime($this->created_at);

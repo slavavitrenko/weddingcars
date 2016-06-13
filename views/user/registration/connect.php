@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'id' => 'connect-account-form',
                 ]); ?>
 
-                <?= $form->field($user, 'type')->radioList([
+                <?= $form->field($model, 'type')->radioList([
                         'client' => Yii::t('app', 'Client'),
                         'driver' => Yii::t('app', 'Driver'),
                     ], [

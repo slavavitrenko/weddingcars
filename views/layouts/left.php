@@ -3,14 +3,15 @@
 $js = '
 
 window.addEventListener("popstate", function(e) {
-    getContent(location.pathname, false);
+    getContent(location.href, false);
 });
 
 $(document).on("click", "a", function(e){
     var href = $(this).attr("href");
-    if(href && !~href.indexOf("#") && !~href.indexOf("mailto")){
+    console.log(location.protocol + "//" + location.host + href);
+    if(href && !~href.indexOf("#") && !~href.indexOf("mailto") && !~href.indexOf("://")){
         e.preventDefault();
-        getContent($(this).attr("href"), true);
+        getContent(location.protocol + "//" + location.host + $(this).attr("href"), true);
         $("#main-navbar .active").removeClass("active");
         $(this).parent().addClass("active");
         $("body").removeClass("sidebar-open");
@@ -41,6 +42,7 @@ $items[] = ['label' => Yii::t('app', 'Home'), 'icon' => 'fa fa-home', 'url' => [
 
 if(Yii::$app->user->can('manager')){
     $items[] = ['label' => Yii::t('user', 'Users'), 'url' => ['/user/admin'], 'icon' => 'fa fa-group'];
+    $items[] = ['label' => Yii::t('app', 'Autos'), 'url'=> ['/auto/index'], 'icon' => 'fa fa-car'];
 }
 
 $items[] = ['label' => Yii::t('app', 'My settings'), 'icon' => 'fa fa-user', 'url' => ['/user/settings/account']];

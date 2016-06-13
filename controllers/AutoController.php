@@ -7,15 +7,14 @@ use app\models\Auto;
 use app\models\AutoSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use app\models\Images;
 
-/**
- * AutoController implements the CRUD actions for Auto model.
- */
+use yii\helpers\Json;
+
 class AutoController extends \app\base\Controller
 {
-    /**
-     * @inheritdoc
-     */
+
     public function behaviors()
     {
         return [
@@ -28,10 +27,6 @@ class AutoController extends \app\base\Controller
         ];
     }
 
-    /**
-     * Lists all Auto models.
-     * @return mixed
-     */
     public function actionIndex()
     {
         $searchModel = new AutoSearch();
@@ -43,11 +38,6 @@ class AutoController extends \app\base\Controller
         ]);
     }
 
-    /**
-     * Displays a single Auto model.
-     * @param integer $id
-     * @return mixed
-     */
     public function actionView($id)
     {
         return $this->render('view', [
@@ -55,16 +45,16 @@ class AutoController extends \app\base\Controller
         ]);
     }
 
-    /**
-     * Creates a new Auto model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
     public function actionCreate()
     {
         $model = new Auto();
+        $model->type = 'car';
+        $model->body = 'car';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            $this->saveImages(UploadedFile::getInstances($model, 'images'), $model->id);
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -73,12 +63,6 @@ class AutoController extends \app\base\Controller
         }
     }
 
-    /**
-     * Updates an existing Auto model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -92,12 +76,6 @@ class AutoController extends \app\base\Controller
         }
     }
 
-    /**
-     * Deletes an existing Auto model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -105,19 +83,47 @@ class AutoController extends \app\base\Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Auto model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Auto the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Auto::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionModels() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $id = end($_POST['depdrop_parents']);
+            $list = \app\models\Models::find()->andWhere(['brand_id'=>$id])->asArray()->all();
+            $selected  = null;
+            if ($id != null && count($list) > 0) {
+                $selected = '';
+                foreach ($list as $i => $model) {
+                    $out[] = ['id' => $model['id'], 'name' => $model['name']];
+                    if ($i == 0) {
+                        $selected = $model['id'];
+                    }
+                }
+            // Shows how you can preselect a value
+                echo Json::encode(['output' => $out, 'selected'=>$selected]);
+                return;
+            }
+        }
+        echo Json::encode(['output' => '', 'selected'=>'']);
+    }
+
+    protected function saveImages($images, $car_id){
+        foreach($images as $image){
+            $date = date('Y-m-d_h:i:s');
+            $filename = mb_substr(str_replace(["]", "[", "(", ")", " ", "\t", "\n"], '', $image->baseName), 0, 20);
+            if($image->saveAs('uploads/cars/' . $filename . $car_id . '_' . $date . '.' . $image->extension)){
+                $imageModel = new Images;
+                $imageModel->car_id = $car_id;
+                $imageModel->path = $filename . $car_id . '_' . $date . '.' . $image->extension;
+                $imageModel->save();
+            }
         }
     }
 }

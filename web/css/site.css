@@ -90,3 +90,58 @@
 /*==============*/
 /*   END PACE   */
 /*==============*/
+
+
+.select2-container--krajee .select2-selection--single {
+    height: 45px!important;
+    line-height: 1.428571429!important;
+    padding: 16px 23px 12px 19px!important;
+}
+
+.select2-container--krajee .select2-selection--single .select2-selection__arrow {
+    height: 44px!important;
+}
+
+.select2-container--krajee .select2-selection {
+    border-radius: 0!important;
+}
+
+label.control-label {
+  display: block;
+}
+
+.form-group.has-success label.btn {
+    color: white;
+}
+
+.form-group .btn-group {
+  margin-left: 0!important;
+}
+
+#auto-type, #user-type, #bus-type, #body-type {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+#auto-type .btn {
+  width: 33%;
+
+}
+#user-type .btn {
+  width: 50%;
+}
+#bus-type .btn {
+  width: 50%;
+}
+#body-type .btn {
+  width: 50%;
+}
+
+.form-group.field-bus-type, .field-body-type {
+  display: none;
+}
+
+
+html::-webkit-scrollbar { width: 0; }
+html { -ms-overflow-style: none; }
+html { overflow: -moz-scrollbars-none; }

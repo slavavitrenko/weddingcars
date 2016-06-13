@@ -12,23 +12,21 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="auto-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <h1>
+        <?= Html::encode($this->title) ?>
+        <?= Html::a('<i class="fa fa-plus"></i>', ['/auto/create'], ['class' => 'btn btn-success']) ?>
+    </h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Auto'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
+            // ['class' => 'yii\grid\SerialColumn'],
+            'user_id',
             'name',
             'type',
             'brand',
-            'model',
+            // 'model',
             // 'year',
             // 'color',
             // 'body',

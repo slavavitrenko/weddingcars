@@ -126,6 +126,7 @@ $config = [
                 'admin' => 'app\controllers\user\AdminController',
                 'registration' => 'app\controllers\user\RegistrationController',
                 'security' => 'app\controllers\user\SecurityController',
+                'recovery' => 'app\controllers\user\RecoveryController',
             ],
             'modelMap' => [
                 'User' => 'app\models\user\User',

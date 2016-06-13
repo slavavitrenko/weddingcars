@@ -40,13 +40,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     'id' => 'connect-account-form',
                 ]); ?>
 
-                <?=$form->field($model, 'type')->widget(SwitchInput::classname(), [
-                    'type' => SwitchInput::RADIO,
-                    'items' => [
-                        ['label' => Yii::t('app', 'Client'), 'value' => 'client'],
-                        ['label' => Yii::t('app', 'Driver'), 'value' => 'driver'],
-                    ],
-                ]); ?>
+                <?= $form->field($user, 'type')->radioList([
+                        'client' => Yii::t('app', 'Client'),
+                        'driver' => Yii::t('app', 'Driver'),
+                    ], [
+                        'id' => 'user-type',
+                        'class' => 'btn-group form-group',
+                        'data-toggle' => 'buttons',
+                        'unselect' => null, // remove hidden field
+                        'item' => function ($index, $label, $name, $checked, $value) {
+                            return '<label class="btn btn-primary' . ($checked ? ' active' : '') . '">' .
+                                Html::radio($name, $checked, ['value' => $value, 'class' => 'project-status-btn']) . $label . '</label>';
+                        },
+                ]) ?>
 
                 <?=$form->field($model, 'fio') ?>
                 

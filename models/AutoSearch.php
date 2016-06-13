@@ -18,7 +18,7 @@ class AutoSearch extends Auto
     public function rules()
     {
         return [
-            [['id', 'retro', 'bus', 'bus_type'], 'integer'],
+            [['id', 'user_id', 'retro', 'bus_type'], 'integer'],
             [['name', 'type', 'brand', 'model', 'year', 'color', 'body'], 'safe'],
         ];
     }
@@ -60,9 +60,9 @@ class AutoSearch extends Auto
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'user_id' => $this->user_id,
             'year' => $this->year,
             'retro' => $this->retro,
-            'bus' => $this->bus,
             'bus_type' => $this->bus_type,
         ]);
 
@@ -72,6 +72,10 @@ class AutoSearch extends Auto
             ->andFilterWhere(['like', 'model', $this->model])
             ->andFilterWhere(['like', 'color', $this->color])
             ->andFilterWhere(['like', 'body', $this->body]);
+
+            if(!Yii::$app->user->can('manager')){
+                $query->andFilterWhere(['auto.user_id' => Yii::$app->user->identity->id]);
+            }
 
         return $dataProvider;
     }

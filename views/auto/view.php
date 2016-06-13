@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            'user_id',
             'name',
             'type',
             'brand',
@@ -37,7 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'color',
             'body',
             'retro',
-            'bus',
             'bus_type',
         ],
     ]) ?>

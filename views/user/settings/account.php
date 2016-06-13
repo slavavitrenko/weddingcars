@@ -42,6 +42,21 @@ $this->params['breadcrumbs'][] = $this->title;
                     'enableClientValidation' => false,
                 ]); ?>
 
+
+                <?= $form->field($model, 'type')->radioList([
+                        'client' => Yii::t('app', 'Client'),
+                        'driver' => Yii::t('app', 'Driver'),
+                    ], [
+                        'id' => 'user-type',
+                        'class' => 'btn-group form-group',
+                        'data-toggle' => 'buttons',
+                        'unselect' => null, // remove hidden field
+                        'item' => function ($index, $label, $name, $checked, $value) {
+                            return '<label class="btn btn-primary' . ($checked ? ' active' : '') . '">' .
+                                Html::radio($name, $checked, ['value' => $value, 'class' => 'project-status-btn']) . $label . '</label>';
+                        },
+                ]) ?>
+
                 <?=$form->field($model, 'fio') ?>
 
                 <?= $form->field($model, 'phone')->widget(MaskedInput::className(), [
@@ -51,14 +66,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'email') ?>
 
                 <?= $form->field($model, 'username') ?>
-
-                <?=$form->field($model, 'type')->widget(SwitchInput::classname(), [
-                    'type' => SwitchInput::RADIO,
-                    'items' => [
-                        ['label' => Yii::t('app', 'Client'), 'value' => 'client'],
-                        ['label' => Yii::t('app', 'Driver'), 'value' => 'driver'],
-                    ],
-                ]); ?>
 
                 <?= $form->field($model, 'new_password')->passwordInput() ?>
 

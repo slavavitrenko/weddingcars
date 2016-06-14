@@ -14,8 +14,6 @@ use dmstr\widgets\Alert;
     <div class="pull-right hidden-xs">
         <b></b>
     </div>
-    <strong>Copyright &copy; <?=date('Y')?> <a href="http://react-logic.com">React Logic Agency</a>.</strong> All rights
-    reserved. 
     <strong><?=YII_DEBUG ? Yii::t('app', 'Development mode') : ''?></strong>
 </footer>
 

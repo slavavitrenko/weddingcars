@@ -29,7 +29,6 @@ $js = '
 
 $this->registerJs($js, \yii\web\View::POS_READY);
 
-
 ?>
 
 <div class="auto-form">
@@ -110,16 +109,40 @@ $this->registerJs($js, \yii\web\View::POS_READY);
         ]); ?>
         <?= $form->field($model, 'year')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'color')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'retro')->widget(CheckboxX::className(), ['pluginOptions'=>['threeState'=>false]]) ?>
 
-        <?=$form->field($model, 'images[]')->widget(FileInput::className(), [
-            'options'=>[
-                'multiple'=>true
-            ],
-            'pluginOptions' => [
-                'maxFileCount' => 10
-            ]
-        ])?>
+
+        <div class="row">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-4">
+                <?=$form->field($model, 'pass_count') ?>
+            </div>
+            <div class="col-sm-5">
+                <?=$form->field($model, 'images[]')->widget(FileInput::className(), [
+                    'options'=>[
+                        'multiple'=>true
+                    ],
+                    'pluginOptions' => [
+                        'maxFileCount' => 10
+                    ]
+                ])?>
+            </div>
+        </div>
+
+        <?=$form->field($model, 'description')->textArea(['rows' => 6])?>
+
+        <div class="row">
+            <div class="col-sm-3 col-sm-offset-3">
+                <?= $form->field($model, 'retro')->widget(CheckboxX::className(), ['pluginOptions'=>['threeState'=>false]]) ?>
+            </div>
+            <div class="col-sm-3">
+                <?= $form->field($model, 'decor')->widget(CheckboxX::className(), ['pluginOptions'=>['threeState'=>false]]) ?>
+            </div>
+            <div class="col-sm-3">
+               <?= $form->field($model, 'client_decor')->widget(CheckboxX::className(), ['pluginOptions'=>['threeState'=>false]]) ?>
+            </div>
+        </div>
+
 
 <div class="row">
     <div class="col-xs-12">

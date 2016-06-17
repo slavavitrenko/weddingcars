@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'header' => '<h2><span id="modal-header"></span></h2>',
             'options' => [
                 'tabindex' => false,
-                'class' => 'modal fade'
+                'class' => 'modal in'
             ]
         ]); ?>
     <div id="modal-content"></div>

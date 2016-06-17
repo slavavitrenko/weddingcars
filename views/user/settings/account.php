@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]); ?>
 
 
-                <?= $form->field($model, 'type')->radioList([
+                <?= $form->field($model, 'type', ['options' => ['class' => Yii::$app->user->can('manager') ? 'hidden' : '']])->radioList([
                         'client' => Yii::t('app', 'Client'),
                         'driver' => Yii::t('app', 'Driver'),
                     ], [

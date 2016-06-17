@@ -46,7 +46,7 @@ class Images extends \yii\db\ActiveRecord
     }
 
     public function beforeDelete(){
-        @unlink('uploads/cars/' . $this->path);
+        @unlink(__DIR__ . '/../web/uploads/cars/' . $this->path);
         return true;
     }
 

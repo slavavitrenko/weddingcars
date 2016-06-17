@@ -68,7 +68,9 @@ class AutoController extends \app\base\Controller
     public function actionCreate()
     {
         $model = new Auto();
-        $model->retro = 0;
+        $model->retro = '0';
+        $model->client_decor = '0';
+        $model->decor = '0';
         // $model->type = 'car';
         // $model->body = 'car';
 
@@ -99,7 +101,11 @@ class AutoController extends \app\base\Controller
 
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        AutoRate::deleteAll(['auto_id' => $model->id]);
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }
@@ -151,6 +157,20 @@ class AutoController extends \app\base\Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionCheck($id){
+        Yii::$app->response->format = 'json';
+        $model = $this->findModel($id);
+        $model->checked = 1;
+        return $model->save();
+    }
+
+    public function actionUncheck($id){
+        Yii::$app->response->format = 'json';
+        $model = $this->findModel($id);
+        $model->checked = 0;
+        return $model->save();
     }
 
     public function actionModels() {

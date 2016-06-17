@@ -18,7 +18,7 @@ $(document).on("click", "a", function(e){
             && !~href.indexOf("debug")
         ){
         e.preventDefault();
-        getContent(location.protocol + "//" + location.host + $(this).attr("href"), true);
+        getContent(location.protocol + "//" + location.host + href, true);
         $("#main-navbar .active").removeClass("active");
         $(this).parent().addClass("active");
         $("body").removeClass("sidebar-open");

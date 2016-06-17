@@ -12,23 +12,21 @@ use yii\helpers\Url;
 $this->title = Yii::t('user', 'Manage users');
 $this->params['breadcrumbs'][] = $this->title;
 
-$js = <<< JS
-
-$(document).on("click", ".btn.btn-success", function(){
-    var btn = $(this);
+$js = '
+$(document).on("click", ".ajax-btn", function(){
+    var button = $(this);
     $.get(
-        btn.attr("value"),
+        button.attr("value"),
         function(data){
             if(data == 1){
-                $.pjax.reload({container: '#users-container'});
+                $.pjax.reload({container: "#users-container"});
             }
-        }
-    );
+        });
 });
-
-JS;
+';
 
 $this->registerJs($js, \yii\web\View::POS_READY);
+
 ?>
 
 <?= $this->render('/admin/_menu') ?>
@@ -121,7 +119,7 @@ $this->registerJs($js, \yii\web\View::POS_READY);
                     ]);
                 } else {
                     return Html::a(Yii::t('user', 'Block'), ['block', 'id' => $model->id], [
-                        'class' => 'btn btn-xs btn-danger btn-block',
+                        'class' => 'btn btn-sm btn-danger btn-block',
                         'data-method' => 'post',
                         'data-confirm' => Yii::t('user', 'Are you sure you want to block this user?'),
                     ]);
@@ -131,7 +129,11 @@ $this->registerJs($js, \yii\web\View::POS_READY);
         ],
         [
             'class' => 'yii\grid\ActionColumn',
-            'template' => '{update} {delete}',
+            'template' => '<div class="btn-group">{update} {delete}</div>',
+            'buttons' => [
+                'update' => function($url, $model, $key){return Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['update', 'id' => $key], ['class' => 'btn btn-sm btn-success', 'data-pjax' => 0]);},
+                'delete' => function($url, $model, $key){return Html::a('<i class="glyphicon glyphicon-trash"></i>', ['delete', 'id' => $key], ['class' => 'btn btn-sm btn-danger', 'data-pjax' => 0, 'data-method' => 'post', 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?')]);},
+            ]
         ],
     ],
 ]); ?>

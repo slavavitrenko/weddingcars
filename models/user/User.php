@@ -4,6 +4,7 @@ namespace app\models\user;
 
 use Yii;
 use app\models\Role;
+use app\models\Auto;
 
 class User extends \dektrium\user\models\User
 {
@@ -52,16 +53,29 @@ class User extends \dektrium\user\models\User
         return $this->assignment ? $this->assignment->item_name : '';
     }
 
-    public function afterSave($insert, $changedAttributes){
+    public function getCars(){
+        return $this->hasMany(Auto::className(), ['user_id' => 'id']);
+    }
 
-        if(!Role::find()->where(['user_id' => $this->id])->one()){
+    public function afterSave($insert, $changedAttributes){
+        if(!Yii::$app->user->can('manager')){
+            Role::deleteAll(['user_id' => $this->id]);
             $role = new Role;
+            $role-> item_name = $this->type;
             $role->user_id = $this->id;
-            $role->item_name = 'client';
-            $role->save();
+            $role->save(false);
         }
 
         return parent::afterSave($insert, $changedAttributes);
+    }
+
+    public function beforeDelete(){
+        if($this->cars){
+            foreach($this->cars as $car){
+                $car->delete();
+            }
+        }
+        return parent::beforeDelete();
     }
 
 }

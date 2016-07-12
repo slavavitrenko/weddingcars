@@ -113,7 +113,7 @@ $this->registerJs($js, \yii\web\View::POS_READY);
             'value' => function ($model) {
                 if ($model->isBlocked) {
                     return Html::a(Yii::t('user', 'Unblock'), ['block', 'id' => $model->id], [
-                        'class' => 'btn btn-xs btn-success btn-block',
+                        'class' => 'btn btn-sm btn-success btn-block',
                         'data-method' => 'post',
                         'data-confirm' => Yii::t('user', 'Are you sure you want to unblock this user?'),
                     ]);

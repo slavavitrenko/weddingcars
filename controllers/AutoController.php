@@ -208,14 +208,14 @@ class AutoController extends \app\base\Controller
         }
     }
 
-    protected function performAjaxValidation($model)
-    {
-        if (Yii::$app->request->isAjax && !Yii::$app->request->isPjax) {
-            if ($model->load(Yii::$app->request->post())) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                echo json_encode(ActiveForm::validate($model));
-                Yii::$app->end();
-            }
-        }
-    }
+    // protected function performAjaxValidation($model)
+    // {
+    //     if (Yii::$app->request->isAjax && !Yii::$app->request->isPjax) {
+    //         if ($model->load(Yii::$app->request->post())) {
+    //             Yii::$app->response->format = Response::FORMAT_JSON;
+    //             echo json_encode(ActiveForm::validate($model));
+    //             Yii::$app->end();
+    //         }
+    //     }
+    // }
 }

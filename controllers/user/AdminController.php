@@ -13,6 +13,8 @@ use app\models\Role;
 class AdminController extends \dektrium\user\controllers\AdminController
 {
 
+    use \app\traits\AjaxTrait;
+
     public function behaviors()
     {
         return [
@@ -87,6 +89,24 @@ class AdminController extends \dektrium\user\controllers\AdminController
             return $assignment->save();
         }
 
+    }
+
+    public function actionBlock($id)
+    {
+        if ($id == Yii::$app->user->getId()) {
+            Yii::$app->getSession()->setFlash('danger', Yii::t('user', 'You can not block your own account'));
+        } else {
+            $user  = $this->findModel($id);
+            if ($user->getIsBlocked()) {
+                $user->unblock();
+                Yii::$app->getSession()->setFlash('success', Yii::t('user', 'User has been unblocked'));
+            } else {
+                $user->block();
+                Yii::$app->getSession()->setFlash('success', Yii::t('user', 'User has been blocked'));
+            }
+        }
+
+        return $this->redirect(['/user/admin']);
     }
 
     public function actionDelete($id)

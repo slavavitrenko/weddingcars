@@ -8,7 +8,7 @@ $config = [
     'language' => 'ru',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    'defaultRoute' => '/site/index',
+    'defaultRoute' => '/auto/index',
     'components' => [
         'view' => [
             'theme' => [
@@ -26,6 +26,12 @@ $config = [
                     'basePath' => '@webroot',
                     'baseUrl' => '@web',
                     'css' => ['css/theme.css'],
+                ],
+                'yii\web\YiiAsset' => [
+                    'sourcePath' => null,
+                    'basePath' => '@webroot',
+                    'baseUrl' => '@web',
+                    'js' => ['js/yii.js'],
                 ],
             ],
         ],

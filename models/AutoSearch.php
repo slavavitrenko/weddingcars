@@ -20,8 +20,8 @@ class AutoSearch extends Auto
     public function rules()
     {
         return [
-            [['id', 'user_id', 'retro', 'bus_type'], 'integer'],
-            [['name', 'type', 'brand', 'model', 'year', 'color', 'body', 'fio'], 'safe'],
+            [['id', 'user_id', 'brand', 'model', 'retro', 'bus_type'], 'integer'],
+            [['name', 'type', 'year', 'color', 'body', 'fio'], 'safe'],
         ];
     }
 
@@ -69,27 +69,18 @@ class AutoSearch extends Auto
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'year' => $this->year,
-            'retro' => $this->retro,
-            'bus_type' => $this->bus_type,
-            'brand' => $this->brand,
-            'model' => $this->model,
         ]);
+        
+        $query->andFilterWhere(['like', 'user.username', $this->fio])
+        ->orFilterwhere(['like', 'user.fio', $this->fio]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'type', $this->type])
-            // ->andFilterWhere(['like', 'brand', $this->brand])
-            // ->andFilterWhere(['like', 'model', $this->model])
-            ->andFilterWhere(['like', 'color', $this->color])
-            ->andFilterWhere(['like', 'body', $this->body]);
+        $query->andFilterWhere(['like', 'brand', $this->brand])
+            ->andFilterWhere(['like', 'model', $this->model]);
 
             if(!Yii::$app->user->can('manager') && !Yii::$app->user->can('admin')){
                 $query->andFilterWhere(['auto.user_id' => Yii::$app->user->identity->id]);
             }
 
-        $query->andFilterWhere(['like', 'user.username', $this->fio])
-        ->orFilterwhere(['like', 'user.fio', $this->fio]);;
 
         return $dataProvider;
     }

@@ -2,33 +2,10 @@
 
 $js = '
 
-window.addEventListener("popstate", function(e) {
-    getContent(location.href, false);
-});
-
-$(document).on("click", "a", function(e){
-    var href = $(this).attr("href");
-    if(
-            href && !~href.indexOf("sort")
-            && !~href.indexOf("#")
-            && !~href.indexOf("mailto")
-            && !~href.indexOf("://")
-            && !~href.indexOf("delete")
-            && !~href.indexOf("uploads")
-            && !~href.indexOf("debug")
-        ){
-        e.preventDefault();
-        getContent(location.protocol + "//" + location.host + href, true);
-        $("#main-navbar .active").removeClass("active");
-        $(this).parent().addClass("active");
-        $("body").removeClass("sidebar-open");
-        return;
-    }
-});
-
-function getContent(url, addEntry) {
+function getContent(url, addEntry, link) {
     $.ajax(url)
     .done(function( data ) {
+        window.scrollTo(0,1);
         $("#main-layout").html(data);
         $("title").html($(".main-title").html());
         if(addEntry == true) {
@@ -36,20 +13,95 @@ function getContent(url, addEntry) {
         }
     })
     .error(function(data){
-        ' . ((YII_ENV_DEV) ? ('$("#main-layout").html(data.responseText);') : ('console.log(data.responseText); window.location = url;')) . '
+        ' . ((YII_ENV_DEV) ? ('$("#main-layout").html(data.responseText);') : ('window.location = url;')) . '
     });
 }
+
+window.addEventListener("popstate", function(e) {
+    getContent(location.href, false);
+});
+
+
+$(document).on("click", "a", function(e){
+    var link = $(this);
+    var href = $(this).attr("href");
+    if(link.attr("data-page")){
+        return;
+    }
+    if(link.attr("data-confirm")){
+        if(confirm(link.attr("data-confirm")) == false){
+            return false;
+        }
+    }
+
+    if(link.attr("data-method") == "post"){
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: href,
+            data: {},
+            success: function(data){
+                getContent(data, true);
+            },
+            error: function(e){
+                console.log(e);
+            }
+        });
+        return false;
+    }
+
+    if( 
+        href
+        && !~href.indexOf("sort")
+        && !~href.indexOf("#")
+        && !~href.indexOf("mailto")
+        && !~href.indexOf("://")
+        && !~href.indexOf("delete")
+        && !~href.indexOf("uploads")
+        && !~href.indexOf("debug")
+        ){
+        e.preventDefault();
+        getContent(location.protocol + "//" + location.host + $(this).attr("href"), true);
+        $("#main-navbar .active").removeClass("active");
+        $(this).parent().addClass("active");
+        $("body").removeClass("sidebar-open");
+        return;
+    }
+    else{
+        return;
+    }
+});
+
+$(document).on("beforeSubmit", "form", function(){
+    var form = $(this);
+    if(form.attr("data-type") == "self"){
+        return false;
+    }
+    $.ajax({
+        url: form.attr("action"),
+        data: form.serialize(),
+        method: form.attr("method"),
+        complete: function(data){
+            if($.parseJSON(data.responseText).length > 2){
+                getContent($.parseJSON(data.responseText), true);
+                $(".modal-backdrop").remove();
+            }
+        }
+    });
+    return false;
+});
+
 ';
 
 $this->registerJs($js, \yii\web\View::POS_READY);
 
 $items = [];
 
-$items[] = ['label' => Yii::t('app', 'Home'), 'icon' => 'fa fa-home', 'url' => ['/']];
+// $items[] = ['label' => Yii::t('app', 'Home'), 'icon' => 'fa fa-home', 'url' => ['/']];
 
 if(Yii::$app->user->can('manager')){
-    $items[] = ['label' => Yii::t('user', 'Users'), 'url' => ['/user/admin'], 'icon' => 'fa fa-group'];
     $items[] = ['label' => Yii::t('app', 'Autos'), 'url'=> ['/auto/index'], 'icon' => 'fa fa-car'];
+    $items[] = ['label' => Yii::t('user', 'Users'), 'url' => ['/user/admin'], 'icon' => 'fa fa-group'];
     $items[] = ['icon' => 'fa fa-tachometer', 'label' => Yii::t('app', 'Settings'), 'url' => '#', 'items' => [
         ['label' => Yii::t('app', 'Brands'), 'icon' => 'fa fa-car', 'url' => ['/brands/index']],
         ['label' => Yii::t('app', 'Models'), 'icon' => 'fa fa-bars', 'url' => ['/models/index']],

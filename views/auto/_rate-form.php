@@ -13,6 +13,7 @@ use kartik\select2\Select2;
     <?php $form = ActiveForm::begin([
         'enableAjaxValidation'   => true,
         // 'enableClientValidation' => false,
+        // 'options' => ['data-type' => 'self']
     ]); ?>
 
     <?= $form->field($model, 'auto_id')->hiddenInput()->label(false) ?>

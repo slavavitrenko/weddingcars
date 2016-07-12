@@ -93,7 +93,7 @@ if (!($brands = Yii::$app->cache->get('all-brands'))){
                             return Html::a('<i class="glyphicon glyphicon-trash"></i>', ['delete', 'id' => $key], ['class' => 'btn btn-sm btn-danger', 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'), 'data-method' => 'post']);
                         },
                         'checked' => function($url, $model, $key){
-                            return Html::a('<i class="glyphicon glyphicon-ok"></i>', false, ['class' => 'pjax-btn btn btn-sm ' . ($model->checked ? 'btn-success' : 'btn-danger'), 'value' => Url::to([($model->checked ? 'uncheck' : 'check'), 'id' => $key]), 'data-container' => 'autos-container', 'data-pjax' => 0]);
+                            return Html::a('<i class="glyphicon glyphicon-ok"></i> ' . (Yii::t('app', $model->checked ? 'Checked' : 'Not checked')), false, ['class' => 'pjax-btn btn btn-sm ' . ($model->checked ? 'btn-success' : 'btn-danger'), 'value' => Url::to([($model->checked ? 'uncheck' : 'check'), 'id' => $key]), 'data-container' => 'autos-container', 'data-pjax' => 0]);
                         }
                     ]
                 ],

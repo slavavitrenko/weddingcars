@@ -21,7 +21,6 @@ window.addEventListener("popstate", function(e) {
     getContent(location.href, false);
 });
 
-
 $(document).on("click", "a", function(e){
     var link = $(this);
     var href = $(this).attr("href");
@@ -105,7 +104,8 @@ if(Yii::$app->user->can('manager')){
     $items[] = ['icon' => 'fa fa-tachometer', 'label' => Yii::t('app', 'Settings'), 'url' => '#', 'items' => [
         ['label' => Yii::t('app', 'Brands'), 'icon' => 'fa fa-car', 'url' => ['/brands/index']],
         ['label' => Yii::t('app', 'Models'), 'icon' => 'fa fa-bars', 'url' => ['/models/index']],
-        ['label' => Yii::t('app', 'Rates'), 'icon' => 'fa fa-money', 'url' => ['/rate/index']]
+        ['label' => Yii::t('app', 'Rates'), 'icon' => 'fa fa-money', 'url' => ['/rate/index']],
+        ['label' => Yii::t('app', 'Site Settings'), 'icon' => 'fa fa-cogs', 'url' => ['/settings']]
     ]];
 }
 if(Yii::$app->user->identity->type == 'driver'){

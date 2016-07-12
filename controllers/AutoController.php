@@ -161,6 +161,7 @@ class AutoController extends \app\base\Controller
 
     public function actionCheck($id){
         Yii::$app->response->format = 'json';
+        if(!Yii::$app->user->can('admin')){return false;}
         $model = $this->findModel($id);
         $model->checked = 1;
         return $model->save();
@@ -168,6 +169,7 @@ class AutoController extends \app\base\Controller
 
     public function actionUncheck($id){
         Yii::$app->response->format = 'json';
+        if(!Yii::$app->user->can('admin')){return false;}
         $model = $this->findModel($id);
         $model->checked = 0;
         return $model->save();

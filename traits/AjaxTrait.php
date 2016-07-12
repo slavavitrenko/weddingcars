@@ -32,7 +32,7 @@ trait AjaxTrait
         }
     }
 
-    public function redirect($url, $statusCode = 200)
+    public function redirect($url, $statusCode = 201)
     {
         Yii::$app->response->format = 'json';
         if(Yii::$app->request->isAjax){

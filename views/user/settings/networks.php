@@ -22,12 +22,15 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <?= Html::encode($this->title) ?>
+                <?php Html::encode($this->title) ?>
             </div>
             <div class="panel-body">
+        
+                <?= $this->render('_menu') ?>
+
                 <div class="alert alert-info">
                     <p><?= Yii::t('user', 'You can connect multiple accounts to be able to log in using them') ?>.</p>
                 </div>
@@ -63,8 +66,5 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php Connect::end() ?>
             </div>
         </div>
-    </div>
-    <div class="col-md-3">
-        <?= $this->render('_menu') ?>
     </div>
 </div>

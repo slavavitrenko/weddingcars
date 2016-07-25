@@ -28,12 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <?= $this->render('_menu') ?>
 
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-body">
+            <div class="panel-heading">
                 <?= Nav::widget([
                     'options' => [
-                        'class' => 'nav-pills nav-stacked',
+                        'class' => 'nav nav-tabs',
                     ],
                     'items' => [
                         ['label' => Yii::t('user', 'Account details'), 'url' => ['/user/admin/update', 'id' => $user->id]],
@@ -45,7 +45,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             // 'visible' => isset(Yii::$app->extensions['dektrium/yii2-rbac']),
                             'visible' => false,
                         ],
-                        '<hr>',
                         [
                             'label' => Yii::t('user', 'Confirm'),
                             'url'   => ['/user/admin/confirm', 'id' => $user->id],
@@ -87,11 +86,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ],
                 ]) ?>
+                
             </div>
-        </div>
-    </div>
-    <div class="col-md-9">
-        <div class="panel panel-default">
             <div class="panel-body">
                 <?= $content ?>
             </div>

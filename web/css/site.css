@@ -85,3 +85,48 @@ label.control-label {
 html::-webkit-scrollbar { width: 0; }
 html { -ms-overflow-style: none; }
 html { overflow: -moz-scrollbars-none; }
+
+.form-group.has-error label.btn {
+    color: white;
+}
+
+.footer {
+    background: #fff;
+    padding: 15px;
+    color: #444;
+    border-top: 1px solid #d2d6de;
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3 {
+  margin-top: 5px;
+  margin-bottom: 10.5px;
+}
+
+thead > tr > th {
+  padding: 0px!important;
+  text-align: center;
+}
+
+ul.breadcrumb {
+    position: absolute;
+    right: 0;
+    margin-bottom: 0;
+    padding: 8px 15x 0;
+}
+
+@media screen and (min-width: 767px){
+  ul.breadcrumb {
+    top: 59px;
+  }
+}
+
+@media screen and (max-width: 768px){
+  ul.breadcrumb {
+    top: 50px;
+  }
+}

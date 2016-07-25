@@ -22,12 +22,15 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <?= Html::encode($this->title) ?>
+                <?php Html::encode($this->title) ?>
             </div>
             <div class="panel-body">
+        
+                <?= $this->render('_menu') ?>
+
                 <?php $form = \yii\widgets\ActiveForm::begin([
                     'id' => 'profile-form',
                     'options' => ['class' => 'form-horizontal'],
@@ -61,8 +64,5 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php \yii\widgets\ActiveForm::end(); ?>
             </div>
         </div>
-    </div>
-    <div class="col-md-3">
-        <?= $this->render('_menu') ?>
     </div>
 </div>

@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use kartik\depdrop\DepDrop;
+use app\models\Categories;
 use app\models\Brands;
 use app\models\Models;
 use yii\helpers\ArrayHelper;
@@ -89,6 +90,12 @@ $this->registerJs($js, \yii\web\View::POS_READY);
             },
         ]) ?>
 
+        <?=$form->field($model, 'category_id')->widget(Select2::className(), [
+            'data' => ArrayHelper::map(Categories::find()->all(), 'id', 'name'),
+            'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+            'pluginOptions' => ['allowClear' => true],
+        ]); ?>
+
         <?= $form->field($model, 'brand')->widget(Select2::className(), [
             'data' => ArrayHelper::map(Brands::find()->all(), 'id', 'name'),
             'options' => [
@@ -109,7 +116,6 @@ $this->registerJs($js, \yii\web\View::POS_READY);
         ]); ?>
         <?= $form->field($model, 'year')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'color')->textInput(['maxlength' => true]) ?>
-
 
         <div class="row">
             <div class="col-sm-3">
@@ -143,14 +149,25 @@ $this->registerJs($js, \yii\web\View::POS_READY);
             </div>
         </div>
 
-
-<div class="row">
-    <div class="col-xs-12">
-        <div class="form-group">
-            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <div class="row">
+            <div class="col-sm-3 col-sm-offset-3">
+                <?=$form->field($model, 'hour_cost'); ?>
+            </div>
+            <div class="col-sm-3">
+                <?=$form->field($model, 'few_hours_cost'); ?>
+            </div>
+            <div class="col-sm-3">
+                <?=$form->field($model, 'outside_cost'); ?>
+            </div>
         </div>
-    </div>
-</div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                </div>
+            </div>
+        </div>
 
     <?php ActiveForm::end(); ?>
 

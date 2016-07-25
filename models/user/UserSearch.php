@@ -8,20 +8,6 @@ use yii\data\ActiveDataProvider;
 
 class UserSearch extends \dektrium\user\models\UserSearch
 {
-	/** @var string */
-    public $username;
-
-    /** @var string */
-    public $email;
-
-    /** @var int */
-    public $created_at;
-
-    /** @var string */
-    public $registration_ip;
-
-    /** @var Finder */
-    protected $finder;
 
     public $role;
 
@@ -55,6 +41,7 @@ class UserSearch extends \dektrium\user\models\UserSearch
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['id' => SORT_ASC]]
         ]);
 
         $query->joinWith('assignment');
@@ -64,10 +51,11 @@ class UserSearch extends \dektrium\user\models\UserSearch
             'desc' => ['auth_assignment.item_name' => SORT_DESC],
         ];
 
-        if (!($this->load($params) && $this->validate())) {
+        $this->load($params);
+
+        if (!$this->validate()) {
             return $dataProvider;
         }
-
 
         if ($this->created_at !== null) {
             $date = strtotime($this->created_at);
@@ -75,6 +63,8 @@ class UserSearch extends \dektrium\user\models\UserSearch
         }
 
         $query->andFilterWhere(['auth_assignment.item_name' => $this->role]);
+
+        $query->andFilterwhere(['NOT IN', 'id', [Yii::$app->user->identity->id]]);
 
         $query->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'email', $this->email])

@@ -20,8 +20,8 @@ class AutoSearch extends Auto
     public function rules()
     {
         return [
-            [['id', 'user_id', 'brand', 'model', 'retro', 'bus_type'], 'integer'],
-            [['name', 'type', 'year', 'color', 'body', 'fio'], 'safe'],
+            [['id', 'user_id', 'retro', 'bus_type'], 'integer'],
+            [['name', 'type', 'year', 'color', 'body', 'fio', 'brand', 'model'], 'safe'],
         ];
     }
 
@@ -43,7 +43,7 @@ class AutoSearch extends Auto
      */
     public function search($params)
     {
-        $query = Auto::find();
+        $query = Auto::find()->joinWith('user')->joinWith('autoModel')->joinWith('autoBrand');
 
         // add conditions that should always apply here
 
@@ -70,17 +70,20 @@ class AutoSearch extends Auto
         $query->andFilterWhere([
             'id' => $this->id,
         ]);
+
+        $query->andFilterWhere(['like', 'models.name', $this->model]);
+        $query->andFilterWhere(['like', 'brands.name', $this->brand]);
         
         $query->andFilterWhere(['like', 'user.username', $this->fio])
         ->orFilterwhere(['like', 'user.fio', $this->fio]);
 
-        $query->andFilterWhere(['like', 'brand', $this->brand])
-            ->andFilterWhere(['like', 'model', $this->model]);
 
             if(!Yii::$app->user->can('manager') && !Yii::$app->user->can('admin')){
                 $query->andFilterWhere(['auto.user_id' => Yii::$app->user->identity->id]);
             }
 
+        // $query->andFilterWhere(['like', 'brand', $this->brand])
+            // ->andFilterWhere(['like', 'model', $this->model]);
 
         return $dataProvider;
     }

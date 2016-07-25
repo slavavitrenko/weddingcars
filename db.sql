@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Июл 12 2016 г., 11:01
+-- Время создания: Июл 25 2016 г., 10:19
 -- Версия сервера: 5.5.44-MariaDB
 -- Версия PHP: 5.4.16
 
@@ -37,8 +37,8 @@ CREATE TABLE IF NOT EXISTS `auth_assignment` (
 --
 
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
-('admin', '6', 2147483647),
-('admin', '7', 2147483647);
+('admin', '1', NULL),
+('client', '7', 2147483647);
 
 -- --------------------------------------------------------
 
@@ -109,6 +109,7 @@ CREATE TABLE IF NOT EXISTS `auto` (
   `user_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL,
+  `category_id` int(11) NOT NULL DEFAULT '0',
   `brand` varchar(255) NOT NULL,
   `model` varchar(255) NOT NULL,
   `year` year(4) NOT NULL,
@@ -120,40 +121,11 @@ CREATE TABLE IF NOT EXISTS `auto` (
   `client_decor` int(1) NOT NULL,
   `pass_count` int(11) NOT NULL,
   `description` text,
+  `hour_cost` decimal(7,2) NOT NULL,
+  `few_hours_cost` decimal(7,2) NOT NULL,
+  `outside_cost` decimal(7,2) NOT NULL,
   `checked` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
-
---
--- Дамп данных таблицы `auto`
---
-
-INSERT INTO `auto` (`id`, `user_id`, `name`, `type`, `brand`, `model`, `year`, `color`, `body`, `retro`, `bus_type`, `decor`, `client_decor`, `pass_count`, `description`, `checked`) VALUES
-(2, 6, '', 'car', '3', '41', 2015, 'black', 'car', 1, '', 0, 0, 0, '4h5', 1),
-(3, 6, '', 'car', '3', '40', 1993, 'black', 'car', 1, '', 0, 0, 0, 'retgfre', 1);
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `auto_rate`
---
-
-CREATE TABLE IF NOT EXISTS `auto_rate` (
-  `id` int(11) NOT NULL,
-  `auto_id` int(11) NOT NULL,
-  `rate_id` int(11) NOT NULL,
-  `price` decimal(7,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
-
---
--- Дамп данных таблицы `auto_rate`
---
-
-INSERT INTO `auto_rate` (`id`, `auto_id`, `rate_id`, `price`) VALUES
-(23, 17, 4, 12.00),
-(24, 17, 2, 200.00),
-(25, 17, 3, 250.00),
-(31, 2, 2, 6786.00),
-(32, 2, 3, 67876.00);
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -165,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `brands` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `picture` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Дамп данных таблицы `brands`
@@ -231,6 +203,18 @@ INSERT INTO `brands` (`id`, `name`, `picture`) VALUES
 (58, 'Haval', 'https://cars.imgsmail.ru/catalogue/firms/5/1/51225ad658a15d5662a3c8fe5112d700_60x60.png'),
 (59, 'Lifan', 'https://cars.imgsmail.ru/catalogue/firms/0/8/084630e31b22ac3d902e30cb392ead3c_60x60.png'),
 (60, 'Zotye', 'https://cars.imgsmail.ru/catalogue/firms/2/c/2caf208ee0e812ec5af82a10c797b009_60x60.png');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `categories`
+--
+
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `picture` varchar(255) CHARACTER SET utf8 NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -780,6 +764,56 @@ INSERT INTO `models` (`id`, `brand_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `notifications`
+--
+
+CREATE TABLE IF NOT EXISTS `notifications` (
+  `id` int(11) NOT NULL,
+  `email` text CHARACTER SET utf8 NOT NULL,
+  `subject` text CHARACTER SET utf8 NOT NULL,
+  `text` text CHARACTER SET utf8 NOT NULL,
+  `laoyut` text CHARACTER SET utf8
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Дамп данных таблицы `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `email`, `subject`, `text`, `laoyut`) VALUES
+(4, 'slavavitrenko@gmail.com', 'Привет', 'Привет', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `orders`
+--
+
+CREATE TABLE IF NOT EXISTS `orders` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `car_id` int(11) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `datetime` text NOT NULL,
+  `hours` int(13) NOT NULL,
+  `city_out` int(1) DEFAULT NULL,
+  `km` int(10) NOT NULL,
+  `route` text NOT NULL,
+  `description` text,
+  `paid` int(1) NOT NULL,
+  `confirmed` int(1) NOT NULL,
+  `created_at` int(13) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `car_id`, `city`, `datetime`, `hours`, `city_out`, `km`, `route`, `description`, `paid`, `confirmed`, `created_at`) VALUES
+(43, 7, 6, 'Полтава', '2016-07-11 10:45', 45, 1, 67, '5ry75', '', 0, 0, 2016);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `profile`
 --
 
@@ -799,28 +833,25 @@ CREATE TABLE IF NOT EXISTS `profile` (
 --
 
 INSERT INTO `profile` (`user_id`, `name`, `public_email`, `gravatar_email`, `gravatar_id`, `location`, `website`, `bio`) VALUES
-(6, NULL, '', 'mxuser@ya.ru', 'b828781ffb29caeabb141d3f8fb066c6', '', '', ''),
-(9, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(1, NULL, '', 'mxuser@ya.ru', 'b828781ffb29caeabb141d3f8fb066c6', '', '', ''),
+(7, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `rate`
+-- Структура таблицы `settings`
 --
 
-CREATE TABLE IF NOT EXISTS `rate` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `settings` (
+  `admin_email` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Дамп данных таблицы `rate`
+-- Дамп данных таблицы `settings`
 --
 
-INSERT INTO `rate` (`id`, `name`) VALUES
-(4, 'В дождь, км'),
-(2, 'В час'),
-(3, 'За городом, км');
+INSERT INTO `settings` (`admin_email`) VALUES
+('admin@react-logic.com');
 
 -- --------------------------------------------------------
 
@@ -838,17 +869,16 @@ CREATE TABLE IF NOT EXISTS `social_account` (
   `created_at` int(11) DEFAULT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Дамп данных таблицы `social_account`
 --
 
 INSERT INTO `social_account` (`id`, `user_id`, `provider`, `client_id`, `data`, `code`, `created_at`, `email`, `username`) VALUES
-(61, 6, 'google', '117109351426877543323', '{"kind":"plus#person","etag":"\\"xw0en60W6-NurXn4VBU-CMjSPEw/_hMoX42dbUukh56-_wAuQ7lxw1w\\"","gender":"male","emails":[{"value":"slavavitrenko@gmail.com","type":"account"}],"objectType":"person","id":"117109351426877543323","displayName":"Слава Витренко","name":{"familyName":"Витренко","givenName":"Слава"},"url":"https://plus.google.com/117109351426877543323","image":{"url":"https://lh3.googleusercontent.com/-XzTWXd6mLFQ/AAAAAAAAAAI/AAAAAAAAHEA/ZVPFRn4fkqE/photo.jpg?sz=50","isDefault":true},"isPlusUser":true,"language":"ru","circledByCount":6,"verified":false}', NULL, NULL, NULL, NULL),
-(62, 6, 'yandex', '199521733', '{"login":"mxuser","id":"199521733"}', NULL, NULL, NULL, NULL),
-(63, 6, 'facebook', '941842045924648', '{"name":"Вячеслав Витренко","id":"941842045924648"}', NULL, NULL, NULL, NULL),
-(67, 6, 'vkontakte', '72258266', '{"user_id":72258266,"email":"mxuser@ya.ru","uid":72258266,"first_name":"Слава","last_name":"Витренко","sex":2,"nickname":"aka mxuser","screen_name":"mxuser","bdate":"18.11.1991","city":1581,"country":2,"timezone":3,"photo":"https://pp.vk.me/c629321/v629321266/3b2b8/iprRWaIkd-U.jpg","id":72258266}', NULL, NULL, NULL, NULL);
+(113, 1, 'facebook', '941842045924648', '{"name":"Вячеслав Витренко","id":"941842045924648"}', NULL, NULL, NULL, NULL),
+(114, 1, 'google', '117109351426877543323', '{"kind":"plus#person","etag":"\\"xw0en60W6-NurXn4VBU-CMjSPEw/_hMoX42dbUukh56-_wAuQ7lxw1w\\"","gender":"male","emails":[{"value":"slavavitrenko@gmail.com","type":"account"}],"objectType":"person","id":"117109351426877543323","displayName":"Слава Витренко","name":{"familyName":"Витренко","givenName":"Слава"},"url":"https://plus.google.com/117109351426877543323","image":{"url":"https://lh3.googleusercontent.com/-XzTWXd6mLFQ/AAAAAAAAAAI/AAAAAAAAHEA/ZVPFRn4fkqE/photo.jpg?sz=50","isDefault":true},"isPlusUser":true,"language":"ru","circledByCount":6,"verified":false}', NULL, NULL, NULL, NULL),
+(116, 1, 'vkontakte', '72258266', '{"user_id":72258266,"email":"mxuser@ya.ru","uid":72258266,"first_name":"Слава","last_name":"Витренко","sex":2,"nickname":"aka mxuser","screen_name":"mxuser","bdate":"18.11.1991","city":1581,"country":2,"timezone":3,"photo":"https://pp.vk.me/c629321/v629321266/3b2b8/iprRWaIkd-U.jpg","id":72258266}', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -885,15 +915,15 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL,
   `flags` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Дамп данных таблицы `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `fio`, `phone`, `type`, `email`, `password_hash`, `auth_key`, `confirmed_at`, `unconfirmed_email`, `blocked_at`, `registration_ip`, `created_at`, `updated_at`, `flags`) VALUES
-(6, 'admin', 'Витренко Вячеслав Дмитриеич', '+380663564463', 'client', 'mxuser@ya.ru', '$2y$10$.A/hZws7JeDOhk4WelHLr.0VxS1go9ErYuyZ4PclUczl3YSKClpni', '00jW-tSUj5jceZfhyYV6ArSmlMUQnP44', 1465814963, NULL, NULL, '93.78.238.18', 1465814964, 1467643317, 0),
-(9, 'slava', 'Витренко Вячеслав Дмитриевич', '+380663564463', 'driver', 'slavavitrenko@gmail.com', '$2y$10$vbwINVl8Fb9ADHalnT5I3.uqx7saGMsS/ZvaTdqtgP6b3a42v117m', 'O9Jeqazi99rN8AnimOTO9TVVBuUwoPW2', 1468244670, NULL, NULL, '93.78.238.18', 1468244670, 1468244670, 0);
+(1, 'admin', 'Витренко Вячеслав Дмитриеич', '+380663564463', 'client', 'mxuser@ya.ru', '$2y$10$TvnK.l9JcXA7ibbuDCIbOul/EVAOd4L85tl7O2AOuvvcWeN3AFl1e', '00jW-tSUj5jceZfhyYV6ArSmlMUQnP44', 1465814963, NULL, NULL, '93.78.238.18', 1465814964, 1468831532, 0),
+(7, 'user2', 'Витренко Вячеслав Дмитриевич', '+380663564463', 'client', 'admin@ya.ru', '$2y$10$iJOJN7h.YSNgPwg1jP3TROgoqTMph9lc5C.0eG1tW08.TLgWvbSE.', 'PQ6Kv-JtnMMoZMh4ftmvh8DBzeleI6mG', 1469429470, NULL, NULL, '93.78.238.18', 1469429470, 1469429470, 0);
 
 --
 -- Индексы сохранённых таблиц
@@ -935,20 +965,22 @@ ALTER TABLE `auto`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `brand` (`brand`(191)),
-  ADD KEY `model` (`model`(191));
-
---
--- Индексы таблицы `auto_rate`
---
-ALTER TABLE `auto_rate`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `auot_id` (`auto_id`),
-  ADD KEY `rate_id` (`rate_id`);
+  ADD KEY `model` (`model`(191)),
+  ADD KEY `category_id` (`category_id`),
+  ADD KEY `few_hours_cost` (`few_hours_cost`),
+  ADD KEY `hour_cost` (`hour_cost`),
+  ADD KEY `outside_cost` (`outside_cost`);
 
 --
 -- Индексы таблицы `brands`
 --
 ALTER TABLE `brands`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `categories`
+--
+ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -971,17 +1003,32 @@ ALTER TABLE `models`
   ADD KEY `brand_id` (`brand_id`);
 
 --
+-- Индексы таблицы `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `car_id` (`car_id`),
+  ADD KEY `created_at` (`created_at`),
+  ADD KEY `accept` (`confirmed`);
+
+--
 -- Индексы таблицы `profile`
 --
 ALTER TABLE `profile`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- Индексы таблицы `rate`
+-- Индексы таблицы `settings`
 --
-ALTER TABLE `rate`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `name` (`name`);
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`admin_email`);
 
 --
 -- Индексы таблицы `social_account`
@@ -1017,17 +1064,17 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `auto`
 --
 ALTER TABLE `auto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT для таблицы `auto_rate`
---
-ALTER TABLE `auto_rate`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT для таблицы `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=98;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=102;
+--
+-- AUTO_INCREMENT для таблицы `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT для таблицы `images`
 --
@@ -1039,20 +1086,25 @@ ALTER TABLE `images`
 ALTER TABLE `models`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=487;
 --
--- AUTO_INCREMENT для таблицы `rate`
+-- AUTO_INCREMENT для таблицы `notifications`
 --
-ALTER TABLE `rate`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+ALTER TABLE `notifications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT для таблицы `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT для таблицы `social_account`
 --
 ALTER TABLE `social_account`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=68;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=117;
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
@@ -1073,13 +1125,13 @@ ALTER TABLE `auto`
 -- Ограничения внешнего ключа таблицы `profile`
 --
 ALTER TABLE `profile`
-  ADD CONSTRAINT `fk_user_profile` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_user_profile` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `social_account`
 --
 ALTER TABLE `social_account`
-  ADD CONSTRAINT `fk_user_account` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_user_account` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `token`

@@ -2,12 +2,17 @@
 
 $js = '
 
+// $.ajaxPrefilter(function( options, originalOptions, jqXHR ) { options.async = true; });
+
 function getContent(url, addEntry, link) {
-    $.ajax(url)
+    // $("#main-layout").html("");
+    $.get(url)
     .done(function( data ) {
         window.scrollTo(0,1);
+        // $("#main-layout").html();
         $("#main-layout").html(data);
         $("title").html($(".main-title").html());
+        console.clear();
         if(addEntry == true) {
             history.pushState(null, null, url); 
         }
@@ -51,13 +56,15 @@ $(document).on("click", "a", function(e){
 
     if( 
         href
-        && !~href.indexOf("sort")
+    && href !== "/"
+        && !~href.indexOf("?sort")
         && !~href.indexOf("#")
         && !~href.indexOf("mailto")
         && !~href.indexOf("://")
         && !~href.indexOf("delete")
         && !~href.indexOf("uploads")
         && !~href.indexOf("debug")
+        && !~href.indexOf("security/auth")
         ){
         e.preventDefault();
         getContent(location.protocol + "//" + location.host + $(this).attr("href"), true);
@@ -67,14 +74,14 @@ $(document).on("click", "a", function(e){
         return;
     }
     else{
-        return;
+        return true;
     }
 });
 
 $(document).on("beforeSubmit", "form", function(){
     var form = $(this);
     if(form.attr("data-type") == "self"){
-        return false;
+        return true;
     }
     $.ajax({
         url: form.attr("action"),
@@ -99,17 +106,26 @@ $items = [];
 // $items[] = ['label' => Yii::t('app', 'Home'), 'icon' => 'fa fa-home', 'url' => ['/']];
 
 if(Yii::$app->user->can('manager')){
-    $items[] = ['label' => Yii::t('app', 'Autos'), 'url'=> ['/auto/index'], 'icon' => 'fa fa-car'];
+    $items[] = ['label' => Yii::t('app', 'Dashboard'), 'url' => '#', 'icon' => 'fa fa-tachometer', 'items' => [
+        ['label' => Yii::t('app', 'Orders'), 'url' => ['/orders'], 'icon' => 'fa fa-usd'],
+        ['label' => Yii::t('app', 'Autos'), 'url' => ['/auto'], 'icon' => 'fa fa-car'],
+        ['label' => Yii::t('app', 'Categories'), 'url' => ['/categories'], 'icon' => 'fa fa-folder-open']
+    ]];
     $items[] = ['label' => Yii::t('user', 'Users'), 'url' => ['/user/admin'], 'icon' => 'fa fa-group'];
     $items[] = ['icon' => 'fa fa-tachometer', 'label' => Yii::t('app', 'Settings'), 'url' => '#', 'items' => [
-        ['label' => Yii::t('app', 'Brands'), 'icon' => 'fa fa-car', 'url' => ['/brands/index']],
-        ['label' => Yii::t('app', 'Models'), 'icon' => 'fa fa-bars', 'url' => ['/models/index']],
-        ['label' => Yii::t('app', 'Rates'), 'icon' => 'fa fa-money', 'url' => ['/rate/index']],
+        ['label' => Yii::t('app', 'Brands'), 'icon' => 'fa fa-car', 'url' => ['/brands']],
+        ['label' => Yii::t('app', 'Models'), 'icon' => 'fa fa-bars', 'url' => ['/models']],
         ['label' => Yii::t('app', 'Site Settings'), 'icon' => 'fa fa-cogs', 'url' => ['/settings']]
     ]];
 }
 if(Yii::$app->user->identity->type == 'driver'){
-    $items[] = ['label' => yii::t('app', 'My autos'), 'icon' => 'fa fa-car', 'url' => ['/auto/index']];
+    $items[] = ['label' => yii::t('app', 'Dashboard'), 'icon' => 'fa fa-tachometer', 'url' => '#', 'items' => [
+        ['label' => Yii::t('app', 'Orders'), 'icon' => 'fa fa-usd', 'url' => ['/orders']],
+        ['label' => Yii::t('app', 'My autos'), 'icon' => 'fa fa-car', 'url' => ['/auto']],
+    ]];
+}
+if(Yii::$app->user->identity->type == 'client' && !Yii::$app->user->can('manager')){
+    $items[] = ['label' => Yii::t('app', 'My Orders'), 'icon' => 'fa fa-tachometer', 'url' => ['/orders']];
 }
 
 $items[] = ['label' => Yii::t('app', 'My settings'), 'icon' => 'fa fa-user', 'url' => '#', 'items' => [

@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Rate;
+use app\models\Categories;
 
 /**
- * RateSearch represents the model behind the search form about `app\models\Rate`.
+ * CategoriesSearch represents the model behind the search form about `app\models\Categories`.
  */
-class RateSearch extends Rate
+class CategoriesSearch extends Categories
 {
     /**
      * @inheritdoc
@@ -19,7 +19,7 @@ class RateSearch extends Rate
     {
         return [
             [['id'], 'integer'],
-            [['name'], 'safe'],
+            [['name', 'picture'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class RateSearch extends Rate
      */
     public function search($params)
     {
-        $query = Rate::find();
+        $query = Categories::find();
 
         // add conditions that should always apply here
 
@@ -62,7 +62,8 @@ class RateSearch extends Rate
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'picture', $this->picture]);
 
         return $dataProvider;
     }

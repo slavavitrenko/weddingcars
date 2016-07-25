@@ -29,10 +29,12 @@ class User extends \dektrium\user\models\User
     }
 	public function rules(){
 		$rules = parent::rules();
-		$rules[] = [['fio', 'phone', 'type'], 'required'];
+		$rules[] = [['fio', 'phone'], 'required'];
+        $rules[] = [['type'], 'required', 'message' => Yii::t('app', 'You must choose account type')];
 		$rules[] = [['fio'], 'match', 'pattern' => '/^[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+\s[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+\s[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+$/u', 'message' => Yii::t('app', 'You must enter data such as your passport')];
 		$rules[] = [['phone'], 'match', 'pattern' => '/^\+380([0-9]{9})+$/', 'message' => Yii::t('app', 'Phone not correct')];
 		$rules[] = [['type'], 'match', 'pattern' => '/^(driver|client)$/', 'message' => Yii::t('app', 'You must select driver or client')];
+        unset($rules['usernameRequired']);
 		return $rules;
 	}
 
@@ -55,6 +57,13 @@ class User extends \dektrium\user\models\User
 
     public function getCars(){
         return $this->hasMany(Auto::className(), ['user_id' => 'id']);
+    }
+
+    public function beforeSave($insert){
+        if(empty($this->username)){
+            $this->generateUsername();
+        }
+        return parent::beforeSave($insert);
     }
 
     public function afterSave($insert, $changedAttributes){

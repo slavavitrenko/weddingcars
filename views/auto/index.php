@@ -19,26 +19,28 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php
 
-if (!($models = Yii::$app->cache->get('all-models'))){
-    $models = Models::find()->all();
-    Yii::$app->cache->set('all-models', $models);
-}
-if (!($brands = Yii::$app->cache->get('all-brands'))){
-    $brands = Brands::find()->all();
-    Yii::$app->cache->set('all-brands', $brands);
-}
+// if (!($models = Yii::$app->cache->get('all-models'))){
+//     $models = Models::find()->all();
+//     Yii::$app->cache->set('all-models', $models);
+// }
+// if (!($brands = Yii::$app->cache->get('all-brands'))){
+//     $brands = Brands::find()->all();
+//     Yii::$app->cache->set('all-brands', $brands);
+// }
 
 ?>
 
 <div class="auto-index">
+    
+    <?php Pjax::begin(['id' => 'autos-container']); ?>
 
     <h1>
-        <?= Html::a('<i class="fa fa-plus"></i>', ['/auto/create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('<i class="glyphicon glyphicon-plus"></i>', ['/auto/create'], ['class' => 'btn btn-success']) ?>
         <?= Html::encode($this->title) ?>
     </h1>
 
-    <?php Pjax::begin(['id' => 'autos-container']); ?>
         <?= GridView::widget([
+            'layout'=>"{items}\n{pager}\n{summary}",
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'columns' => [
@@ -51,25 +53,25 @@ if (!($brands = Yii::$app->cache->get('all-brands'))){
                 // 'type',
                 [
                     'attribute' => 'brand',
-                    'value' => 'autoBrand.name',
-                    'filter' => Select2::widget([
-                            'model' => $searchModel,
-                            'attribute' => 'brand',
-                            'data' => ArrayHelper::map($brands, 'id', 'name'),
-                            'options' => ['placeholder' => Yii::t('app', 'Choose...')],
-                            'pluginOptions' => ['allowClear' => true],
-                        ])
+                    // 'value' => 'autoBrand.name',
+                    // 'filter' => Select2::widget([
+                    //         'model' => $searchModel,
+                    //         'attribute' => 'brand',
+                    //         'data' => ArrayHelper::map($brands, 'id', 'name'),
+                    //         'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                    //         'pluginOptions' => ['allowClear' => true],
+                    //     ])
                 ],
                 [
                     'attribute' => 'model',
-                    'value' => 'autoModel.name',
-                    'filter' => Select2::widget([
-                            'model' => $searchModel,
-                            'attribute' => 'model',
-                            'data' => ArrayHelper::map($models, 'id', 'name'),
-                            'options' => ['placeholder' => Yii::t('app', 'Choose...')],
-                            'pluginOptions' => ['allowClear' => true]
-                        ])
+                    // 'value' => 'autoModel.name',
+                    // 'filter' => Select2::widget([
+                    //         'model' => $searchModel,
+                    //         'attribute' => 'model',
+                    //         'data' => ArrayHelper::map($models, 'id', 'name'),
+                    //         'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                    //         'pluginOptions' => ['allowClear' => true]
+                    //     ])
                 ],
                 // 'year',
                 // 'color',
@@ -93,7 +95,7 @@ if (!($brands = Yii::$app->cache->get('all-brands'))){
                             return Html::a('<i class="glyphicon glyphicon-trash"></i>', ['delete', 'id' => $key], ['class' => 'btn btn-sm btn-danger', 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'), 'data-method' => 'post']);
                         },
                         'checked' => function($url, $model, $key){
-                            return Html::a('<i class="glyphicon glyphicon-ok"></i> ' . (Yii::t('app', $model->checked ? 'Checked' : 'Not checked')), false, ['class' => 'pjax-btn btn btn-sm ' . ($model->checked ? 'btn-success' : 'btn-danger'), 'value' => Url::to([($model->checked ? 'uncheck' : 'check'), 'id' => $key]), 'data-container' => 'autos-container', 'data-pjax' => 0]);
+                            return Html::a((Yii::t('app', $model->checked ? 'Checked' : 'Not checked')), false, ['class' => 'pjax-btn btn btn-sm ' . ($model->checked ? 'btn-success' : 'btn-danger'), 'value' => Url::to([($model->checked ? 'uncheck' : 'check'), 'id' => $key]), 'data-container' => 'autos-container', 'data-pjax' => 0]);
                         }
                     ]
                 ],

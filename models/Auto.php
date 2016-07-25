@@ -24,7 +24,7 @@ class Auto extends \yii\db\ActiveRecord
             ['bus_type', 'required', 'when' => function($model){return $model->type == 'bus';},
             'whenClient' => 'function(attribute, value){ return $("input[name=\'Auto[type]\']:checked").val() == "bus";}'],
             [['type', 'brand', 'model', 'year', 'color', 'retro'], 'required'],
-            [['user_id', 'retro', 'brand', 'model'], 'integer'],
+            [['user_id', 'retro', 'brand', 'model', 'category_id'], 'integer'],
             [['name', 'type', 'color', 'description'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             [['type'], 'match', 'pattern' => '/^(car|limousine|bus)$/', 'message' => Yii::t('app', 'Please select car, limousine or bus')],
@@ -36,6 +36,8 @@ class Auto extends \yii\db\ActiveRecord
             [['images'], 'file', 'maxFiles' => 10, 'skipOnEmpty' => true, 'extensions' => 'gif, jpg, png'],
 
             [['decor', 'client_decor', 'checked'], 'match', 'pattern' => '/^(0|1)$/', 'message' => Yii::t('app', 'You must choose "yes" or "no"')],
+            [['category_id'], 'default', 'value' => '0'],
+            [['hour_cost', 'few_hours_cost', 'outside_cost'], 'required']
 
         ];
     }
@@ -55,7 +57,15 @@ class Auto extends \yii\db\ActiveRecord
             'retro' => Yii::t('app', 'Retro'),
             'bus_type' => Yii::t('app', 'Bus Type'),
             'images' => Yii::t('app', 'Images'),
-            'fio' => Yii::t('app', 'Fio')
+            'fio' => Yii::t('app', 'Fio'),
+            'decor' => Yii::t('app', 'Decor'),
+            'client_decor' => Yii::t('app', 'Client Decor'),
+            'pass_count' => Yii::t('app', 'Pass Count'),
+            'category_id' => Yii::t('app', 'Category'),
+            'description' => Yii::t('app', 'Description'),
+            'hour_cost' => Yii::t('app', 'Cost Per Hour'),
+            'few_hours_cost' => Yii::t('app', 'Cost Per Few Hours'),
+            'outside_cost' => Yii::t('app', 'Outside Cost'),
         ];
     }
 
@@ -78,6 +88,10 @@ class Auto extends \yii\db\ActiveRecord
 
     public function getPictures(){
         return $this->hasMany(Images::className(), ['car_id' => 'id']);
+    }
+
+    public function getName(){
+        return $this->autoBrand->name . ' ' . $this->autoModel->name;
     }
 
     public function beforeSave($insert){

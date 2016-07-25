@@ -12,11 +12,11 @@ use yii\filters\AccessControl;
 /**
  * BrandsController implements the CRUD actions for Brands model.
  */
-class BrandsController extends \app\base\Controller
+class BrandsController extends \yii\web\Controller
 {
-    /**
-     * @inheritdoc
-     */
+
+    use \app\traits\AjaxTrait;
+    
     public function behaviors()
     {
         return [

@@ -60,17 +60,6 @@ class AdminController extends \dektrium\user\controllers\AdminController
         ]);
     }
 
-	public function render($view, $params = [])
-    {
-        if(Yii::$app->request->isAjax){
-            return $this->getView()->renderAjax($view, $params, $this) . '<span class="hidden main-title">' . $this->view->title . '</span>';
-        }
-        else{
-            $content = $this->getView()->render($view, $params, $this);
-            return $this->renderContent($content);
-        }
-    }
-
     public function actionChangeRole($id, $role){
         if($id == Yii::$app->user->identity->id){
             return 0;
@@ -118,7 +107,7 @@ class AdminController extends \dektrium\user\controllers\AdminController
             $event = $this->getUserEvent($model);
             $this->trigger(self::EVENT_BEFORE_DELETE, $event);
             $model->delete();
-            Roles::deleteAll(['user_id' => $id]);
+            Role::deleteAll(['user_id' => $id]);
             $this->trigger(self::EVENT_AFTER_DELETE, $event);
             Yii::$app->getSession()->setFlash('success', Yii::t('user', 'User has been deleted'));
         }

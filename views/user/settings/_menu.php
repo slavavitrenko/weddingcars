@@ -31,7 +31,7 @@ $networksVisible = count(Yii::$app->authClientCollection->clients) > 0;
     <div class="panel-body">
         <?= Menu::widget([
             'options' => [
-                'class' => 'nav nav-pills nav-stacked',
+                'class' => 'nav nav-tabs',
             ],
             'items' => [
                 ['label' => Yii::t('user', 'Account'), 'url' => ['/user/settings/account']],

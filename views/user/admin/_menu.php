@@ -10,10 +10,11 @@
  */
 
 use yii\bootstrap\Nav;
+use yii\helpers\Html;
 
 ?>
 
-<?= Nav::widget([
+<?php Nav::widget([
     'options' => [
         'class' => 'nav-tabs',
         'style' => 'margin-bottom: 15px',

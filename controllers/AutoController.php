@@ -17,8 +17,10 @@ use yii\filters\AccessControl;
 
 use yii\helpers\Json;
 
-class AutoController extends \app\base\Controller
+class AutoController extends \yii\web\Controller
 {
+
+    use \app\traits\AjaxTrait;
 
     public function behaviors()
     {
@@ -54,14 +56,8 @@ class AutoController extends \app\base\Controller
 
     public function actionView($id)
     {
-        $model = $this->findModel($id);
-        $rates = new ActiveDataProvider([
-                'query' => AutoRate::find()->where(['auto_id' => $model->id])
-            ]);
-        $rates->sort = false;
         return $this->render('view', [
-            'model' => $model,
-            'rates' => $rates
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -103,8 +99,6 @@ class AutoController extends \app\base\Controller
     {
         $model = $this->findModel($id);
 
-        AutoRate::deleteAll(['auto_id' => $model->id]);
-
         $model->delete();
 
         return $this->redirect(['index']);
@@ -119,45 +113,45 @@ class AutoController extends \app\base\Controller
         }
     }
 
-    public function actionCreateRate($auto_id){
-        $model = new AutoRate;
-        $model->auto_id = $auto_id;
+    // public function actionCreateRate($auto_id){
+    //     $model = new AutoRate;
+    //     $model->auto_id = $auto_id;
 
-        $this->performAjaxValidation($model);
+    //     $this->performAjaxValidation($model);
 
-        if($model->load(Yii::$app->request->post()) && $model->save()){
-            return $this->redirect(['view', 'id' => $auto_id]);
-        }
-        return $this->render('_rate-form', ['model' => $model]);
-    }
+    //     if($model->load(Yii::$app->request->post()) && $model->save()){
+    //         return $this->redirect(['view', 'id' => $auto_id]);
+    //     }
+    //     return $this->render('_rate-form', ['model' => $model]);
+    // }
 
-    public function actionUpdateRate($id, $auto_id){
-        $model = $this->findAutoRate($id);
-        $model->auto_id = $auto_id;
+    // public function actionUpdateRate($id, $auto_id){
+    //     $model = $this->findAutoRate($id);
+    //     $model->auto_id = $auto_id;
 
-        $this->performAjaxValidation($model);
+    //     $this->performAjaxValidation($model);
 
-        if($model->load(Yii::$app->request->post()) && $model->save()){
-            return $this->redirect(['view', 'id' => $auto_id]);
-        }
-        return $this->render('_rate-form', ['model' => $model]);
-    }
+    //     if($model->load(Yii::$app->request->post()) && $model->save()){
+    //         return $this->redirect(['view', 'id' => $auto_id]);
+    //     }
+    //     return $this->render('_rate-form', ['model' => $model]);
+    // }
 
-    public function actionDeleteRate($id){
-        $rate = $this->findAutoRate($id);
-        $id = $rate->auto_id;
-        $rate->delete();
-        return $this->redirect(['view', 'id' => $id]);
-    }
+    // public function actionDeleteRate($id){
+    //     $rate = $this->findAutoRate($id);
+    //     $id = $rate->auto_id;
+    //     $rate->delete();
+    //     return $this->redirect(['view', 'id' => $id]);
+    // }
 
-    protected function findAutoRate($id)
-    {
-        if (($model = AutoRate::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
+    // protected function findAutoRate($id)
+    // {
+    //     if (($model = AutoRate::findOne($id)) !== null) {
+    //         return $model;
+    //     } else {
+    //         throw new NotFoundHttpException('The requested page does not exist.');
+    //     }
+    // }
 
     public function actionCheck($id){
         Yii::$app->response->format = 'json';

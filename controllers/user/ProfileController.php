@@ -3,10 +3,26 @@
 namespace app\controllers\user;
 
 use Yii;
+use yii\filters\AccessControl;
 
 
 class ProfileController extends \dektrium\user\controllers\ProfileController
 {
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
 
     public function actionIndex()
     {

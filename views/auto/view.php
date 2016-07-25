@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
@@ -86,33 +86,6 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php endforeach; ?>
             </div>
         <?php endif; ?>
-        </div>
-        <div class="col-xs-12">
-        <p>
-            <h3>
-                <?=Html::a('<i class="glyphicon glyphicon-plus"></i>', false, ['class' => 'btn btn-success modal-btn', 'value' => Url::to(['create-rate', 'auto_id' => $model->id]), 'data-modal-header' => Yii::t('app', 'Create Rate')]); ?>
-                <?=Yii::t('app', 'Rates'); ?>
-            </h3>
-        </p>
-            <?= GridView::widget([
-                'dataProvider' => $rates,
-                'columns' => [
-                    ['attribute' => 'name', 'headerOptions' => ['class' => 'hidden']],
-                    ['attribute' => 'price', 'headerOptions' => ['class' => 'hidden']],
-                    [
-                        'class' => 'yii\grid\ActionColumn',
-                        'template' => '<div class="btn-group">{update} {delete}</div>',
-                        'buttons' => [
-                            'update' => function($url, $model, $key){
-                                return Html::a('<i class="glyphicon glyphicon-pencil"></i>', false, ['class' => 'btn btn-sm btn-primary modal-btn', 'value' => Url::to(['update-rate', 'auto_id' => $model->auto_id, 'id' => $key])]);
-                            },
-                            'delete' => function($url, $model, $key){
-                                return Html::a('<i class="glyphicon glyphicon-trash"></i>', ['delete-rate', 'id' => $key], ['class' => 'btn btn-sm btn-danger', 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'), 'data-method' => 'post']);
-                            }
-                        ]
-                    ]
-                ]
-            ]) ?>
         </div>
     </div>
 </div>

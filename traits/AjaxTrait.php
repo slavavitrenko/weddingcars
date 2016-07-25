@@ -15,9 +15,18 @@ trait AjaxTrait
 	public function render($view, $params = [])
     {
         if(Yii::$app->request->isAjax){
-            return \dmstr\widgets\Alert::widget() . $this->getView()->renderAjax($view, $params, $this) . '<span class="hidden main-title">' . $this->view->title . '</span>';
+            return \dmstr\widgets\Alert::widget()
+            .
+            $this->getView()->renderAjax($view, $params, $this) . '<span class="hidden main-title">' . $this->view->title . '</span>'
+            .
+            '<div class="pull-right">'
+            .
+            \yii\widgets\Breadcrumbs::widget([
+                'links' => isset($this->view->params['breadcrumbs']) ? $this->view->params['breadcrumbs'] : [],
+            ]) . '</div>'
+            ;
         }
-        else{
+        else {
             $content = $this->getView()->render($view, $params, $this);
             return $this->renderContent($content);
         }
@@ -32,10 +41,10 @@ trait AjaxTrait
         }
     }
 
-    public function redirect($url, $statusCode = 201)
+    public function redirect($url, $statusCode = 200, $ajax=true)
     {
         Yii::$app->response->format = 'json';
-        if(Yii::$app->request->isAjax){
+        if(Yii::$app->request->isAjax && $ajax === true){
             Yii::$app->getResponse()->setStatusCode($statusCode);
             return Url::to($url);
         }

@@ -7,23 +7,32 @@ use yii\web\Controller;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
 
-class SiteController extends \app\base\Controller
+
+class SiteController extends \yii\web\Controller
 {
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-        ];
+    
+    use \app\traits\AjaxTrait;
+    
+    public function init(){
+        $this->layout = '@app/views/layouts/frontend/frontend';
+        return parent::init();
     }
+    // public function behaviors()
+    // {
+    //     return [
+    //         'access' => [
+    //             'class' => AccessControl::className(),
+    //             'rules' => [
+    //                 [
+    //                     'allow' => true,
+    //                     'roles' => ['@'],
+    //                 ],
+    //             ],
+    //         ],
+    //     ];
+    // }
 
     public function actions()
     {
@@ -38,8 +47,7 @@ class SiteController extends \app\base\Controller
         ];
     }
 
-    public function actionIndex()
-    {
+    public function actionIndex(){
         return $this->render('index');
     }
 

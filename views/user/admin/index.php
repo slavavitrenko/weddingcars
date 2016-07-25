@@ -9,11 +9,12 @@ use yii\web\View;
 use yii\widgets\Pjax;
 use yii\helpers\Url;
 
-$this->title = Yii::t('user', 'Manage users');
+$this->title = Yii::t('user', 'Users');
 $this->params['breadcrumbs'][] = $this->title;
 
 $js = '
-$(document).on("click", ".ajax-btn", function(){
+$(document).on("click", ".ajax-btn", function(e){
+    e.preventDefault();
     var button = $(this);
     $.get(
         button.attr("value"),
@@ -28,15 +29,17 @@ $(document).on("click", ".ajax-btn", function(){
 $this->registerJs($js, \yii\web\View::POS_READY);
 
 ?>
-
-<?= $this->render('/admin/_menu') ?>
+    <h1>
+        <?= Html::a('<i class="glyphicon glyphicon-plus"></i>', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::encode($this->title) ?>
+    </h1>
 
 <?php Pjax::begin(['id' => 'users-container']) ?>
 
 <?= GridView::widget([
     'dataProvider' 	=> $dataProvider,
     'filterModel'  	=> $searchModel,
-    'layout'  		=> "{items}\n{pager}",
+    'layout'  		=> "{items}\n{pager}\n{summary}",
     'columns' => [
         'username',
         'email:email',
@@ -58,8 +61,8 @@ $this->registerJs($js, \yii\web\View::POS_READY);
                 return '<div class="btn-group">' .
                 Html::button('а', ['class' => $model->role == 'admin' ? 'btn btn-info btn-sm' : 'btn btn-success btn-sm ajax-btn', 'value' => Url::to(['/user/admin/change-role', 'id' => $model->id, 'role' => 'admin'])])
                 .
-                Html::button('м', ['class' => $model->role == 'manager' ? 'btn btn-info btn-sm' : 'btn btn-success btn-sm ajax-btn', 'value' => Url::to(['/user/admin/change-role', 'id' => $model->id, 'role' => 'manager'])])
-                .
+                // Html::button('м', ['class' => $model->role == 'manager' ? 'btn btn-info btn-sm' : 'btn btn-success btn-sm ajax-btn', 'value' => Url::to(['/user/admin/change-role', 'id' => $model->id, 'role' => 'manager'])])
+                // .
                 Html::button('к', ['class' => $model->role == 'client' ? 'btn btn-info btn-sm' : 'btn btn-success btn-sm ajax-btn', 'value' => Url::to(['/user/admin/change-role', 'id' => $model->id, 'role' => 'client'])])
                 .
                 '</div>';
@@ -115,12 +118,14 @@ $this->registerJs($js, \yii\web\View::POS_READY);
                     return Html::a(Yii::t('user', 'Unblock'), ['block', 'id' => $model->id], [
                         'class' => 'btn btn-sm btn-success btn-block',
                         'data-method' => 'post',
+                        'data-pjax' => 0,
                         'data-confirm' => Yii::t('user', 'Are you sure you want to unblock this user?'),
                     ]);
                 } else {
                     return Html::a(Yii::t('user', 'Block'), ['block', 'id' => $model->id], [
                         'class' => 'btn btn-sm btn-danger btn-block',
                         'data-method' => 'post',
+                        'data-pjax' => 0,
                         'data-confirm' => Yii::t('user', 'Are you sure you want to block this user?'),
                     ]);
                 }

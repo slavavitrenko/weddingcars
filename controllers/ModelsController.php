@@ -12,11 +12,11 @@ use yii\filters\AccessControl;
 /**
  * ModelsController implements the CRUD actions for Models model.
  */
-class ModelsController extends \app\base\Controller
+class ModelsController extends \yii\web\Controller
 {
-    /**
-     * @inheritdoc
-     */
+
+    use \app\traits\AjaxTrait;
+    
     public function behaviors()
     {
         return [

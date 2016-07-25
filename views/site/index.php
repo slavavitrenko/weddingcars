@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'Wedding Car Poltava';
+$this->title = Yii::t('app', 'Home');
 ?>
 <div class="site-index">
 

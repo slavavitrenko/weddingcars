@@ -8,7 +8,7 @@ $config = [
     'language' => 'ru',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    'defaultRoute' => '/auto/index',
+    'defaultRoute' => 'site/index',
     'components' => [
         'view' => [
             'theme' => [
@@ -46,9 +46,17 @@ $config = [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        // 'mailer' => [
+        //     'class' => 'yii\swiftmailer\Mailer',
+        //     'useFileTransport' => true,
+        // ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            'useFileTransport' => true,
+            'viewPath' => '@app/mail',
+            'transport' => [
+                'class' => 'Swift_MailTransport',
+            ],
+            'useFileTransport' => false,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -64,6 +72,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'order/<id:\d+>' => 'order',
             ],
         ],
         'i18n' => [
@@ -102,21 +111,21 @@ $config = [
                     'clientId'     => '5501958',
                     'clientSecret' => 'fThdaGgLsZqhthOwyppU',
                 ],
-                'google' => [
-                    'class'        => 'dektrium\user\clients\Google',
-                    'clientId'     => '47666163515-l74vtmg2sfth5t7rru47nedhrank3lj0.apps.googleusercontent.com',
-                    'clientSecret' => 'kkJtv4T7gn89XQGA1wJeMG94',
-                ],
-                'yandex' => [
-                    'class'        => 'dektrium\user\clients\Yandex',
-                    'clientId'     => '852f88417fc84db48018e288de94c52b',
-                    'clientSecret' => 'fcf0313235e14b40b509dc3c007d0f25'
-                ],
                 'facebook' => [
                     'class'        => 'dektrium\user\clients\Facebook',
                     'clientId'     => '287710171567401',
                     'clientSecret' => 'fe2fc254cb04c8f297715b6cfbc7de9b',
                 ],
+                'google' => [
+                    'class'        => 'dektrium\user\clients\Google',
+                    'clientId'     => '47666163515-l74vtmg2sfth5t7rru47nedhrank3lj0.apps.googleusercontent.com',
+                    'clientSecret' => 'kkJtv4T7gn89XQGA1wJeMG94',
+                ],
+                // 'yandex' => [
+                //     'class'        => 'dektrium\user\clients\Yandex',
+                //     'clientId'     => '852f88417fc84db48018e288de94c52b',
+                //     'clientSecret' => 'fcf0313235e14b40b509dc3c007d0f25'
+                // ],
             ],
         ],
     ],

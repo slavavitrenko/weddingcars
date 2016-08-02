@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'filterModel' => $searchModel,
             'columns' => [
                 'name',
-                ['class' => 'yii\grid\ActionColumn'],
+                ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}'],
             ],
         ]); ?>
     <?php Pjax::end(); ?>

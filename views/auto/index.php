@@ -32,13 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="auto-index">
     
-    <?php Pjax::begin(['id' => 'autos-container']); ?>
 
     <h1>
         <?= Html::a('<i class="glyphicon glyphicon-plus"></i>', ['/auto/create'], ['class' => 'btn btn-success']) ?>
         <?= Html::encode($this->title) ?>
     </h1>
 
+    <?php Pjax::begin(['id' => 'autos-container']); ?>
         <?= GridView::widget([
             'layout'=>"{items}\n{pager}\n{summary}",
             'dataProvider' => $dataProvider,
@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 // 'type',
                 [
                     'attribute' => 'brand',
-                    // 'value' => 'autoBrand.name',
+                    'value' => 'autoBrand.name',
                     // 'filter' => Select2::widget([
                     //         'model' => $searchModel,
                     //         'attribute' => 'brand',
@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'attribute' => 'model',
-                    // 'value' => 'autoModel.name',
+                    'value' => 'autoModel.name',
                     // 'filter' => Select2::widget([
                     //         'model' => $searchModel,
                     //         'attribute' => 'model',
@@ -86,10 +86,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'template' => '<div class="btn-group">{checked} {view} {delete}</div>',
+                    'template' => '<div class="btn-group">{checked} {view} {update} {delete}</div>',
                     'buttons' => [
                         'view' => function($url, $model, $key){
                             return Html::a('<i class="glyphicon glyphicon-eye-open"></i>', ['view', 'id' => $key], ['class' => 'btn btn-sm btn-primary', 'data-pjax' => 0]);
+                        },
+
+                        'update' => function($url, $model, $key){
+                            return Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['update', 'id' => $key], ['class' => 'btn btn-sm btn-primary']);
                         },
                         'delete' => function($url, $model, $key){
                             return Html::a('<i class="glyphicon glyphicon-trash"></i>', ['delete', 'id' => $key], ['class' => 'btn btn-sm btn-danger', 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'), 'data-method' => 'post']);

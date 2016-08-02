@@ -13,20 +13,15 @@ $config = [
         'view' => [
             'theme' => [
                 'pathMap' => [
-                    '@dektrium/user/views' => '@app/views/user'
+                    '@dektrium/user/views' => '@app/views/user',
+                    '@vendor/voskobovich/liqpay/widgets/views' => '@app/views/widgets'
                 ],
             ],
         ],
         'assetManager' => [
             'class' => 'yii\web\AssetManager',
-            // 'appendTimestamp' => true,
+            'appendTimestamp' => true,
             'bundles' => [
-                'yii\bootstrap\BootstrapAsset' => [
-                    'sourcePath' => null,
-                    'basePath' => '@webroot',
-                    'baseUrl' => '@web',
-                    'css' => ['css/theme.css'],
-                ],
                 'yii\web\YiiAsset' => [
                     'sourcePath' => null,
                     'basePath' => '@webroot',
@@ -36,27 +31,26 @@ $config = [
             ],
         ],
         'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'TIcpcFSiaR9JfHjSJdiW61fms30Fze7F',
         ],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
-            // 'class' => 'yii\caching\DummyCache',
+            'class' =>'yii\caching\FileCache',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        // 'mailer' => [
-        //     'class' => 'yii\swiftmailer\Mailer',
-        //     'useFileTransport' => true,
-        // ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@app/mail',
-            'transport' => [
-                'class' => 'Swift_MailTransport',
-            ],
             'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.yandex.ru',
+                'username' => 'mxuser@ya.ru',
+                'password' => 'MjNhmjnh34',
+                'port' => '587',
+                'encryption' => 'TLS',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -73,6 +67,9 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 'order/<id:\d+>' => 'order',
+                'pages/<id:\d+>' => '/pages/view',
+                'category/<id:\d+>' => 'category/list',
+                'auto/<id:\d+>' => 'category/view',
             ],
         ],
         'i18n' => [
@@ -121,21 +118,36 @@ $config = [
                     'clientId'     => '47666163515-l74vtmg2sfth5t7rru47nedhrank3lj0.apps.googleusercontent.com',
                     'clientSecret' => 'kkJtv4T7gn89XQGA1wJeMG94',
                 ],
-                // 'yandex' => [
-                //     'class'        => 'dektrium\user\clients\Yandex',
-                //     'clientId'     => '852f88417fc84db48018e288de94c52b',
-                //     'clientSecret' => 'fcf0313235e14b40b509dc3c007d0f25'
-                // ],
+                'yandex' => [
+                    'class'        => 'dektrium\user\clients\Yandex',
+                    'clientId'     => '852f88417fc84db48018e288de94c52b',
+                    'clientSecret' => 'fcf0313235e14b40b509dc3c007d0f25'
+                ],
             ],
         ],
     ],
     'modules' => [
+        'liqpay' => [
+            'class' => 'pistol88\liqpay\Module',
+            // 'public_key' => 'i49048593185',
+            // 'private_key' => 's2I6Zz8fHstyJkXMA6bFxh0UcK8guQoGvOxSMW2k',
+            'currency' => 'UAH',
+            'pay_way' => null,
+            'version' => 3,
+            'sandbox' => YII_DEBUG,
+            'language' => 'ru',
+            'result_url' => '/page/thanks',
+            'paymentName' => 'Оплата заказа',
+            'server_url' => 'http://weddingcars.pl.ua/site/confirm',
+        ],
+        'redactor' => 'yii\redactor\RedactorModule',
         'user' => [
             'class' => 'dektrium\user\Module',
             'admins' => ['admin'],
             'enableUnconfirmedLogin' => true,
             'enableRegistration' => true,
             'enableConfirmation' => false,
+            'enableGeneratingPassword' => true,
             'controllerMap' => [
                 'settings' => 'app\controllers\user\SettingsController',
                 'profile' => 'app\controllers\user\ProfileController',
@@ -152,7 +164,7 @@ $config = [
             ],
         ],
         'rbac' => [
-            'class' => 'dektrium\rbac\Module',
+            'class' => 'dektrium\rbac\RbacWebModule',
         ],
     ],
     'params' => $params,

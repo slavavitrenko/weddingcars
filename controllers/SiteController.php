@@ -9,6 +9,9 @@ use app\models\ContactForm;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
+use app\models\Settings;
+use app\models\Orders;
+
 
 class SiteController extends \yii\web\Controller
 {
@@ -17,7 +20,16 @@ class SiteController extends \yii\web\Controller
     
     public function init(){
         $this->layout = '@app/views/layouts/frontend/frontend';
+        $this->enableCsrfValidation = false;
         return parent::init();
+    }
+
+    public function beforeAction($action)
+    {            
+        if ($action->id == 'confirm') {
+        }
+
+        return parent::beforeAction($action);
     }
     // public function behaviors()
     // {
@@ -44,11 +56,31 @@ class SiteController extends \yii\web\Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
+            'confirm' => [
+                'class' => 'voskobovich\liqpay\actions\CallbackAction',
+                'callable' => 'confirm'
+            ]
         ];
     }
 
     public function actionIndex(){
-        return $this->render('index');
+        $model = new ContactForm;
+        if($model->load(Yii::$app->request->post()) && $model->contact(Settings::get('email'))){
+            Yii::$app->session->setFlash('success', Yii::t('app', 'Contact form submtted'));
+            return $this->refresh();
+        }
+        return $this->render('index', ['model' => $model]);
+    }
+
+    public function actionPay($id)
+    {
+        $model = Orders::findOne($id);
+
+        return $this->render('test', ['model' => $model]);
+    }
+    
+    public function actionTerms(){
+        return $this->render('terms', ['text' => Settings::get('terms')]);
     }
 
 }

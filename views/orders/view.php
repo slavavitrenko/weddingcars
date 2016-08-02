@@ -2,11 +2,10 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\Pjax;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Orders */
 
-$this->title = $model->id;
+$this->title = Yii::t('app', 'Order') . ' №' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Orders'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -14,33 +13,75 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+    <?php if(($model->confirmed == '0') && (Yii::$app->user->can('manager') or $model->user_id == Yii::$app->user->identity->id)): ?>
+        <p>
+            <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'pjax' => 0,
+                    'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                    'method' => 'post',
+                ],
+            ]) ?>
+        </p>
+    <?php endif; ?>
+    <?php if($model->car->user_id == Yii::$app->user->identity->id && $model->confirmed == '0'): ?>
+        <p>
+            <?=Html::a(Yii::t('app', 'Confirm'), ['confirm', 'id' => $model->id], [
+                'class' => 'btn btn-primary',
+                'data' => [
+                    'pjax' => 0,
+                    'method' => 'post'
+                ]
+            ]); ?>
+        </p>
+    <?php endif; ?>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'user_id',
-            'car_id',
+            // 'id',
+            [
+                'attribute' => 'user_id',
+                'format' => 'raw',
+                'value' => $model->user->fio . '<br>' . Html::a($model->user->phone, 'tel:' . $model->user->phone, ['class' => 'lead']) . ' (' . $model->user->email . ')',
+                'visible' =>
+                Yii::$app->user->can('manager')
+                or
+                ($model->car->user_id == Yii::$app->user->identity->id && $model->confirmed == '1')
+            ],
+            [
+                'attribute' => 'car_id',
+                'format' => 'raw',
+                'value' => Html::a($model->car->autoBrand->name . ' ' . $model->car->autoModel->name, ['/auto/' . $model->car_id], ['target' => '_blank', 'data-pjax' => 0]),
+                // 'visible' => $model->user_id == Yii::$app->user->identity->id,
+            ],
             'city',
-            'datetime:datetime',
+            [
+                'attribute' => 'datetime',
+                'format' => 'datetime'
+                // 'value' => Yii::t('app', '{0, date, MMMM dd, YYYY HH:mm}', [$model->datetime])
+            ],
             'hours',
-            'city_out',
+            [
+                'attribute' => 'city_out',
+                'value' => Yii::t('app', $model->city_out == '1' ? 'Yeap' : 'Nope')
+            ],
             'km',
             'route:ntext',
             'description:ntext',
-            'paid',
-            'confirmed',
-            'created_at',
+            [
+                'attribute' => 'paid',
+                'value' => Yii::t('app', in_array($model->paid, ['success', 'sandbox']) ? 'Yeap' : 'Nope')
+            ],
+            [
+                'attribute' => 'confirmed',
+                'value' => Yii::t('app', $model->confirmed == '1' ? 'Yeap' : 'Nope')
+            ],
+            [
+                'attribute' => 'created_at',
+                'value' => Yii::t('app', '{0, date, MMMM dd, YYYY HH:mm}', [$model->created_at])
+            ],
         ],
     ]) ?>
 

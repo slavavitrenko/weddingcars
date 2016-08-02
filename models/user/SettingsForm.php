@@ -25,10 +25,11 @@ class SettingsForm extends \dektrium\user\models\SettingsForm
 
 	public function rules(){
 		$rules = parent::rules();
-		$rules[] = [['fio', 'phone', 'type'], 'required'];
+		$rules[] = [['fio', 'phone'], 'required'];
+        $rules[] = [['type'], 'required', 'when' => function($model){ return !Yii::$app->user->can('admin'); }];
 		$rules[] = [['fio'], 'match', 'pattern' => '/^[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+\s[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+\s[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+$/u', 'message' => Yii::t('app', 'You must enter data such as your passport')];
         $rules[] = [['phone'], 'match', 'pattern' => '/^\+380([0-9]{9})+$/', 'message' => Yii::t('app', 'Phone not correct')];
-        $rules[] = [['type'], 'match', 'pattern' => '/^(driver|client)$/', 'message' => Yii::t('app', 'You must select driver or client')];
+        $rules[] = [['type'], 'match', 'pattern' => '/^(driver|client|admin)$/', 'message' => Yii::t('app', 'You must select driver or client')];
 		return $rules;
 	}
 

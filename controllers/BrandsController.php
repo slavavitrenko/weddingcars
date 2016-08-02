@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Brands;
-use app\models\BrandsSearch;
+use app\models\search\Brands as BrandsSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -61,12 +61,12 @@ class BrandsController extends \yii\web\Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
+    // public function actionView($id)
+    // {
+    //     return $this->render('view', [
+    //         'model' => $this->findModel($id),
+    //     ]);
+    // }
 
     /**
      * Creates a new Brands model.
@@ -78,7 +78,7 @@ class BrandsController extends \yii\web\Controller
         $model = new Brands();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -97,7 +97,7 @@ class BrandsController extends \yii\web\Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,

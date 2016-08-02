@@ -4,8 +4,9 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Auto;
-use app\models\AutoSearch;
+use app\models\search\Auto as AutoSearch;
 use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use app\models\Images;
@@ -29,6 +30,7 @@ class AutoController extends \yii\web\Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'delete-image' => ['POST'],
                 ],
             ],
             'access' => [
@@ -38,6 +40,7 @@ class AutoController extends \yii\web\Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    ['actions' => ['models'], 'allow' => true],
                 ],
             ],
         ];
@@ -70,6 +73,8 @@ class AutoController extends \yii\web\Controller
         // $model->type = 'car';
         // $model->body = 'car';
 
+        $this->performAjaxValidation($model);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             $this->saveImages(UploadedFile::getInstances($model, 'images'), $model->id);
@@ -82,22 +87,35 @@ class AutoController extends \yii\web\Controller
         }
     }
 
-    // public function actionUpdate($id)
-    // {
-    //     $model = $this->findModel($id);
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
 
-    //     if ($model->load(Yii::$app->request->post()) && $model->save()) {
-    //         return $this->redirect(['view', 'id' => $model->id]);
-    //     } else {
-    //         return $this->render('update', [
-    //             'model' => $model,
-    //         ]);
-    //     }
-    // }
+        if(!Yii::$app->user->can('manager') && $model->user_id != Yii::$app->user->identity->id){ 
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $this->performAjaxValidation($model);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            $this->saveImages(UploadedFile::getInstances($model, 'images'), $model->id);
+
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
 
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
+        
+        if(!Yii::$app->user->can('manager') && $model->user_id != Yii::$app->user->identity->id){ 
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
 
         $model->delete();
 
@@ -112,46 +130,6 @@ class AutoController extends \yii\web\Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-
-    // public function actionCreateRate($auto_id){
-    //     $model = new AutoRate;
-    //     $model->auto_id = $auto_id;
-
-    //     $this->performAjaxValidation($model);
-
-    //     if($model->load(Yii::$app->request->post()) && $model->save()){
-    //         return $this->redirect(['view', 'id' => $auto_id]);
-    //     }
-    //     return $this->render('_rate-form', ['model' => $model]);
-    // }
-
-    // public function actionUpdateRate($id, $auto_id){
-    //     $model = $this->findAutoRate($id);
-    //     $model->auto_id = $auto_id;
-
-    //     $this->performAjaxValidation($model);
-
-    //     if($model->load(Yii::$app->request->post()) && $model->save()){
-    //         return $this->redirect(['view', 'id' => $auto_id]);
-    //     }
-    //     return $this->render('_rate-form', ['model' => $model]);
-    // }
-
-    // public function actionDeleteRate($id){
-    //     $rate = $this->findAutoRate($id);
-    //     $id = $rate->auto_id;
-    //     $rate->delete();
-    //     return $this->redirect(['view', 'id' => $id]);
-    // }
-
-    // protected function findAutoRate($id)
-    // {
-    //     if (($model = AutoRate::findOne($id)) !== null) {
-    //         return $model;
-    //     } else {
-    //         throw new NotFoundHttpException('The requested page does not exist.');
-    //     }
-    // }
 
     public function actionCheck($id){
         Yii::$app->response->format = 'json';
@@ -202,6 +180,16 @@ class AutoController extends \yii\web\Controller
                 $imageModel->save();
             }
         }
+    }
+
+    public function actionDeleteImage($id){
+        $image = Images::findOne($id);
+        if(!Yii::$app->user->can('manager') && $model->car->user_id != Yii::$app->user->id){
+            throw new ForbiddenHttpException(Yii::t('app', 'Forbidden'));
+        }
+        $auto_id = $image->car_id;
+        $image->delete();
+        return $this->redirect(['view', 'id' => $auto_id]);
     }
 
     // protected function performAjaxValidation($model)

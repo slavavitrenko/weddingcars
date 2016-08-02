@@ -32,10 +32,12 @@ class RegistrationForm extends \dektrium\user\models\RegistrationForm
 		return $labels;
 	}
 
-	public function register()
+	public function register($check=true)
     {
-        if (!$this->validate()) {
-            return false;
+        if($check){
+            if (!$this->validate()) {
+                return false;
+            }
         }
 
         /** @var User $user */
@@ -54,7 +56,7 @@ class RegistrationForm extends \dektrium\user\models\RegistrationForm
             Yii::t('user', 'Your account has been created and a message with further instructions has been sent to your email')
         );
 
-        return true;
+        return $this->id;
     }
 
     public function label($label){

@@ -14,13 +14,6 @@ body {
     padding: 70px 15px 20px;
 }
 
-.footer {
-    height: 60px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
-}
-
 .jumbotron {
     text-align: center;
     background-color: transparent;
@@ -103,7 +96,7 @@ a.desc:after {
     font-size: 13px;
     padding: 0;
     margin: 0;
-    height: 18px;
+    height: 34px;
 }
 .form-group {
     margin-bottom: 10px;
@@ -112,4 +105,108 @@ a.desc:after {
 .field-orders-terms {
     display: inline;
     margin-right: 15px;
+}
+
+*:focus {
+    outline: none;
+}
+
+.rating-container {
+    font-size: 20px;
+    display: inline;
+}
+.field-orders-city_out label {
+    margin-top: 6px;
+}
+
+input[type="checkbox"] {
+    margin: 10px;
+    margin-top: 1px;
+    line-height: normal;
+}
+
+.termsofuse, .termsofuse__form {
+    margin-top: 45px;
+    display: inline-block;
+}
+
+#user-type {
+    width: 100%;
+}
+
+#user-type > .btn {
+    width: 50%;
+}
+
+.big_button {
+    font-family: Lato-Bold,sans-serif;
+    font-size: 17px;
+    color: #fff;
+    background-color: #27cbc0;
+    border-style: none;
+    padding: 22px 32px;
+    border-radius: 4px;
+    /* margin-top: 60px; */
+    /*margin-bottom: 80px;*/
+    transition: all .3s ease;
+}
+.big_type_button {
+    font-family: Lato-Bold,sans-serif;
+    font-size: 17px;
+    color: #fff;
+    background-color: #27cbc0;
+    border-style: none;
+    padding: 15px 32px;
+    border-radius: 4px;
+    /* margin-top: 60px; */
+    /*margin-bottom: 80px;*/
+    transition: all .3s ease;
+}
+
+#registration-form, #login-form {
+    margin-bottom: 30px;
+}
+
+.kv-file-content img {
+    height: 90px!important;
+}
+
+.select2-container--krajee .select2-selection--single {
+    height: 40px!important;
+    line-height: 1.428571429;
+    padding: 6px 24px 6px 12px;
+}
+
+.select2-container--krajee .select2-selection--single .select2-selection__arrow {
+    height: 39px!important;
+}
+
+.select2-container--krajee .select2-selection {
+    /*border-radius: 0!important;*/
+}
+
+.select2-container--krajee .select2-selection--single .select2-selection__rendered {
+    color: #555555;
+    padding: 3px;
+}
+.rating-disabled .rating {
+    cursor: default!important;
+}
+
+.breadcrumb {
+    background-color: white;
+}
+
+.slider__image {
+    background-size: cover;
+}
+
+@media screen and (max-width: 768px){
+    .header--bgc {
+        min-height: 0!important;
+    }
+}
+
+.row.categories {
+    margin-bottom: 50px;
 }

@@ -8,5 +8,6 @@ return [
     'username' => $settings->user,
     'password' => $settings->password,
     'charset' => 'utf8',
-    'enableSchemaCache' => true
+    'enableSchemaCache' => YII_DEBUG ? false : true
+    // 'enableSchemaCache' => true
 ];

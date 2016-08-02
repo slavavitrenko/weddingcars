@@ -12,29 +12,40 @@ FrontendAsset::register($this);
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?> | <?=Yii::$app->params['siteName']?></title>
-    <?php $this->head() ?>
+	<meta charset="<?= Yii::$app->charset ?>">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<?= Html::csrfMetaTags() ?>
+	<title><?= Html::encode($this->title) ?> | <?=Yii::$app->params['siteName']?></title>
+	<?php $this->head() ?>
 </head>
-<body>
-<?php $this->beginBody() ?>
+<body class='<?=Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index' ? 'home' : ''?> <?=Yii::$app->controller->id . '-' . Yii::$app->controller->action->id; ?>'>
 
-<div class="wrap">
+<?php if(!YII_DEBUG): ?>
+  <div id="preloader"></div>
+<?php endif; ?>
+
+  <a href="#" class="scrollToTop">
+    <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
+  </a>
+  
+	<?php $this->beginBody() ?>
+
 	<?=$this->render('navbar'); ?>
-    <div class="container">
-        <?= $this->render('content', ['content' => $content]) ?>
-    </div>
-</div>
+	<?= $this->render('content', ['content' => $content]) ?>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; <?=Yii::$app->params['siteName']; ?> <?= date('Y') ?></p>
-    </div>
-</footer>
-
-<?php $this->endBody() ?>
+	<footer class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8">
+					<p class="footer__info">&copy; 2016 | WeddingCars.pl.ua - Прокат свадебных автомобилей в Полтаве</p>
+				</div>
+				<div class="col-md-4">
+				</div>
+			</div>
+		</div>
+	</footer>
+	
+	<?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>

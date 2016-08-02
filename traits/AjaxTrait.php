@@ -14,7 +14,7 @@ trait AjaxTrait
 
 	public function render($view, $params = [])
     {
-        if(Yii::$app->request->isAjax){
+        if(Yii::$app->request->isAjax && !Yii::$app->request->get('_pjax')){
             return \dmstr\widgets\Alert::widget()
             .
             $this->getView()->renderAjax($view, $params, $this) . '<span class="hidden main-title">' . $this->view->title . '</span>'
@@ -32,12 +32,17 @@ trait AjaxTrait
         }
     }
 
-	protected function performAjaxValidation($model)
+	protected function performAjaxValidation($model, $stop=true, $errors=[])
     {
         if (Yii::$app->request->post('ajax') && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            echo json_encode(ActiveForm::validate($model));
-            Yii::$app->end();
+            if($stop){
+                echo json_encode(array_merge(ActiveForm::validate($model), $errors));
+            }
+            else{
+                return ActiveForm::validate($model);
+            }
+            if($stop){Yii::$app->end();}
         }
     }
 

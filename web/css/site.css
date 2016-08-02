@@ -33,13 +33,13 @@
 
 
 .select2-container--krajee .select2-selection--single {
-    height: 45px!important;
-    line-height: 1.428571429!important;
-    padding: 16px 23px 12px 19px!important;
+    height: 35px!important;
+    line-height: 1.428571429;
+    padding: 10px 15px;
 }
 
 .select2-container--krajee .select2-selection--single .select2-selection__arrow {
-    height: 44px!important;
+    height: 33px!important;
 }
 
 .select2-container--krajee .select2-selection {
@@ -111,7 +111,7 @@ thead > tr > th {
   padding: 0px!important;
   text-align: center;
 }
-
+/*
 ul.breadcrumb {
     position: absolute;
     right: 0;
@@ -129,4 +129,7 @@ ul.breadcrumb {
   ul.breadcrumb {
     top: 50px;
   }
+}*/
+.delete-button {
+    position: absolute;
 }

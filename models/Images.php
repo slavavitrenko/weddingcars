@@ -3,27 +3,17 @@
 namespace app\models;
 
 use Yii;
+use app\models\Auto;
 
-/**
- * This is the model class for table "images".
- *
- * @property integer $id
- * @property integer $car_id
- * @property string $path
- */
+
 class Images extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+
     public static function tableName()
     {
         return 'images';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -33,9 +23,6 @@ class Images extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
@@ -52,6 +39,10 @@ class Images extends \yii\db\ActiveRecord
 
     public function getSrc(){
         return '/uploads/cars/' . $this->path;
+    }
+
+    public function getCar(){
+        return $this->hasOne(Auto::className(), ['id' => 'car_id']);
     }
 
 }

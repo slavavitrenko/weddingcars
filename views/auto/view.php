@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
+        <?=Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -82,7 +83,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php if($model->pictures) : ?>
             <div class="row">
             <?php foreach($model->pictures as $picture) :?>
-                <div class="col-sm-4 well"><?=Html::img($picture->src, ['class' => 'img-responsive']); ?></div>
+                <div class="col-sm-4 well">
+                    <?=Html::a('<i class="glyphicon glyphicon-remove"></i>', ['delete-image', 'id' => $picture->id], ['class' => 'btn btn-xs btn-danger delete-button', 'data-method' => 'post', 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?')]); ?>
+                    <?=Html::img($picture->src, ['class' => 'img-responsive']); ?>
+                </div>
             <?php endforeach; ?>
             </div>
         <?php endif; ?>

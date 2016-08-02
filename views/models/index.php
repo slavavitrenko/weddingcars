@@ -3,9 +3,10 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\ModelsSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+use kartik\select2\Select2;
+use app\models\Brands;
+use yii\helpers\ArrayHelper;
+
 
 $this->title = Yii::t('app', 'Models');
 $this->params['breadcrumbs'][] = $this->title;
@@ -25,8 +26,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'filterModel' => $searchModel,
             'columns' => [
                 'name',
+                [
+                    'attribute' => 'brand_id',
+                    'value' => 'brand.name',
+                    'filter' => Select2::widget([
+                            'model' => $searchModel,
+                            'attribute' => 'brand_id',
+                            'data' => ArrayHelper::map(Brands::find()->all(), 'id', 'name'),
+                            'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                            'pluginOptions' => ['allowClear' => true]
+                        ])
+                ],
 
-                ['class' => 'yii\grid\ActionColumn'],
+                ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}'],
             ],
         ]); ?>
     <?php Pjax::end(); ?>

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\Auto;
 
 
 class Categories extends \yii\db\ActiveRecord
@@ -33,5 +34,13 @@ class Categories extends \yii\db\ActiveRecord
     public function beforeDelete(){
         @unlink($this->picture);
         return parent::beforeDelete();
+    }
+
+    public function getSrc(){
+        return '/' . $this->picture;
+    }
+
+    public function getCars(){
+        return $this->hasMany(Auto::className(), ['category_id' => 'id'])->where(['checked' => '1']);
     }
 }

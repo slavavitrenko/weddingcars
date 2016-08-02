@@ -4,10 +4,12 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Orders;
-use app\models\OrdersSearch;
+use app\models\search\Orders as OrdersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Settings;
+use yii\helpers\Url;
 
 
 class OrdersController extends Controller
@@ -40,8 +42,12 @@ class OrdersController extends Controller
 
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        if($model->car->user_id != Yii::$app->user->identity->id && !Yii::$app->user->can('manager') && $model->user_id != Yii::$app->user->identity->id){
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -49,7 +55,10 @@ class OrdersController extends Controller
     {
         $model = new Orders();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->confirmed = '0';
+            $model->paid = '0';
+            $model->save(false);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -58,29 +67,57 @@ class OrdersController extends Controller
         }
     }
 
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
+    public function actionConfirm($id){
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        Yii::$app->response->format = 'json';
+
+        $model = $this->findModel($id);
+        if($model->car->user_id != Yii::$app->user->identity->id){
+            throw new NotFoundHttpException();
         }
+
+        $model->updateAttributes([
+                'confirmed' => '1'
+            ]);
+
+        Yii::$app->mailer->compose()
+                        ->setTo($model->user->email)
+                        ->setFrom([Settings::get('admin_email') => Yii::$app->params['siteName']])
+                        ->setSubject(Yii::t('app', 'New order to your auto'))
+                        ->setTextBody(Yii::t('app', 'New order on site. Link - {link}', ['link' => Url::to(['/orders/view', 'id' => $model->id], true)]))
+                        ->send();
+
+        return $this->redirect(['view', 'id' => $id]);
     }
 
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if((Yii::$app->user->identity->id != $model->user_id) && (!Yii::$app->user->can('manager'))){
+            Yii::$app->session->setFlash('danger', Yii::t('app', 'You are not allowed to acces for this section'));
+            return $this->redirect(['index']);
+        }
+        
+        if($model->confirmed == '1'){
+            Yii::$app->session->setFlash('danger', Yii::t('app', 'Order is confirmed. You can`t delete it'));
+        }
+        else {
+            $model->delete();
+        }
 
         return $this->redirect(['index']);
     }
 
     protected function findModel($id)
-    {
+    {   
         if (($model = Orders::findOne($id)) !== null) {
+            if(
+                !Yii::$app->user->can('manager')
+                && !Yii::$app->user->identity->type == 'driver'
+                && $model->user_id != Yii::$app->user->identity->id
+                ){
+                throw new NotFoundHttpException('The requested page does not exist.');
+            }
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

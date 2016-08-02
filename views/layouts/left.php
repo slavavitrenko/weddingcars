@@ -12,7 +12,7 @@ function getContent(url, addEntry, link) {
         // $("#main-layout").html();
         $("#main-layout").html(data);
         $("title").html($(".main-title").html());
-        console.clear();
+        // console.clear();
         if(addEntry == true) {
             history.pushState(null, null, url); 
         }
@@ -28,15 +28,26 @@ window.addEventListener("popstate", function(e) {
 
 $(document).on("click", "a", function(e){
     var link = $(this);
+    if(link.attr("target")){
+        return; 
+    }
+    if(link.attr("data-type") == "self"){
+        return;
+    }
     var href = $(this).attr("href");
     if(link.attr("data-page")){
         return;
     }
     if(link.attr("data-confirm")){
+        e.preventDefault();
         if(confirm(link.attr("data-confirm")) == false){
             return false;
         }
     }
+    
+    // if(link.attr("data-pjax") == false){
+    //     return;
+    // }
 
     if(link.attr("data-method") == "post"){
         e.preventDefault();
@@ -59,7 +70,8 @@ $(document).on("click", "a", function(e){
     && href !== "/"
         && !~href.indexOf("?sort")
         && !~href.indexOf("#")
-        && !~href.indexOf("mailto")
+        && !~href.indexOf("mailto:")
+        && !~href.indexOf("tel:")
         && !~href.indexOf("://")
         && !~href.indexOf("delete")
         && !~href.indexOf("uploads")
@@ -109,10 +121,11 @@ if(Yii::$app->user->can('manager')){
     $items[] = ['label' => Yii::t('app', 'Dashboard'), 'url' => '#', 'icon' => 'fa fa-tachometer', 'items' => [
         ['label' => Yii::t('app', 'Orders'), 'url' => ['/orders'], 'icon' => 'fa fa-usd'],
         ['label' => Yii::t('app', 'Autos'), 'url' => ['/auto'], 'icon' => 'fa fa-car'],
-        ['label' => Yii::t('app', 'Categories'), 'url' => ['/categories'], 'icon' => 'fa fa-folder-open']
     ]];
     $items[] = ['label' => Yii::t('user', 'Users'), 'url' => ['/user/admin'], 'icon' => 'fa fa-group'];
     $items[] = ['icon' => 'fa fa-tachometer', 'label' => Yii::t('app', 'Settings'), 'url' => '#', 'items' => [
+        ['label' => Yii::t('app', 'Pages'), 'url' => ['/pages'], 'icon' => 'fa fa-file-image-o'],
+        ['label' => Yii::t('app', 'Categories'), 'url' => ['/categories'], 'icon' => 'fa fa-folder-open'],
         ['label' => Yii::t('app', 'Brands'), 'icon' => 'fa fa-car', 'url' => ['/brands']],
         ['label' => Yii::t('app', 'Models'), 'icon' => 'fa fa-bars', 'url' => ['/models']],
         ['label' => Yii::t('app', 'Site Settings'), 'icon' => 'fa fa-cogs', 'url' => ['/settings']]
@@ -130,7 +143,7 @@ if(Yii::$app->user->identity->type == 'client' && !Yii::$app->user->can('manager
 
 $items[] = ['label' => Yii::t('app', 'My settings'), 'icon' => 'fa fa-user', 'url' => '#', 'items' => [
     ['label' => Yii::t('user', 'Account'), 'url' => ['/user/settings/account']],
-    ['label' => Yii::t('user', 'Profile'), 'url' => ['/user/settings/profile']],
+    // ['label' => Yii::t('user', 'Profile'), 'url' => ['/user/settings/profile']],
     ['label' => Yii::t('user', 'Networks'), 'url' => ['/user/settings/networks']],
 ]];
 

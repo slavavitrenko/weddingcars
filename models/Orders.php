@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use app\models\user\User;
+use app\models\Auto;
 
 
 class Orders extends \yii\db\ActiveRecord
@@ -19,15 +21,18 @@ class Orders extends \yii\db\ActiveRecord
     {
         return [
             [['car_id', 'city', 'datetime', 'km', 'hours', 'route'], 'required'],
-            [['user_id', 'car_id', 'hours', 'city_out', 'km', 'paid', 'confirmed', 'created_at'], 'integer'],
+            [['terms'], 'required', 'message' => Yii::t('app', 'You must agree the terms')],
+            [['user_id', 'car_id', 'hours', 'confirmed', 'created_at'], 'integer'],
             [['route', 'description'], 'string'],
+            [['paid'], 'string', 'max' => 255],
+            [['paid'], 'default', 'value' => 'not'],
             [['city'], 'string', 'max' => 255],
-            [['created_at'], 'default', 'value' => date('Y-m-d H:i')],
-            [['city_out', 'km', 'confirmed', 'paid'], 'default', 'value' => '0'],
+            [['created_at'], 'default', 'value' => time()],
+            [['city_out', 'km', 'confirmed'], 'default', 'value' => '0'],
             [['datetime'], 'date', 'format' => 'php:Y-m-d H:i'],
+            [['hours', 'km'], 'integer', 'max' => 999, 'min' => 1],
             [['terms'], 'match', 'pattern' => '/^1$/', 'message' => Yii::t('app', 'You must agree the terms')],
             [['terms'], 'default', 'value' => '0'],
-            [['terms'], 'required', 'message' => Yii::t('app', 'You must agree the terms')]
         ];
     }
 
@@ -64,9 +69,33 @@ class Orders extends \yii\db\ActiveRecord
     }
 
     public function beforeSave($insert){
+        if(empty($this->order_id)){
+            $this->order_id = Yii::$app->security->generateRandomString(100);
+        }
         if(empty($this->user_id)){
             $this->user_id = Yii::$app->user->identity->id;
         }
         return parent::beforeSave($insert);
     }
+
+    public function afterSave($insert, $changedattributes){
+        // if($this->isNewRecord){
+            $car = Auto::findOne($this->car_id);
+            $car->popularity = $car->popularity + 1;
+        // }
+        return parent::afterSave($insert, $changedattributes);
+    }
+
+    public function getCost(){
+        return $this->car->hour_cost;
+    }
+
+    public function  getId(){
+        return $this->order_id;
+    }
+
+    public function getStatus(){
+        return Yii::t('app', $this->paid);
+    }
+    
 }

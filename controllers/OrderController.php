@@ -6,9 +6,7 @@ use Yii;
 use app\models\Orders;
 use app\models\user\RegistrationForm;
 use app\models\user\User;
-use yii\base\Model;
-use yii\web\Response;
-use yii\widgets\ActiveForm;
+use app\models\Auto;
 
 
 class OrderController extends \yii\web\Controller
@@ -31,7 +29,8 @@ class OrderController extends \yii\web\Controller
 		$orderModel->car_id = $id;
 		$userModel = Yii::createObject(RegistrationForm::className());
 
-        $this->performAjaxValidation($orderModel, $userModel);
+        $errors = $this->performAjaxValidation($userModel, false);
+        $this->performAjaxValidation($orderModel, true, $errors);
 
 		if($userModel->load(Yii::$app->request->post()) && $orderModel->load(Yii::$app->request->post()) && $userModel->register()){
 			$orderModel->user_id = $userModel->id;
@@ -52,20 +51,60 @@ class OrderController extends \yii\web\Controller
 	private function exist($id){
 		$model = new Orders;
 		$model->car_id = $id;
+		$this->performAjaxValidation($model);
 		if($model->load(Yii::$app->request->post()) && $model->save()){
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Your order accepted. Thank you.'));
 			return $this->redirect(['/orders']);
 		}
-		return $this->render('exist', ['model' => $model]);
+		return $this->render('exist', ['order' => $model]);
 	}
 
-	protected function performAjaxValidation($order, $user)
-    {
-        if (Yii::$app->request->isAjax && ($order->load(Yii::$app->request->post()) && ($user->load(Yii::$app->request->post())))) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            echo json_encode(
-            	array_merge(ActiveForm::validate($order), ActiveForm::validate($user)));
-            Yii::$app->end();
-        }
-    }
+	public function actionNew(){
+		return Yii::$app->user->isGuest ? $this->newDriver() : $this->existDriver();
+	}
+
+	private function newDriver(){
+
+		$autoModel = new Auto;
+		$autoModel->retro = '0';
+        $autoModel->client_decor = '0';
+        $autoModel->decor = '0';
+		$userModel = Yii::createObject(RegistrationForm::className());
+
+        $errors = $this->performAjaxValidation($userModel, false);
+        $this->performAjaxValidation($autoModel, true, $errors);
+
+		if($userModel->load(Yii::$app->request->post()) && $autoModel->load(Yii::$app->request->post()) && $userModel->validate()){
+			$userModel->type = 'driver'; 
+			$userModel->register(false);
+			
+			$autoModel->user_id = $userModel->id;
+			Yii::$app->getUser()->login(User::findOne($userModel->id, 0));
+			if($autoModel->save()){
+				Yii::$app->session->setFlash('success', Yii::t('app', 'Your order accepted. Thank you.'));
+				return $this->redirect(['/auto']);
+			}
+			else {
+				Yii::$app->user->logout();
+				User::findOne($userModel->id)->delete();
+			}
+		}
+
+		return $this->render('newDriver', ['user' => $userModel, 'auto' => $autoModel]);
+	}
+
+	private function existDriver(){
+		$model = new Auto;
+		$model->retro = '0';
+        $model->client_decor = '0';
+        $model->decor = '0';
+		$this->performAjaxValidation($model);
+		if($model->load(Yii::$app->request->post()) && $model->save()){
+			Yii::$app->session->setFlash('success', Yii::t('app', 'Your order accepted. Thank you.'));
+			return $this->redirect(['/auto']);
+		}
+		return $this->render('existDriver', ['model' => $model]);
+	}
+
+
 }

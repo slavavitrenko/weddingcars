@@ -14,7 +14,6 @@ $(document).on("click", ".pjax-btn", function(){
 		function(data){
 			if(data == 1){
 				$.pjax.reload({container: "#" + button.attr("data-container")});
-				// console.log(button.attr("data-container"));
 			}
 		});
 });

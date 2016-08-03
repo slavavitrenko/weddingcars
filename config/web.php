@@ -40,7 +40,6 @@ $config = [
             'errorAction' => 'site/error',
         ],
         'mailer' => require(__DIR__ . '/mailer.php'),
-        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

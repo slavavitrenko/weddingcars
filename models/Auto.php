@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use app\models\user\User;
 use app\models\Images;
+use app\models\Orders;
 use app\models\Brands;
 use app\models\Models;
 use app\models\Comments;
@@ -118,6 +119,10 @@ class Auto extends \yii\db\ActiveRecord
         $images = Images::find()->where(['car_id' => $this->id])->all();
         foreach($images as $image){
             $image->delete();
+        }
+        $orders = Orders::find()->where(['car_id' => $this->id])->all();
+        foreach($orders as $order){
+            $order->delete();
         }
         return true;
     }

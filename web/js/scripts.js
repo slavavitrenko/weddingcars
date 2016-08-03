@@ -149,8 +149,8 @@ $(function() {
 $(window).load(function() {
 
   var body = $('body');
-  $('#preloader').delay(350).fadeOut('slow');
-  body.delay(350).css({
+  $('#preloader').delay(150).fadeOut();
+  body.delay(0).css({
     'overflow': 'visible'
   });
 

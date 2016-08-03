@@ -4,6 +4,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use kartik\checkbox\CheckboxX;
 use kartik\datetime\DateTimePicker;
+use yii\widgets\MaskedInput;
 
 
 $this->title = Yii::t('app', 'New Order & Register');
@@ -31,13 +32,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                 Даные для регистрации:
                             </h3>
                             <?=$form->field($user, 'fio', ['options' => ['class' => 'form-group--noicon']])->textInput(['placeholder' => Yii::t('app', 'Fio')])->label(false); ?>
-                            <?=$form->field($user, 'phone', ['options' => ['class' => 'form-group--noicon']])->textInput(['placeholder' => Yii::t('app', 'Phone')])->label(false); ?>
-                            <?=$form->field($user, 'email', ['options' => ['class' => 'form-group--noicon']])->textInput(['placeholder' => Yii::t('app', 'Email')])->label(false); ?>
+                            <?=$form->field($user, 'phone', ['options' => ['class' => 'form-group--noicon']])->widget(MaskedInput::className(), [
+                                'mask' => '+380999999999',
+                            ])->textInput(['placeholder' => Yii::t('app', 'Phone')])->label(false); ?>
+                            <?=$form->field($user, 'email', ['options' => ['class' => 'form-group--noicon']])->widget(MaskedInput::className(), [
+                                'clientOptions' => ['alias' => 'email'],
+                                'options' => ['placeholder' => Yii::t('app', 'Email'), 'class' => 'form-control'],
+                            ])->label(false); ?>
                             <?=$form->field($user, 'password', ['options' => ['class' => 'form-group--noicon']])->passwordInput(['placeholder' => Yii::t('app', 'Password')])->label(false); ?>
                         </div>
                         <div class="col-md-6 end">
                             <h3 class="checkout__title checkout__title--regist">
-                                Информация для зазказа автомобиля:
+                                Информация для заказа автомобиля:
                             </h3>
                             <div class="row">
                                 <div class="col-md-6">
@@ -52,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <div class="row">
                                             <div class="col-md-7">
                                                 <div class="form-group form-group--noicon">
-                                                    <?php echo $form->field($order, 'city_out', ['options' => ['class' => 'form-group--noicon']])->widget(CheckboxX::className(), ['pluginOptions'=>['threeState'=>false]]) ?>
+                                                    <?php echo $form->field($order, 'city_out', ['template' => '{label}{input}', 'options' => ['class' => 'form-group--noicon']])->widget(CheckboxX::className(), ['pluginOptions'=>['threeState'=>false]]) ?>
                                                 </div>
                                             </div>
                                             <div class="col-md-5">

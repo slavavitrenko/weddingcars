@@ -11,6 +11,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use kartik\checkbox\CheckboxX;
 use kartik\file\FileInput;
+use yii\widgets\MaskedInput;
 
 
 $this->title = Yii::t('app', 'Create Auto');
@@ -33,8 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     Даные для регистрации:
                 </h3>
                 <?=$form->field($user, 'fio', ['options' => ['class' => 'form-group--noicon']])->textInput(['placeholder' => Yii::t('app', 'Fio')])->label(false); ?>
-                <?=$form->field($user, 'phone', ['options' => ['class' => 'form-group--noicon']])->textInput(['placeholder' => Yii::t('app', 'Phone')])->label(false); ?>
-                <?=$form->field($user, 'email', ['options' => ['class' => 'form-group--noicon']])->textInput(['placeholder' => Yii::t('app', 'Email')])->label(false); ?>
+                <?=$form->field($user, 'phone', ['options' => ['class' => 'form-group--noicon']])->widget(MaskedInput::className(), [
+                	'mask' => '+380999999999',
+                ])->textInput(['placeholder' => Yii::t('app', 'Phone')])->label(false); ?>
+                <?=$form->field($user, 'email', ['options' => ['class' => 'form-group--noicon']])->widget(MaskedInput::className(), [
+                    'clientOptions' => ['alias' => 'email'],
+                    'options' => ['placeholder' => Yii::t('app', 'Email'), 'class' => 'form-control'],
+                ])->label(false); ?>
                 <?=$form->field($user, 'password', ['options' => ['class' => 'form-group--noicon']])->passwordInput(['placeholder' => Yii::t('app', 'Password')])->label(false); ?>
 			</div>
 

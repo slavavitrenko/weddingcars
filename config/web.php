@@ -34,7 +34,7 @@ $config = [
             'cookieValidationKey' => 'TIcpcFSiaR9JfHjSJdiW61fms30Fze7F',
         ],
         'cache' => [
-            'class' =>'yii\caching\FileCache',
+            'class' => !YII_DEBUG ? 'yii\caching\FileCache' : 'yii\caching\DummyCache',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -54,10 +54,12 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/' => 'site/index',
+                'categories/all' => 'category/index',
                 'order/<id:\d+>' => 'order',
-                'pages/<id:\d+>' => '/pages/view',
+                'page/<id:\d+>' => '/pages/view',
                 'category/<id:\d+>' => 'category/list',
-                'auto/<id:\d+>' => 'category/view',
+                '/<id:\d+>' => 'category/view',
             ],
         ],
         'i18n' => [
@@ -134,8 +136,8 @@ $config = [
             'admins' => ['admin'],
             'enableUnconfirmedLogin' => true,
             'enableRegistration' => true,
-            'enableConfirmation' => false,
-            'enableGeneratingPassword' => true,
+            // 'enableConfirmation' => false,
+            'enableGeneratingPassword' => false,
             'controllerMap' => [
                 'settings' => 'app\controllers\user\SettingsController',
                 'profile' => 'app\controllers\user\ProfileController',

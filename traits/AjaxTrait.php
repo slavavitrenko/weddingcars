@@ -48,8 +48,8 @@ trait AjaxTrait
 
     public function redirect($url, $statusCode = 200, $ajax=true)
     {
-        Yii::$app->response->format = 'json';
         if(Yii::$app->request->isAjax && $ajax === true){
+            Yii::$app->response->format = 'json';
             Yii::$app->getResponse()->setStatusCode($statusCode);
             return Url::to($url);
         }

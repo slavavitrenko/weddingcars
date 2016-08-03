@@ -32,9 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?=Html::encode($this->title); ?>
                         <?php endif; ?>
                     </h1>
-                    <?php if(Yii::$app->user->can('manager')): ?>
-                    <p> (<?=Yii::t('app', $model->active ? 'Page is Active' : 'Page is Inactive')?>)</p>
-                <?php endif; ?>
                     
                     <?=$model->text; ?>
 

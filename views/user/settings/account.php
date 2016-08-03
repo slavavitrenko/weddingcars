@@ -64,9 +64,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'phone')->widget(MaskedInput::className(), [
                     'mask' => '+380999999999',
-                    ]) ?>
+                ]) ?>
 
-                <?= $form->field($model, 'email') ?>
+                <?= $form->field($model, 'email')->widget(MaskedInput::className(), [
+                    'clientOptions' => ['alias' => 'email']
+                ]) ?>
 
                 <?= $form->field($model, 'username') ?>
 

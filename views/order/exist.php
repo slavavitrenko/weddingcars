@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <div class="row">
                                             <div class="col-md-7">
                                                 <div class="form-group form-group--noicon">
-                                                    <?php echo $form->field($order, 'city_out', ['options' => ['class' => 'form-group form-group--noicon']])->widget(CheckboxX::className(), ['pluginOptions'=>['threeState'=>false]]) ?>
+                                                    <?php echo $form->field($order, 'city_out', ['template' => '{label}{input}', 'options' => ['class' => 'form-group form-group--noicon']])->widget(CheckboxX::className(), ['pluginOptions'=>['threeState'=>false]]) ?>
                                                 </div>
                                             </div>
                                             <div class="col-md-5">

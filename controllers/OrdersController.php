@@ -83,8 +83,8 @@ class OrdersController extends Controller
         Yii::$app->mailer->compose()
                         ->setTo($model->user->email)
                         ->setFrom([Settings::get('admin_email') => Yii::$app->params['siteName']])
-                        ->setSubject(Yii::t('app', 'New order to your auto'))
-                        ->setTextBody(Yii::t('app', 'New order on site. Link - {link}', ['link' => Url::to(['/orders/view', 'id' => $model->id], true)]))
+                        ->setSubject(Yii::t('app', 'Your order has been confirmed'))
+                        ->setTextBody(Yii::t('app', 'Your order has been confirmed and you may pay to it. Link - {link}', ['link' => Url::to(['/orders/view', 'id' => $model->id], true)]))
                         ->send();
 
         return $this->redirect(['view', 'id' => $id]);

@@ -58,7 +58,7 @@ class LiqPay extends Component
         $model->sandbox = $this->sandbox;
         $model->language = $this->language;
         $model->server_url = $this->server_url;
-        $model->result_url = \yii\helpers\Url::toRoute(['/site/index'], true);
+        $model->result_url = \yii\helpers\Url::toRoute(['/orders'], true);
         $model->action = $this->action;
 
         return $model;

@@ -60,6 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         if($model->user_id == Yii::$app->user->identity->id && $model->paid == 'not'){
                             return $model->confirmed ? Html::a(Yii::t('app', 'Pay'), ['/site/pay', 'id' => $model->id]) : Yii::t('app', 'Wait Confirmation');
                         }
+                        if($model->paid == 'failure'){ return $model->getStatus() . ' ' . Html::a(Yii::t('app', 'Retry Pay'), ['/site/pay', 'id' => $model->id]); }
                         return $model->confirmed ? $model->getStatus() : Yii::t('app', 'Wait Confirmation');
                     },
                     'filter' => ['success' => Yii::t('app', 'Paid'), 'not' => Yii::t('app', 'Not Paid')],

@@ -95,7 +95,13 @@ class Orders extends \yii\db\ActiveRecord
     }
 
     public function getStatus(){
-        return Yii::t('app', $this->paid);
+        return '<span class="label label-' . (in_array($this->paid, ['success', 'sandbox']) ? 'primary' : 'danger') . '">' . Yii::t('app', $this->paid) . '</span>';
+    }
+
+    public function generateOrderId(){
+        $this->updateAttributes([
+                'order_id' => Yii::$app->security->generateRandomString(100)
+            ]);
     }
     
 }

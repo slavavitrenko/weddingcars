@@ -43,9 +43,9 @@ class Settings extends \yii\db\ActiveRecord
 
     public static function get($option=null){
         
-        if(YII_DEBUG){
+        // if(YII_DEBUG){
             return $entry = ($entry = self::find()->select([$option])->one()) ? $entry[$option] : null;
-        }
+        // }
 
         $entry = Yii::$app->cache->get('settings_' . $option);
         if(!entry){

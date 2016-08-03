@@ -41,7 +41,7 @@ class CallbackAction extends Action
      */
     public function run()
     {
-        // Yii::$app->response->format = 'json';
+        Yii::$app->response->format = 'json';
         $post =Yii::$app->request->post();
 
         if (empty($post['data']) || empty($post['signature'])) {
@@ -67,7 +67,14 @@ class CallbackAction extends Action
         }
 
         $order = Orders::find()->where(['order_id' => $model->order_id])->limit(1)->one();
+        if(!$order){
+            return 'No such orders with requested order_id';
+        }
         $order->updateAttributes(['paid' => $data['status']]);
+
+        if($data['status'] == 'failure'){
+            $order->generateOrderId();
+        }
 
         if(YII_DEBUG && $data['status'] == 'sandbox'){
             $this->sendEmail($order, true);

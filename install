@@ -52,7 +52,7 @@ function write_settings($db=null, $user=null, $password=null){
 
 function change_settings(){
 	$db = readline('Имя базы данных: ');
-	$user = readline('Пользователь БД: (' . $db . ')');
+	$user = readline('Пользователь БД: (' . $db . ') ');
 	$password = readline('Пароль: ');
 	if($user == ''){
 		$user = $db;

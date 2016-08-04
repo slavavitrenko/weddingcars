@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::encode($this->title) ?>
     </h1>
 
-    <?php Pjax::begin(['id' => 'autos-container']); ?>
+    <?php Pjax::begin(['id' => 'autos-container', 'linkSelector' => false]); ?>
         <?= GridView::widget([
             'layout'=>"{items}\n{pager}\n{summary}",
             'dataProvider' => $dataProvider,

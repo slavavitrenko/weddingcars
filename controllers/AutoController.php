@@ -4,19 +4,19 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Auto;
-use app\models\search\Auto as AutoSearch;
-use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
-use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
+use yii\web\Response;
 use app\models\Images;
 use app\models\AutoRate;
-use yii\data\ActiveDataProvider;
-use yii\web\Response;
+use yii\web\UploadedFile;
 use yii\widgets\ActiveForm;
+use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-
+use yii\data\ActiveDataProvider;
+use yii\web\NotFoundHttpException;
+use yii\web\ForbiddenHttpException;
+use app\models\search\Auto as AutoSearch;
 use yii\helpers\Json;
+
 
 class AutoController extends \yii\web\Controller
 {
@@ -136,7 +136,7 @@ class AutoController extends \yii\web\Controller
         if(!Yii::$app->user->can('admin')){return false;}
         $model = $this->findModel($id);
         $model->checked = 1;
-        return $model->save();
+        return $model->save(false);
     }
 
     public function actionUncheck($id){
@@ -144,7 +144,7 @@ class AutoController extends \yii\web\Controller
         if(!Yii::$app->user->can('admin')){return false;}
         $model = $this->findModel($id);
         $model->checked = 0;
-        return $model->save();
+        return $model->save(false);
     }
 
     public function actionModels() {

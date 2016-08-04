@@ -42,6 +42,8 @@ class Orders extends BaseOrders
 
         $query->joinWith('car');
         $query->joinWith('user');
+        $query->joinWith('autoModel');
+        $query->joinWith('autoBrand');
 
         $query->andFilterWhere([
             'id' => $this->id,

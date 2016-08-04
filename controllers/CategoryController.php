@@ -35,9 +35,14 @@ class CategoryController extends Controller
 	}
 
 	public function actionList($id){
-		$models = Auto::find()->where(['category_id' => $id, 'checked' => '1'])->all();
-        $category = Categories::findOne($id);
-		return $this->render('list', ['autos' => $models, 'category' => $category]);
+        $categoryData = Yii::$app->cache->get('category_' . $id);
+        if(!$categoryData){
+            $categoryData['models'] = Auto::find()->where(['category_id' => $id, 'checked' => '1'])->joinWith(['autoModel', 'autoBrand', 'pictures'])->all();
+            $categoryData['category'] = Categories::findOne($id);
+            Yii::$app->cache->set('category_' . $id, $categoryData);
+        }
+
+		return $this->render('list', ['autos' => $categoryData['models'], 'category' => $categoryData['category']]);
 	}
 
 	public function actionView($id){

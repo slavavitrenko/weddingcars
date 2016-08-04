@@ -20,7 +20,7 @@ $config = [
         ],
         'assetManager' => [
             'class' => 'yii\web\AssetManager',
-            'appendTimestamp' => true,
+            // 'appendTimestamp' => true,
             'bundles' => [
                 'yii\web\YiiAsset' => [
                     'sourcePath' => null,
@@ -34,7 +34,7 @@ $config = [
             'cookieValidationKey' => 'TIcpcFSiaR9JfHjSJdiW61fms30Fze7F',
         ],
         'cache' => [
-            'class' => !YII_DEBUG ? 'yii\caching\FileCache' : 'yii\caching\DummyCache',
+            'class' => 'yii\caching\FileCache',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',

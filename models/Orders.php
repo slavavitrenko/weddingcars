@@ -5,6 +5,8 @@ namespace app\models;
 use Yii;
 use app\models\user\User;
 use app\models\Auto;
+use app\models\Brands;
+use app\models\Models;
 
 
 class Orders extends \yii\db\ActiveRecord
@@ -62,6 +64,14 @@ class Orders extends \yii\db\ActiveRecord
 
     public function getUser(){
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function getAutoModel(){
+        return $this->hasOne(Models::className(), ['id' => 'model'])->via('car');
+    }
+
+    public function getAutoBrand(){
+        return $this->hasOne(Brands::className(), ['id' => 'brand'])->via('car');
     }
 
     public function label($label){

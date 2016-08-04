@@ -18,11 +18,11 @@ class FrontendAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/frontend.css',
          '//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css',
          '//cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css',
          'css/custom.min.css',
          'css/media-screens.min.css',
+        'css/frontend.css',
     ];
     public $js = [
         'js/frontend.js',

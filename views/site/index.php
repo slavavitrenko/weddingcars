@@ -11,7 +11,7 @@ use kartik\rating\StarRating;
 
 $categories = Yii::$app->cache->get('categories');
 if(!$categories){
-    $categories = Categories::find()->all();
+    $categories = Categories::find()->joinWith(['cars'])->all();
     Yii::$app->cache->set('categories', $categories);
 }
 
@@ -61,11 +61,17 @@ Our Cars
                     <a href="<?=Url::to(['/category/' . $category->id]); ?>" class="ourcars__car">
                         <div class="ourcars__image" style='background: url(<?=$category->src; ?>) no-repeat; background-position: center center; background-size: contain;' alt="car"></div>
                         <h3 class="ourcars__subtitle"><?=$category->name?></h3>
-                        <?php $min = Auto::find()->where(['category_id' => $category->id])->min('pass_count'); ?>
-                        <?php $max = Auto::find()->where(['category_id' => $category->id])->max('pass_count'); ?>
-                        <?php $min_per_hour = Auto::find()->where(['category_id' => $category->id])->max('hour_cost'); ?>
-                        <span><?=$min?>-<?=$max?> мест</span>
-                        <span>от <?=$min_per_hour; ?> грн/час</span>
+                        <?php
+                            $statData = Yii::$app->cache->get('stat_category_' . $category->id);
+                            if(!$statData){
+                                $statData['min_pass_count'] = Auto::find()->where(['category_id' => $category->id])->min('pass_count');
+                                $statData['max_pass_count'] = Auto::find()->where(['category_id' => $category->id])->max('pass_count');
+                                $statData['min_per_hour'] = Auto::find()->where(['category_id' => $category->id])->min('hour_cost');
+                                Yii::$app->cache->set('stat_category_' . $category->id, $statData);
+                            }
+                        ?>
+                        <span><?=$statData['min_pass_count']; ?>-<?=$statData['max_pass_count']; ?> мест</span>
+                        <span>от <?=$statData['min_per_hour']; ?> грн/час</span>
                     </a>
                 </div>
             <?php endif; ?>
@@ -166,7 +172,11 @@ Popular Cars
 
                 <?php foreach($popular as $car):?>
                     <?php
-                        $rating = round(Yii::$app->db->createCommand('select avg(rating) from comments where auto_id = :auto_id', [':auto_id' => $car->id])->queryOne()['avg(rating)'], 0);
+                        $rating = Yii::$app->cache->get('rating_car_' . $car->id);
+                        if(!$rating){
+                            $rating = round(Yii::$app->db->createCommand('select avg(rating) from comments where auto_id = :auto_id', [':auto_id' => $car->id])->queryOne()['avg(rating)'], 0);
+                            Yii::$app->cache->set('rating_car_' . $car->id, $rating);
+                        }
                     ?>
 
                     <div class="slider__item">
@@ -185,7 +195,7 @@ Popular Cars
                                 ],
                             ]);?>
                             </div>
-                            <a href="<?=Url::to(['/auto/' . $car->id])?>" class="slider__more">Подробнее</a>
+                            <a href="<?=Url::to(['/category/view/', 'id' =>  $car->id])?>" class="slider__more">Подробнее</a>
                         </div>
                     </div>
 

@@ -29,7 +29,7 @@ class Auto extends BaseAuto
 
     public function search($params)
     {
-        $query = BaseAuto::find()->joinWith('user')->joinWith('autoModel')->joinWith('autoBrand');
+        $query = BaseAuto::find()->joinWith(['user', 'autoModel', 'autoBrand']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

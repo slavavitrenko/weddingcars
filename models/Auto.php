@@ -136,7 +136,7 @@ class Auto extends \yii\db\ActiveRecord
     }
 
     public static function getPopular($count=10){
-        return self::find()->orderBy(['popularity' => SORT_DESC])->limit($count)->all();
+        return self::find()->orderBy(['popularity' => SORT_DESC])->joinWith(['autoBrand', 'autoModel', 'picture', 'comments'])->limit($count)->all();
     }
 
 }

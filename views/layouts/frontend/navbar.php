@@ -15,12 +15,24 @@ if(!$pages){
 
 
 $items = [];
-$items[] = ['img src="/images/header__logo-min.png" class="header__logo  hidden-sm  hidden-md  hidden-lg" alt="logo">'];
+$items[] = ['template' => '{label}', 'label' => '<img src="/images/header__logo-min.png" class="header__logo  hidden-sm  hidden-md  hidden-lg" alt="logo">'];
 $items[] = ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']];
 $items[] = ['label' => Yii::t('app', 'Cars'), 'url' => ['/category/index']];
 foreach($pages as $page){
   $items[] = ['label' => $page->title, 'url' => ['/pages/view', 'id' =>  $page->id]];
 }
+$items[] = ['label' => '<div class="nav__social hidden-sm  hidden-md  hidden-lg">' . 
+        "<a target='_blank' href='" . (Settings::get('vk_link') ? Settings::get('vk_link') : '#') . "' class='header__icon header__icon--vk'></a>".
+        "<a target='_blank' href='" . (Settings::get('fb_link') ? Settings::get('fb_link') : '#') . "' class='header__icon header__icon--fb'></a>".
+        "<a target='_blank' href='" . (Settings::get('in_link') ? Settings::get('in_link') : '#') . "' class='header__icon header__icon--insta'></a>".
+        "<a target='_blank' href='" . (Settings::get('tw_link') ? Settings::get('tw_link') : '#') . "' class='header__icon header__icon--twitter'></a>"
+ . '</div>'];
+ if(Yii::$app->user->isGuest){
+  $items[] = ['label' => Html::a(Yii::t('app', 'Login'), ['/user/login'], ['class' => 'header__link hidden-sm  hidden-md  hidden-lg']) . ' / ' . Html::a(Yii::t('app', 'Register'), ['/user/register'], ['class' => 'header__link hidden-sm  hidden-md  hidden-lg'])];
+ }
+ else{
+  $items[] = ['label' => Html::a(Yii::t('app', 'Dashboard'), ['/orders/index'], ['class' => 'header__link hidden-sm  hidden-md  hidden-lg']) . ' / '  . Html::a(Yii::t('app', 'Logout'), ['/user/logout'], ['data-method' => 'post', 'class' => 'header__link hidden-sm  hidden-md  hidden-lg'])];
+ }
 
 ?>
 <header class="header header--bgc">
@@ -32,7 +44,7 @@ foreach($pages as $page){
     <div class="col-md-4  col-sm-4 col-sm-pull-3 hidden-xs">
         <a target='_blank' href="<?=Settings::get('vk_link') ? Settings::get('vk_link') : '#'?>" class="header__icon header__icon--vk"></a>
         <a target='_blank' href="<?=Settings::get('fb_link') ? Settings::get('fb_link') : '#'?>" class="header__icon header__icon--fb"></a>
-        <a target='_blank' href='<?=Settings::get('in_link') ? Settings::get('in_link') : '#'?>' class="header__icon header__icon--insta"></a>
+        <a target='_blank' href="<?=Settings::get('in_link') ? Settings::get('in_link') : '#'?>" class="header__icon header__icon--insta"></a>
         <a target='_blank' href="<?=Settings::get('tw_link') ? Settings::get('tw_link') : '#'?>" class="header__icon header__icon--twitter"></a>
     </div>
     <div class="col-sm-3 hidden-xs">
@@ -69,7 +81,8 @@ foreach($pages as $page){
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <?=\yii\widgets\Menu::widget([
         'options' => ['class' => 'nav navbar-nav text-center'],
-          'items' => $items
+          'items' => $items,
+          'encodeLabels' => false
       ]); ?>
 </div>
 <!-- /.navbar-collapse -->

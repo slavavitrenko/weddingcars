@@ -201,12 +201,30 @@ input[type="checkbox"] {
     background-size: cover;
 }
 
+.rent__price {
+    padding: 4px 15px 0 18px;
+}
+
 @media screen and (max-width: 768px){
     .header--bgc {
         min-height: 0!important;
+    }
+    .rent__price--mid {
+         margin-left: 0; 
+         margin-right: 0; 
+    }
+    .rent__price {
+        padding: 4px 10px 0 13px;
     }
 }
 
 .row.categories {
     margin-bottom: 50px;
+}
+
+.nav li a.header__link {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 16px;
+    text-transform: none;
 }

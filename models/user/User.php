@@ -95,9 +95,7 @@ class User extends \dektrium\user\models\User
             }
         }
         if($this->assignment){
-            foreach($this->assignment as $role){
-                $role->delete();
-            }
+            $this->assignment->delete();
         }
         return parent::beforeDelete();
     }

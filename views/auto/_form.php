@@ -54,6 +54,7 @@ $this->registerJs($js, \yii\web\View::POS_READY);
 
                         <?php echo $form->field($model, 'model')->widget(DepDrop::classname(), [
                             'options'=>['id'=>'models-dropdown'],
+                            'data' => ArrayHelper::map(Models::find()->where(['brand_id' => $model->brand])->all(), 'id', 'name'),
                             'pluginOptions'=>[
                                 'depends' => ['brands-dropdown'],
                                 'placeholder' => Yii::t('app', 'Choose...'),

@@ -25,10 +25,15 @@ class User extends \dektrium\user\models\User
         $scenarios['update'][]   = 'type';
         $scenarios['register'][] = 'type';
         $scenarios['settings'][] = 'type';
+        $scenarios['create'][]   = 'partner';
+        $scenarios['update'][]   = 'partner';
+        $scenarios['register'][] = 'partner';
+        $scenarios['settings'][] = 'partner';
         return $scenarios;
     }
 	public function rules(){
 		$rules = parent::rules();
+        $rules[] = ['partner', 'integer'];
 		$rules[] = [['fio', 'phone'], 'required'];
         $rules[] = [['type'], 'required', 'message' => Yii::t('app', 'You must choose account type')];
 		$rules[] = [['fio'], 'match', 'pattern' => '/^[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+\s[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+\s[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+$/u', 'message' => Yii::t('app', 'You must enter data such as your passport')];
@@ -44,6 +49,8 @@ class User extends \dektrium\user\models\User
 		$labels['phone'] = Yii::t('app', 'Phone');
 		$labels['type'] = Yii::t('app', 'Account type');
         $labels['role'] = Yii::t('app', 'Role');
+        $labels['partner'] = Yii::t('app', 'Partner');
+        $labels['score'] = Yii::t('app', 'Score');
 		return $labels;
 	}
 
@@ -62,6 +69,9 @@ class User extends \dektrium\user\models\User
     public function beforeSave($insert){
         if(empty($this->username)){
             $this->generateUsername();
+        }
+        if($this->type != 'driver'){
+            $this->partner = '0';
         }
         return parent::beforeSave($insert);
     }
@@ -82,6 +92,11 @@ class User extends \dektrium\user\models\User
         if($this->cars){
             foreach($this->cars as $car){
                 $car->delete();
+            }
+        }
+        if($this->assignment){
+            foreach($this->assignment as $role){
+                $role->delete();
             }
         }
         return parent::beforeDelete();

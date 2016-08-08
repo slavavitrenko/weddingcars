@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="orders-index">
 
-    <?php Pjax::begin(); ?>
+    <?php // Pjax::begin(); ?>
     
     <h1>
         <?= Html::a('<i class="glyphicon glyphicon-plus"></i>', ['/category'], ['class' => 'btn btn-success', 'data-type' => 'self']); ?>
@@ -60,15 +60,27 @@ $this->params['breadcrumbs'][] = $this->title;
                         if($model->user_id == Yii::$app->user->identity->id && $model->paid == 'not'){
                             return $model->confirmed ? Html::a(Yii::t('app', 'Pay'), ['/site/pay', 'id' => $model->id]) : Yii::t('app', 'Wait Confirmation');
                         }
-                        if($model->paid == 'failure'){ return $model->getStatus() . ' ' . Html::a(Yii::t('app', 'Retry Pay'), ['/site/pay', 'id' => $model->id]); }
-                        return $model->confirmed ? $model->getStatus() : Yii::t('app', 'Wait Confirmation');
+                        if($model->paid == 'failure'){ return $model->getPaidStatus() . ' ' . Html::a(Yii::t('app', 'Retry Pay'), ['/site/pay', 'id' => $model->id]); }
+                        return $model->confirmed ? $model->getPaidStatus() : Yii::t('app', 'Wait Confirmation');
                     },
                     'filter' => ['success' => Yii::t('app', 'Paid'), 'not' => Yii::t('app', 'Not Paid')],
+                ],
+                [
+                    'attribute' => 'cost',
+                    'value' => function($model){ return $model->cost / 100 * $model->partner_percent; },
+                    'visible' => Yii::$app->user->identity->partner == 1,
                 ],
                 [
                     'attribute' => 'confirmed',
                     'value' => function($model){ return Yii::t('app', $model->confirmed == '1' ? 'Yeap': 'Nope'); },
                     'filter' => ['1' => Yii::t('app', 'Confirmed'), '0' => Yii::t('app', 'Not Confirmed')],
+                ],
+                [
+                    'attribute' => 'archive',
+                    'format' => 'raw',
+                    'value' => function($model){ return Html::a(Yii::t('app', ($model->archive == '1' ? 'Unarchive' : 'Archive')), ['archive', 'id' => $model->id], ['class' => 'btn btn-sm ' . ($model->archive ? 'btn-primary' : 'btn-success'), 'data-method' => 'post', 'data-pjax' => '0']); },
+                    'filter' => ['1' => Yii::t('app', 'Archived')],
+                    // 'visible' => Yii::$app->user->identity->type == 'driver' && Yii::$app->user->identity->pertner == '1'
                 ],
                 // 'created_at',
 
@@ -86,5 +98,5 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]); ?>
-    <?php Pjax::end(); ?>
+    <?php // Pjax::end(); ?>
 </div>

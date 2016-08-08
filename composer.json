@@ -32,7 +32,8 @@
         "kartik-v/bootstrap-star-rating": "@dev",
         "kartik-v/yii2-widget-rating": "*",
         "yiidoc/yii2-redactor": "*",
-        "pistol88/yii2-liqpay": "*"
+        "pistol88/yii2-liqpay": "*",
+        "yiisoft/yii2-redis": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

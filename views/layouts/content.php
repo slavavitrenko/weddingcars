@@ -19,5 +19,5 @@ use dmstr\widgets\Alert;
     <div class="pull-right hidden-xs">
         <b></b>
     </div>
-    <strong><?=YII_DEBUG ? Yii::t('app', 'Development mode') : ''?></strong>
+    <strong><?=YII_DEBUG ? Yii::t('app', 'Development mode') : Yii::t('app', 'Production mode')?></strong>
 </footer>

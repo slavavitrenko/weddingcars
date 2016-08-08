@@ -26,7 +26,6 @@
 }
 
 
-
 /*==============*/
 /*   END PACE   */
 /*==============*/
@@ -130,6 +129,17 @@ ul.breadcrumb {
     top: 50px;
   }
 }*/
+
+@media screen and (max-width: 768px){
+  ul.breadcrumb {
+    display: none;
+  }
+}
+
 .delete-button {
     position: absolute;
+}
+
+.field-register-form-partner {
+  display: none;
 }

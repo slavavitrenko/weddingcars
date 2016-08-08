@@ -5,13 +5,14 @@ $js = '
 // $.ajaxPrefilter(function( options, originalOptions, jqXHR ) { options.async = true; });
 
 function getContent(url, addEntry, link) {
-    // $("#main-layout").html("");
+
     $.get(url)
     .done(function( data ) {
         window.scrollTo(0,1);
         // $("#main-layout").html();
         $("#main-layout").html(data);
         $("title").html($(".main-title").html());
+
         // console.clear();
         if(addEntry == true) {
             history.pushState(null, null, url); 
@@ -57,6 +58,7 @@ $(document).on("click", "a", function(e){
             data: {},
             success: function(data){
                 getContent(data, true);
+                // link.parent().parent().remove();
             },
             error: function(e){
                 console.log(e);

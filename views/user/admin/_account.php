@@ -12,6 +12,21 @@
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
+$js = "
+$('#user-type input').on('change', function() {
+    var value = $('input[name=\'User[type]\']:checked').val(); 
+    if(value == 'driver'){
+        $('.field-user-partner').slideDown();
+    }
+    else{
+        // $('#user-partner').checkboxX('reset');
+        $('.field-user-partner').slideUp();
+    }
+});
+";
+
+$this->registerJs($js, \yii\web\View::POS_READY);
+
 /*
  * @var yii\web\View $this
  * @var dektrium\user\models\User $user

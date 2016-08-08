@@ -14,14 +14,15 @@ class NotifyController extends Controller
 	public function actionIndex(){
 		if(($entries = Notifications::find()->all()) != false){
 			foreach($entries as $entry){
-				print_r(Yii::$app->mailer->compose()
+				$sended = Yii::$app->mailer->compose()
 		            ->setTo($entry->email)
 		            ->setSubject($entry->subject)
 		            ->setFrom([Settings::get('admin_email') => 'Bot'])
 		            ->setTextBody($entry->text)
-		            ->send());
-				die();
-				// $entry->delete();
+		            ->send();
+				if($sended){
+					$entry->delete();
+				}
 			}
 		}
 	}

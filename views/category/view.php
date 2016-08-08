@@ -8,9 +8,11 @@ use yii\widgets\ActiveForm;
 use kartik\rating\StarRating;
 use app\models\Comments;
 
-
-$rating = Yii::$app->db->createCommand('select avg(rating) from comments where auto_id = :auto_id', [':auto_id' => $model->id])->queryOne();
-$rating = round($rating['avg(rating)'], 0);
+$rating = Yii::$app->cache->get('avg_rating_' . $model->id);
+if(!$rating){
+  $rating = round(Yii::$app->db->createCommand('select avg(rating) from comments where auto_id = :auto_id', [':auto_id' => $model->id])->queryOne()['avg(rating)'], 0);
+  Yii::$app->cache->set('avg_rating_' . $model->id, $rating);
+}
 
 $this->title = $model->autoBrand->name . ' ' . $model->autoModel->name;
 

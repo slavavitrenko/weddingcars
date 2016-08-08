@@ -114,4 +114,11 @@ class AdminController extends \dektrium\user\controllers\AdminController
 
         return $this->redirect(['index']);
     }
+
+    public function actionPay($id){
+        $model = $this->findModel($id);
+        $model->updateAttributes(['score' => '0']);
+        Yii::$app->session->setFlash('success', Yii::t('app', 'Remuneration marked as paid'));
+        return $this->redirect(['index']);
+    }
 }

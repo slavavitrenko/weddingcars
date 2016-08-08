@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
 	<div class="row">
 		<div class="col-sm-6">
 		    <?= $form->field($model, 'admin_email')->textInput(['maxlength' => true]) ?>
+		    <?= $form->field($model, 'partner_percent'); ?>
 		    <?= $form->field($model, 'liqpay_public_key')->textInput(['maxlength' => true]) ?>
 		    <?= $form->field($model, 'liqpay_private_key')->textInput(['maxlength' => true]) ?>
 		    <?=$form->field($model, 'address'); ?>

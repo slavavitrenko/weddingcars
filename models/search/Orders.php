@@ -16,7 +16,7 @@ class Orders extends BaseOrders
     {
         return [
             [['car_id', 'hours', 'city_out', 'km', 'confirmed', 'created_at'], 'integer'],
-            [['city', 'route', 'description', 'paid', 'user_id'], 'safe'],
+            [['city', 'route', 'description', 'paid', 'user_id', 'archive'], 'safe'],
         ];
     }
 
@@ -57,6 +57,12 @@ class Orders extends BaseOrders
             'confirmed' => $this->confirmed,
             'created_at' => $this->created_at,
         ]);
+
+        if(empty($this->archive)){
+            $query->andFilterWhere(['orders.archive' => '0']);
+        }
+
+        $query->andFilterWhere(['archive' => $this->archive]);
 
         $query->andFilterWhere(['like', 'user.fio', $this->user_id]);
 

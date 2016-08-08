@@ -32,6 +32,9 @@ use yii\helpers\Html;
                             <p>
                                 <?=Yii::$app->user->identity->fio; ?>
                                 <small><?=Yii::t('app', 'Registered at')?> <?=Yii::t('user', '{0, date, MMMM dd, YYYY HH:mm}', [Yii::$app->user->identity->created_at]); ?></small>
+                                <?php if(Yii::$app->user->identity->partner == '1'): ?>
+                                    <?=Yii::t('app', 'Earned')?>: <?=Yii::$app->user->identity->score; ?> грн
+                                <?php endif; ?>
                             </p>
                         </li>
                         <!-- Menu Footer-->

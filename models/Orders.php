@@ -30,12 +30,20 @@ class Orders extends \yii\db\ActiveRecord
             [['paid'], 'default', 'value' => 'not'],
             [['city'], 'string', 'max' => 255],
             [['created_at'], 'default', 'value' => time()],
-            [['city_out', 'km', 'confirmed'], 'default', 'value' => '0'],
+            [['city_out', 'km', 'confirmed', 'archive'], 'default', 'value' => '0'],
             [['datetime'], 'date', 'format' => 'php:Y-m-d H:i'],
-            [['hours', 'km'], 'integer', 'max' => 999, 'min' => 1],
+            [['datetime'], 'validateDatetime'],
+            [['hours', 'km', 'partner_percent'], 'integer', 'max' => 999, 'min' => 1],
             [['terms'], 'match', 'pattern' => '/^1$/', 'message' => Yii::t('app', 'You must agree the terms')],
             [['terms'], 'default', 'value' => '0'],
+            ['cost', 'number'],
         ];
+    }
+
+    public function validateDatetime($attribute, $params){
+        if($this->datetime < date('Y-m-d H:i')){
+            $this->addError('datetime', Yii::t('app', 'Selected date has already passed'));
+        }
     }
 
     public function attributeLabels()
@@ -54,7 +62,9 @@ class Orders extends \yii\db\ActiveRecord
             'paid' => Yii::t('app', 'Paid'),
             'confirmed' => Yii::t('app', 'Confirmed by Driver'),
             'created_at' => Yii::t('app', 'Created At'),
-            'terms' => Yii::t('app', 'Agree Terms')
+            'terms' => Yii::t('app', 'Agree Terms'),
+            'cost' => Yii::t('app', 'Earned'),
+            'archive' => Yii::t('app', 'Archived'),
         ];
     }
 
@@ -85,6 +95,14 @@ class Orders extends \yii\db\ActiveRecord
         if(empty($this->user_id)){
             $this->user_id = Yii::$app->user->identity->id;
         }
+        if(empty($this->cost)){
+            $this->cost = $this->car->hour_cost;
+        }
+        // if($this->user->partner == '1'){
+        //     $userScore = $this->user->score;
+        //     $this->user->updateAtributes(['score' => $userScore + ($this->cost / 2)]);
+        //     $this->cost = $this->cost / 2;
+        // }
         return parent::beforeSave($insert);
     }
 
@@ -104,7 +122,7 @@ class Orders extends \yii\db\ActiveRecord
         return $this->order_id;
     }
 
-    public function getStatus(){
+    public function getPaidStatus(){
         return '<span class="label label-' . (in_array($this->paid, ['success', 'sandbox']) ? 'primary' : 'danger') . '">' . Yii::t('app', $this->paid) . '</span>';
     }
 

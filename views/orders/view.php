@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'car_id',
                 'format' => 'raw',
-                'value' => Html::a($model->car->autoBrand->name . ' ' . $model->car->autoModel->name, ['/auto/' . $model->car_id], ['target' => '_blank', 'data-pjax' => 0]),
+                'value' => Html::a($model->car->autoBrand->name . ' ' . $model->car->autoModel->name, ['/category/view', 'id' => $model->car_id], ['target' => '_blank', 'data-pjax' => 0]),
                 // 'visible' => $model->user_id == Yii::$app->user->identity->id,
             ],
             'city',

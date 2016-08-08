@@ -34,7 +34,7 @@ $this->registerJs($js, \yii\web\View::POS_READY);
         <?= Html::encode($this->title) ?>
     </h1>
 
-<?php Pjax::begin(['id' => 'users-container']) ?>
+<?php // Pjax::begin(['id' => 'users-container']) ?>
 
 <?= GridView::widget([
     'dataProvider' 	=> $dataProvider,
@@ -48,16 +48,17 @@ $this->registerJs($js, \yii\web\View::POS_READY);
             'format' => 'raw',
             'filter' => Html::activeDropdownList($searchModel, 'role', [
                         'admin' => Yii::t('app', 'Admin'),
-                        'manager' => Yii::t('app', 'Manager'),
+                        // 'manager' => Yii::t('app', 'Manager'),
                         'driver' => Yii::t('app', 'Driver'),
                         'client' => Yii::t('app', 'Client'),
+                        'partner' => Yii::t('app', 'Partner')
                     ],
                     [
                         'class' => 'form-control',
                         'prompt' => Yii::t('app', 'Choose...')
             ]),
             'value' => function($model){
-                if($model->type == 'driver'){return Yii::t('app', 'Driver');}
+                if($model->type == 'driver'){return $model->partner == '1' ? Yii::t('app', 'Partner') : Yii::t('app', 'Driver');}
                 return '<div class="btn-group">' .
                 Html::button('а', ['class' => $model->role == 'admin' ? 'btn btn-info btn-sm' : 'btn btn-success btn-sm ajax-btn', 'value' => Url::to(['/user/admin/change-role', 'id' => $model->id, 'role' => 'admin'])])
                 .
@@ -95,21 +96,33 @@ $this->registerJs($js, \yii\web\View::POS_READY);
         //         ],
         //     ]),
         // ],
+        // [
+        //     'header' => Yii::t('user', 'Confirmation'),
+        //     'value' => function ($model) {
+        //         if ($model->isConfirmed) {
+        //             return '<div class="text-center"><span class="text-success">' . Yii::t('user', 'Confirmed') . '</span></div>';
+        //         } else {
+        //             return Html::a(Yii::t('user', 'Confirm'), ['confirm', 'id' => $model->id], [
+        //                 'class' => 'btn btn-sm btn-success btn-block',
+        //                 'data-method' => 'post',
+        //                 'data-pjax' => 0,
+        //                 'data-confirm' => Yii::t('user', 'Are you sure you want to confirm this user?'),
+        //             ]);
+        //         }
+        //     },
+        //     'format' => 'raw',
+        //     'visible' => Yii::$app->getModule('user')->enableConfirmation,
+        // ],
         [
-            'header' => Yii::t('user', 'Confirmation'),
-            'value' => function ($model) {
-                if ($model->isConfirmed) {
-                    return '<div class="text-center"><span class="text-success">' . Yii::t('user', 'Confirmed') . '</span></div>';
-                } else {
-                    return Html::a(Yii::t('user', 'Confirm'), ['confirm', 'id' => $model->id], [
-                        'class' => 'btn btn-xs btn-success btn-block',
-                        'data-method' => 'post',
-                        'data-confirm' => Yii::t('user', 'Are you sure you want to confirm this user?'),
-                    ]);
-                }
-            },
+            'attribute' => 'score',
             'format' => 'raw',
-            'visible' => Yii::$app->getModule('user')->enableConfirmation,
+            'value' => function($model){
+                if($model->partner == '1'){
+                    return $model->score > '0' ? $model->score . ' ' . Html::a('<i class="glyphicon glyphicon-ok"></i>', ['pay', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary', 'data-method' => 'post']) : ''; 
+                }else{
+                    return '';
+                }
+            }
         ],
         [
             'header' => Yii::t('user', 'Block status'),
@@ -143,4 +156,4 @@ $this->registerJs($js, \yii\web\View::POS_READY);
     ],
 ]); ?>
 
-<?php Pjax::end() ?>
+<?php // Pjax::end() ?>

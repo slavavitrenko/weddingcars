@@ -77,6 +77,16 @@ class OrdersController extends Controller
         }
     }
 
+    public function actionArchive($id){
+        $model = $this->findModel($id);
+        if(Yii::$app->user->identity->id != $model->car->user_id){
+            Yii::$app->session->setFlash('danger', Yii::t('app', 'You are not allowed to acces for this section'));
+            return $this->redirect(['index']);
+        }
+        $model->updateAttributes(['archive' => $model->archive == '1' ? '0' : '1']);
+        return $this->redirect(['index']);
+    }
+
     public function actionConfirm($id){
 
         Yii::$app->response->format = 'json';

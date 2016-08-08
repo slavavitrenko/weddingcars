@@ -7,6 +7,7 @@ use Yii;
 class RegistrationForm extends \dektrium\user\models\RegistrationForm
 {
 
+    public $partner;
 	public $type;
 	public $phone;
 	public $fio;
@@ -14,6 +15,7 @@ class RegistrationForm extends \dektrium\user\models\RegistrationForm
 
 	public function rules(){
 		$rules = parent::rules();
+        $rules[] = ['partner', 'integer'];
 		$rules[] = [['fio', 'phone'], 'required'];
         // $rules[] = [['type'], 'required', 'message' => Yii::t('app', 'You must choose account type')];
         $rules[] = [['type'], 'default', 'value' => 'client'];
@@ -29,6 +31,7 @@ class RegistrationForm extends \dektrium\user\models\RegistrationForm
         $labels['fio'] = Yii::t('app', 'FIO');
 		$labels['phone'] = Yii::t('app', 'Phone');
 		$labels['type'] = Yii::t('app', 'Account type');
+        $labels['partner'] = Yii::t('app', 'Partner');
 		return $labels;
 	}
 

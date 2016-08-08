@@ -57,7 +57,7 @@ class Models extends BaseModels
             'brand_id' => $this->brand_id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'models.name', $this->name]);
 
         return $dataProvider;
     }

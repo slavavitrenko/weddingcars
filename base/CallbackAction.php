@@ -70,7 +70,19 @@ class CallbackAction extends Action
         if(!$order){
             return 'No such orders with requested order_id';
         }
+        if(in_array($order->paid, ['success', 'sandbox'])){
+            return 'success';
+        }
+        
         $order->updateAttributes(['paid' => $data['status']]);
+
+        if(($order->car->user->partner == '1') && in_array($data['status'], ['success', 'sandbox'])){
+            $userScore = $order->car->user->score;
+            $cost = $order->cost;
+            // $order->updateAttributes(['cost' => $cost / 100 * (100 - Settings::get('partner_percent'))]);
+            $order->updateAttributes(['partner_percent' => Settings::get('partner_percent')]);
+            $order->car->user->updateAttributes(['score' => $userScore + ($cost / 100 * Settings::get('partner_percent'))]);
+        }
 
         if($data['status'] == 'failure'){
             $order->generateOrderId();

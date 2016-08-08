@@ -38,7 +38,7 @@ class CategoryController extends Controller
         $categoryData = Yii::$app->cache->get('category_' . $id);
         if(!$categoryData){
             $categoryData['models'] = Auto::find()->where(['category_id' => $id, 'checked' => '1'])->joinWith(['autoModel', 'autoBrand', 'pictures'])->all();
-            $categoryData['category'] = Categories::findOne($id);
+            $categoryData['category'] = Categories::find()->joinWith('cars')->where(['categories.id' => $id])->one();
             Yii::$app->cache->set('category_' . $id, $categoryData);
         }
 
@@ -50,7 +50,12 @@ class CategoryController extends Controller
         if($commentModel->load(Yii::$app->request->post()) && $commentModel->save()){
             return $this->refresh();
         }
-		if (($model = Auto::findOne($id)) !== null) {
+        $model = Yii::$app->cache->get('auto_' . $id);
+        if(!$model){
+            $model = Auto::find()->where(['auto.id' => $id])->joinWith(['autoBrand', 'autoModel', 'category', 'pictures', 'comments'])->one();
+            Yii::$app->cache->set('auto_' . $id, $model);
+        }
+		if ($model !== null) {
 			return $this->render('view', ['model' => $model, 'commentModel' => $commentModel]);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

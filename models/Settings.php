@@ -20,6 +20,7 @@ class Settings extends \yii\db\ActiveRecord
             [['admin_email', 'liqpay_public_key', 'liqpay_private_key', 'vk_link', 'fb_link', 'tw_link', 'in_link', 'address', 'phone1', 'phone2', 'email'], 'string', 'max' => 255],
             [['terms'], 'string', 'max' => 50000],
             [['latitude', 'longitude'], 'string', 'max' => 25],
+            ['partner_percent', 'integer', 'min' => 1, 'max' => '99'],
         ];
     }
 
@@ -37,7 +38,8 @@ class Settings extends \yii\db\ActiveRecord
             'phone1' => Yii::t('app', 'Phone 1'),
             'phone2' => Yii::t('app', 'Phone 2'),
             'email' => Yii::t('app', 'Contact Email'),
-            'terms' => Yii::t('app', 'Terms of use')
+            'terms' => Yii::t('app', 'Terms of use'),
+            'partner_percent' => Yii::t('app', 'Partner Percent'),
         ];
     }
 

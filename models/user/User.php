@@ -34,6 +34,7 @@ class User extends \dektrium\user\models\User
 	public function rules(){
 		$rules = parent::rules();
         $rules[] = ['partner', 'integer'];
+        $rules[] = ['partner', 'default', 'value' => '0'];
 		$rules[] = [['fio', 'phone'], 'required'];
         $rules[] = [['type'], 'required', 'message' => Yii::t('app', 'You must choose account type')];
 		$rules[] = [['fio'], 'match', 'pattern' => '/^[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+\s[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+\s[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+$/u', 'message' => Yii::t('app', 'You must enter data such as your passport')];

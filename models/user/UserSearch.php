@@ -61,7 +61,7 @@ class UserSearch extends \dektrium\user\models\UserSearch
 
         switch($this->role){
             case 'driver':
-            $query->andFilterWhere(['user.type' => 'driver', 'user.partner' => '0']);
+            $query->andFilterWhere(['user.type' => 'driver', 'user.partner' => ['0', 'null']]);
             break;
 
             case 'client':

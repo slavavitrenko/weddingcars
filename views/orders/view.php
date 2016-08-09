@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => Html::a($model->car->autoBrand->name . ' ' . $model->car->autoModel->name, ['/category/view', 'id' => $model->car_id], ['target' => '_blank', 'data-pjax' => 0]),
                 // 'visible' => $model->user_id == Yii::$app->user->identity->id,
             ],
-            'city',
+            'region.name',
             [
                 'attribute' => 'datetime',
                 'format' => 'datetime'

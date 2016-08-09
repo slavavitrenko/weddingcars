@@ -15,8 +15,8 @@ class Orders extends BaseOrders
     public function rules()
     {
         return [
-            [['car_id', 'hours', 'city_out', 'km', 'confirmed', 'created_at'], 'integer'],
-            [['city', 'route', 'description', 'paid', 'user_id', 'archive'], 'safe'],
+            [['car_id', 'hours', 'city_out', 'km', 'confirmed', 'created_at', 'city'], 'integer'],
+            [['route', 'description', 'paid', 'user_id', 'archive'], 'safe'],
         ];
     }
 

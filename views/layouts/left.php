@@ -128,6 +128,7 @@ if(Yii::$app->user->can('manager')){
     $items[] = ['icon' => 'fa fa-tachometer', 'label' => Yii::t('app', 'Settings'), 'url' => '#', 'items' => [
         ['label' => Yii::t('app', 'Pages'), 'url' => ['/pages'], 'icon' => 'fa fa-file-image-o'],
         ['label' => Yii::t('app', 'Categories'), 'url' => ['/categories'], 'icon' => 'fa fa-folder-open'],
+        ['label' => YiI::t('app', 'Regions'), 'url' => ['/regions'], 'icon' => 'fa fa-folder-open'],
         ['label' => Yii::t('app', 'Brands'), 'icon' => 'fa fa-car', 'url' => ['/brands']],
         ['label' => Yii::t('app', 'Models'), 'icon' => 'fa fa-bars', 'url' => ['/models']],
         ['label' => Yii::t('app', 'Site Settings'), 'icon' => 'fa fa-cogs', 'url' => ['/settings']]

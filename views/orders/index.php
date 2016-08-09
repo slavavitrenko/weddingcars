@@ -6,6 +6,7 @@ use yii\widgets\Pjax;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use app\models\Auto;
+use app\models\Regions;
 
 
 $this->title = Yii::t('app', 'Orders');
@@ -13,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="orders-index">
 
-    <?php // Pjax::begin(); ?>
+    <?php Pjax::begin(); ?>
     
     <h1>
         <?= Html::a('<i class="glyphicon glyphicon-plus"></i>', ['/category'], ['class' => 'btn btn-success', 'data-type' => 'self']); ?>
@@ -44,7 +45,17 @@ $this->params['breadcrumbs'][] = $this->title;
                             'options' => ['placeholder' => yii::t('app', 'Choose...')]
                         ]),
                 ],
-                'city',
+                [
+                    'attribute' => 'city',
+                    'value' => function($model){ return $model->region->name; },
+                    'filter' => Select2::widget([
+                            'model' => $searchModel,
+                            'attribute' => 'city',
+                            'data' => ArrayHelper::map(Regions::find()->all(), 'id', 'name'),
+                            'options' => ['placeholder' => Yii::t('app', 'Choose...')],
+                            'pluginOptions' => ['allowClear' => true],
+                        ])
+                ],
                 'datetime',
                 // 'hours',
                 // 'city_out',
@@ -98,5 +109,5 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]); ?>
-    <?php // Pjax::end(); ?>
+    <?php Pjax::end(); ?>
 </div>

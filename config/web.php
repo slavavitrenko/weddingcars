@@ -28,6 +28,12 @@ $config = [
                     'baseUrl' => '@web',
                     'js' => ['js/yii.js'],
                 ],
+                'yii\authclient\widgets\AuthChoiceAsset' => [
+                    'sourcePath' => null,
+                    'basePath' => '@webroot',
+                    'baseUrl' => '@web',
+                    'js' => ['js/authchoice.js'],
+                ]
             ],
         ],
         'request' => [

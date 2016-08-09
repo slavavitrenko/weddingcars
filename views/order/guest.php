@@ -5,6 +5,9 @@ use yii\widgets\ActiveForm;
 use kartik\checkbox\CheckboxX;
 use kartik\datetime\DateTimePicker;
 use yii\widgets\MaskedInput;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
+use app\models\Regions;
 
 
 $this->title = Yii::t('app', 'New Order & Register');
@@ -47,7 +50,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             </h3>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <?=$form->field($order, 'city', ['options' => ['class' => 'form-group--noicon']])->textInput(['placeholder' => Yii::t('app', 'City')])->label(false); ?>
+                                    <?=$form->field($order, 'city', ['options' => ['class' => 'form-group--noicon']])->widget(Select2::className(), [
+                                        'data' => ArrayHelper::map(Regions::find()->all(), 'id', 'name'),
+                                        'options' => ['placeholder' => Yii::t('app', 'Region')],
+                                    ])->label(false); ?>
+                                    
                                     <?=$form->field($order, 'hours', ['options' => ['class' => 'form-group--noicon']])->input('number', ['min' => '1', 'placeholder' => Yii::t('app', 'Hours')])->label(false); ?>
                                 </div>
                                 <div class="col-md-6">

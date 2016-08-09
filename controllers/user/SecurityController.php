@@ -3,7 +3,12 @@
 namespace app\controllers\user;
 
 use Yii;
+use yii\base\Model;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
+use dektrium\user\models\LoginForm;
 use yii\filters\AccessControl;
+
 
 class SecurityController extends \dektrium\user\controllers\SecurityController
 {
@@ -25,4 +30,35 @@ class SecurityController extends \dektrium\user\controllers\SecurityController
             ],
         ];
     }
+
+    public function actionLogin()
+    {
+        if (!Yii::$app->user->isGuest) {
+            $this->goHome();
+        }
+
+        $model = Yii::createObject(LoginForm::className());
+        $event = $this->getFormEvent($model);
+
+        $this->performAjaxValidation($model);
+
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->login()) {
+            return $this->redirect(['/orders']);
+        }
+
+        return $this->render('login', [
+            'model'  => $model,
+            'module' => $this->module,
+        ]);
+    }
+
+    protected function performAjaxValidation(Model $model)
+    {
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            echo json_encode(ActiveForm::validate($model));
+            Yii::$app->end();
+        }
+    }
+
 }

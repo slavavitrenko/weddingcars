@@ -7,6 +7,7 @@ use app\models\user\User;
 use app\models\Auto;
 use app\models\Brands;
 use app\models\Models;
+use app\models\Regions;
 
 
 class Orders extends \yii\db\ActiveRecord
@@ -24,11 +25,10 @@ class Orders extends \yii\db\ActiveRecord
         return [
             [['car_id', 'city', 'datetime', 'km', 'hours', 'route'], 'required'],
             [['terms'], 'required', 'message' => Yii::t('app', 'You must agree the terms')],
-            [['user_id', 'car_id', 'hours', 'confirmed', 'created_at'], 'integer'],
+            [['user_id', 'car_id', 'hours', 'confirmed', 'created_at', 'city'], 'integer'],
             [['route', 'description'], 'string'],
             [['paid'], 'string', 'max' => 255],
             [['paid'], 'default', 'value' => 'not'],
-            [['city'], 'string', 'max' => 255],
             [['created_at'], 'default', 'value' => time()],
             [['city_out', 'km', 'confirmed', 'archive'], 'default', 'value' => '0'],
             [['datetime'], 'date', 'format' => 'php:Y-m-d H:i'],
@@ -106,14 +106,6 @@ class Orders extends \yii\db\ActiveRecord
         return parent::beforeSave($insert);
     }
 
-    public function afterSave($insert, $changedattributes){
-        // if($this->isNewRecord){
-            $car = Auto::findOne($this->car_id);
-            $car->popularity = $car->popularity + 1;
-        // }
-        return parent::afterSave($insert, $changedattributes);
-    }
-
     public function getCost(){
         return $this->car->hour_cost;
     }
@@ -126,10 +118,22 @@ class Orders extends \yii\db\ActiveRecord
         return '<span class="label label-' . (in_array($this->paid, ['success', 'sandbox']) ? 'primary' : 'danger') . '">' . Yii::t('app', $this->paid) . '</span>';
     }
 
+    public function getRegion(){
+        return $this->hasOne(Regions::className(), ['id' => 'city']);
+    }
+
     public function generateOrderId(){
         $this->updateAttributes([
                 'order_id' => Yii::$app->security->generateRandomString(100)
             ]);
+    }
+
+    public function afterSave($insert, $changedattributes){
+        // if($this->isNewRecord){
+            $car = Auto::findOne($this->car_id);
+            $car->popularity = $car->popularity + 1;
+        // }
+        return parent::afterSave($insert, $changedattributes);
     }
     
 }

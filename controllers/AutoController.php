@@ -91,6 +91,10 @@ class AutoController extends \yii\web\Controller
     {
         $model = $this->findModel($id);
 
+        if($model->checked == '1'){
+            throw new ForbiddenHttpException(Yii::t('app', 'Auto is confirmed. You not allowed to change it'));
+        }
+
         if(!Yii::$app->user->can('manager') && $model->user_id != Yii::$app->user->identity->id){ 
             throw new NotFoundHttpException('The requested page does not exist.');
         }
@@ -184,7 +188,7 @@ class AutoController extends \yii\web\Controller
 
     public function actionDeleteImage($id){
         $image = Images::findOne($id);
-        if(!Yii::$app->user->can('manager') && $model->car->user_id != Yii::$app->user->id){
+        if((!Yii::$app->user->can('manager')) && ($model->car->user_id != Yii::$app->user->id)){
             throw new ForbiddenHttpException(Yii::t('app', 'Forbidden'));
         }
         $auto_id = $image->car_id;

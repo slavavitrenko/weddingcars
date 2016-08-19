@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]) ?>
                     <hr>
                     <p class="text-center"><?=Yii::t('app', 'Or Manually'); ?></p>
-                    <?=$form->field($model, 'login', ['options' => ['class' => 'form-group--noicon']])->textInput(['placeholder' => Yii::t('user', 'Login')])->label(false); ?>
+                    <?=$form->field($model, 'login', ['options' => ['class' => 'form-group--noicon']])->textInput(['placeholder' => Yii::t('app', 'Login or Email')])->label(false); ?>
 
                     <?= $form->field($model, 'password', ['options' => ['class' => 'form-group--noicon']])->passwordInput(['placeholder' => Yii::t('user', 'Password')])->label(($module->enablePasswordRecovery ? ' ' . Html::a(Yii::t('user', 'Forgot password?'), ['/user/recovery/request'], ['tabindex' => '5']) . '' : '')) ?>
 

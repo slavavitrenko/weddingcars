@@ -16,6 +16,7 @@ FrontendAsset::register($this);
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<?= Html::csrfMetaTags() ?>
 	<title><?= Html::encode($this->title) ?> | <?=Yii::$app->params['siteName']?></title>
+    <link rel="icon" href="/favicon.ico"><link rel="shortcut icon" href="/favicon.ico">
 	<?php $this->head() ?>
 </head>
 <body class='<?=Yii::$app->controller->id == 'site' && Yii::$app->controller->action->id == 'index' ? 'home' : ''?> <?=Yii::$app->controller->id . '-' . Yii::$app->controller->action->id; ?>'>

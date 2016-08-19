@@ -18,6 +18,10 @@ $config = [
                 ],
             ],
         ],
+        'user' => [
+            'identityClass' => 'dektrium\user\models\User',
+            'returnUrl' => '/orders',
+        ],
         'assetManager' => [
             'class' => 'yii\web\AssetManager',
             // 'appendTimestamp' => true,
@@ -40,14 +44,14 @@ $config = [
             'cookieValidationKey' => 'TIcpcFSiaR9JfHjSJdiW61fms30Fze7F',
         ],
         'cache' => [
-            // 'class' => 'yii\caching\FileCache',
+            'class' => 'yii\caching\FileCache',
             // 'class' => 'yii\caching\DummyCache',
-            'class' => 'yii\redis\Cache',
-            'redis' => [
-                'hostname' => 'localhost',
-                'port' => 6379,
-                'database' => 0,
-            ]
+            // 'class' => 'yii\redis\Cache',
+            // 'redis' => [
+            //     'hostname' => 'localhost',
+            //     'port' => 6379,
+            //     'database' => 0,
+            // ]
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',

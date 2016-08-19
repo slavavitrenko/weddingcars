@@ -33,8 +33,8 @@
 
 .select2-container--krajee .select2-selection--single {
     height: 35px!important;
-    line-height: 1.428571429;
-    padding: 10px 15px;
+    line-height: 1.428571429!important;
+    padding: 10px 15px!important;
 }
 
 .select2-container--krajee .select2-selection--single .select2-selection__arrow {

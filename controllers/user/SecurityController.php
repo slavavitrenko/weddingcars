@@ -34,7 +34,7 @@ class SecurityController extends \dektrium\user\controllers\SecurityController
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            $this->goHome();
+            return $this->redirect(['/orders']);
         }
 
         $model = Yii::createObject(LoginForm::className());

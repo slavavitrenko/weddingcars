@@ -71,7 +71,7 @@ class Auto extends \yii\db\ActiveRecord
             'description' => Yii::t('app', 'Description'),
             'hour_cost' => Yii::t('app', 'Cost Per Hour'),
             'few_hours_cost' => Yii::t('app', 'Cost Per Few Hours'),
-            'outside_cost' => Yii::t('app', 'Outside Cost'),
+            'outside_cost' => Yii::t('app', 'Outside Cost per km'),
         ];
     }
 

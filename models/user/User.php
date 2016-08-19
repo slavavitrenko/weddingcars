@@ -9,6 +9,8 @@ use app\models\Auto;
 class User extends \dektrium\user\models\User
 {
 
+    public $returnUrl = ['/orders'];
+
 	public function scenarios()
     {
         $scenarios = parent::scenarios();

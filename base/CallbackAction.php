@@ -51,9 +51,10 @@ class CallbackAction extends Action
         $post['signature'] = str_replace('\\/', '/', $post['signature']);
         $post['data'] = str_replace('\\/', '/', $post['data']);
 
-        $file = fopen('confirm.txt', 'w+');
-        fwrite($file, json_encode($post) . "\r\n\r\n");
-        fclose($file);
+        // $post =Yii::$app->request->post();
+        // $file = fopen('confirm.txt', 'w+');
+        // fwrite($file, json_encode($post) . "\r\n\r\n");
+        // fclose($file);
 
         $liqPay = Yii::$app->getModule('liqpay');
         $sign = base64_encode(sha1(Settings::get('liqpay_private_key') . $post['data'] . Settings::get('liqpay_private_key'), 1));

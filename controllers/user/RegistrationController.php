@@ -9,9 +9,10 @@ use app\models\user\RegistrationForm;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 use yii\base\Model;
+use yii\web\NotFoundHttpException;
 
 
-class Registrationcontroller extends \dektrium\user\controllers\RegistrationController
+class RegistrationController extends \dektrium\user\controllers\RegistrationController
 {
 
     use \app\traits\AjaxTrait;

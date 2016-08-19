@@ -93,6 +93,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
 
                         'update' => function($url, $model, $key){
+                            if($model->checked == '1'){
+                                return '';
+                            }
                             return Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['update', 'id' => $key], ['class' => 'btn btn-sm btn-primary']);
                         },
                         'delete' => function($url, $model, $key){

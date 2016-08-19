@@ -20,13 +20,14 @@ $(document).on("click", ".ajax-btn", function(e){
         button.attr("value"),
         function(data){
             if(data == 1){
-                $.pjax.reload({container: "#users-container"});
+                jQuery.pjax.reload({container: "#users-container"});
+                // window.location.reload();
             }
         });
 });
 ';
 
-$this->registerJs($js, \yii\web\View::POS_READY);
+$this->registerJs($js, \yii\web\View::POS_END);
 
 ?>
     <h1>
@@ -34,7 +35,7 @@ $this->registerJs($js, \yii\web\View::POS_READY);
         <?= Html::encode($this->title) ?>
     </h1>
 
-<?php // Pjax::begin(['id' => 'users-container']) ?>
+<?php Pjax::begin(['id' => 'users-container']) ?>
 
 <?= GridView::widget([
     'dataProvider' 	=> $dataProvider,
@@ -60,11 +61,11 @@ $this->registerJs($js, \yii\web\View::POS_READY);
             'value' => function($model){
                 if($model->type == 'driver'){return $model->partner == '1' ? Yii::t('app', 'Partner') : Yii::t('app', 'Driver');}
                 return '<div class="btn-group">' .
-                Html::button('а', ['class' => $model->role == 'admin' ? 'btn btn-info btn-sm' : 'btn btn-success btn-sm ajax-btn', 'value' => Url::to(['/user/admin/change-role', 'id' => $model->id, 'role' => 'admin'])])
+                Html::button('админ', ['class' => $model->role == 'admin' ? 'btn btn-info btn-sm' : 'btn btn-success btn-sm ajax-btn', 'value' => Url::to(['/user/admin/change-role', 'id' => $model->id, 'role' => 'admin'])])
                 .
                 // Html::button('м', ['class' => $model->role == 'manager' ? 'btn btn-info btn-sm' : 'btn btn-success btn-sm ajax-btn', 'value' => Url::to(['/user/admin/change-role', 'id' => $model->id, 'role' => 'manager'])])
                 // .
-                Html::button('к', ['class' => $model->role == 'client' ? 'btn btn-info btn-sm' : 'btn btn-success btn-sm ajax-btn', 'value' => Url::to(['/user/admin/change-role', 'id' => $model->id, 'role' => 'client'])])
+                Html::button('клиент', ['class' => $model->role == 'client' ? 'btn btn-info btn-sm' : 'btn btn-success btn-sm ajax-btn', 'value' => Url::to(['/user/admin/change-role', 'id' => $model->id, 'role' => 'client'])])
                 .
                 '</div>';
             }
@@ -156,4 +157,4 @@ $this->registerJs($js, \yii\web\View::POS_READY);
     ],
 ]); ?>
 
-<?php // Pjax::end() ?>
+<?php Pjax::end() ?>

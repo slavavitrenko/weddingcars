@@ -117,12 +117,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $auto,
                     'attribute' => 'images[]',
                     'options'=>[
-                        'multiple'=>true
+                        'multiple'=>true,
                     ],
                     'pluginOptions' => [
                         'maxFileCount' => 10
                     ]
-                ])->label(false); ?>
+                ])/*->label(false)*/; ?>
 
                  <?=Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'header__button']); ?>
 

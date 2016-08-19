@@ -120,11 +120,11 @@ $commentModel->rating = 5;
             </p>
           <span class="contact__social">Понравился автомобиль? Поделись!</span>
 
-          <a class="header__icon header__icon--vk" target="_blank" onclick="return !window.open(this.href, 'Вконтакте', 'width=640,height=300')" href="https://vk.com/share.php?url=<?=Url::to(['/auto/' . $model->id], true);?>"></a>
+          <a class="header__icon header__icon--vk" target="_blank" onclick="return !window.open(this.href, 'Вконтакте', 'width=640,height=300')" href="https://vk.com/share.php?url=<?=Url::to(['/category/view', 'id' => $model->id], true);?>"></a>
 
-          <a class="header__icon header__icon--fb" target="_blank" onclick="return !window.open(this.href, 'Facebook', 'width=640,height=300')" href="http://www.facebook.com/sharer/sharer.php?u=<?=Url::to(['/auto/' . $model->id], true);?>"></a>
+          <a class="header__icon header__icon--fb" target="_blank" onclick="return !window.open(this.href, 'Facebook', 'width=640,height=300')" href="http://www.facebook.com/sharer/sharer.php?u=<?=Url::to(['/category/view', 'id' => $model->id], true);?>"></a>
 
-          <a class="header__icon header__icon--twitter" target="_blank" onclick="return !window.open(this.href, 'Facebook', 'width=640,height=300')" href="https://twitter.com/intent/tweet?url=<?=Url::to(['/auto/' . $model->id], true);?>"></a>
+          <a class="header__icon header__icon--twitter" target="_blank" onclick="return !window.open(this.href, 'Facebook', 'width=640,height=300')" href="https://twitter.com/intent/tweet?url=<?=Url::to(['/category/view', 'id' => $model->id], true);?>"></a>
 
         </div>
         <div class="col-md-5">

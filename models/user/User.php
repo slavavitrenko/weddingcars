@@ -5,11 +5,19 @@ namespace app\models\user;
 use Yii;
 use app\models\Role;
 use app\models\Auto;
+use yii\web\IdentityInterface;
 
-class User extends \dektrium\user\models\User
+class User extends \dektrium\user\models\User implements IdentityInterface
 {
 
     public $returnUrl = ['/orders'];
+
+    
+    public function behaviors(){
+        return [
+            'class' => 'app\behaviors\AccessLogBehavior',
+        ];
+    }
 
 	public function scenarios()
     {
@@ -41,7 +49,7 @@ class User extends \dektrium\user\models\User
         $rules[] = [['type'], 'required', 'message' => Yii::t('app', 'You must choose account type')];
 		$rules[] = [['fio'], 'match', 'pattern' => '/^[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+\s[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+\s[\`\'\-а-яёА-ЯЁЩЁЇІЄщёіїє]+$/u', 'message' => Yii::t('app', 'You must enter data such as your passport')];
 		$rules[] = [['phone'], 'match', 'pattern' => '/^\+380([0-9]{9})+$/', 'message' => Yii::t('app', 'Phone not correct')];
-		$rules[] = [['type'], 'match', 'pattern' => '/^(driver|client|admin)$/', 'message' => Yii::t('app', 'You must select driver or client')];
+		$rules[] = [['type'], 'match', 'pattern' => '/^(driver|client|admin|manager)$/', 'message' => Yii::t('app', 'You must select driver or client')];
         unset($rules['usernameRequired']);
 		return $rules;
 	}
@@ -69,6 +77,10 @@ class User extends \dektrium\user\models\User
         return $this->hasMany(Auto::className(), ['user_id' => 'id']);
     }
 
+    public function setCars($cars){
+        return true;
+    }
+
     public function beforeSave($insert){
         if(empty($this->username)){
             $this->generateUsername();
@@ -80,13 +92,13 @@ class User extends \dektrium\user\models\User
     }
 
     public function afterSave($insert, $changedAttributes){
-        if(!Yii::$app->user->can('manager')){
+        // if(!Yii::$app->user->can('manager')){
             Role::deleteAll(['user_id' => $this->id]);
             $role = new Role;
-            $role-> item_name = $this->type;
+            $role->item_name = $this->type;
             $role->user_id = $this->id;
             $role->save(false);
-        }
+        // }
 
         return parent::afterSave($insert, $changedAttributes);
     }
@@ -102,5 +114,6 @@ class User extends \dektrium\user\models\User
         }
         return parent::beforeDelete();
     }
+    
 
 }

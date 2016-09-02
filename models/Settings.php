@@ -8,6 +8,14 @@ use Yii;
 class Settings extends \yii\db\ActiveRecord
 {
 
+    public $id;
+    
+    public function behaviors(){
+        return [
+            'class' => 'app\behaviors\AccessLogBehavior',
+        ];
+    }
+
     public static function tableName()
     {
         return 'settings';
@@ -51,4 +59,5 @@ class Settings extends \yii\db\ActiveRecord
         }
         return $entry;
     }
+    
 }

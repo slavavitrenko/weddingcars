@@ -31,6 +31,9 @@ class PagesController extends Controller
                     [
                         'allow' => true,
                         'roles' => ['@'],
+                        'matchCallback' => function () {
+                            return Yii::$app->user->can('manager');
+                        },
                     ],
                 ],
             ],
@@ -87,7 +90,7 @@ class PagesController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/pages/index']);
     }
 
     protected function findModel($id)

@@ -13,6 +13,12 @@ use Yii;
  */
 class Brands extends \yii\db\ActiveRecord
 {
+    
+    public function behaviors(){
+        return [
+            'class' => 'app\behaviors\AccessLogBehavior',
+        ];
+    }
     /**
      * @inheritdoc
      */

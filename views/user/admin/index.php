@@ -49,7 +49,7 @@ $this->registerJs($js, \yii\web\View::POS_END);
             'format' => 'raw',
             'filter' => Html::activeDropdownList($searchModel, 'role', [
                         'admin' => Yii::t('app', 'Admin'),
-                        // 'manager' => Yii::t('app', 'Manager'),
+                        'manager' => Yii::t('app', 'Manager'),
                         'driver' => Yii::t('app', 'Driver'),
                         'client' => Yii::t('app', 'Client'),
                         'partner' => Yii::t('app', 'Partner')
@@ -63,8 +63,8 @@ $this->registerJs($js, \yii\web\View::POS_END);
                 return '<div class="btn-group">' .
                 Html::button('админ', ['class' => $model->role == 'admin' ? 'btn btn-info btn-sm' : 'btn btn-success btn-sm ajax-btn', 'value' => Url::to(['/user/admin/change-role', 'id' => $model->id, 'role' => 'admin'])])
                 .
-                // Html::button('м', ['class' => $model->role == 'manager' ? 'btn btn-info btn-sm' : 'btn btn-success btn-sm ajax-btn', 'value' => Url::to(['/user/admin/change-role', 'id' => $model->id, 'role' => 'manager'])])
-                // .
+                Html::button('менеджер', ['class' => $model->role == 'manager' ? 'btn btn-info btn-sm' : 'btn btn-success btn-sm ajax-btn', 'value' => Url::to(['/user/admin/change-role', 'id' => $model->id, 'role' => 'manager'])])
+                .
                 Html::button('клиент', ['class' => $model->role == 'client' ? 'btn btn-info btn-sm' : 'btn btn-success btn-sm ajax-btn', 'value' => Url::to(['/user/admin/change-role', 'id' => $model->id, 'role' => 'client'])])
                 .
                 '</div>';

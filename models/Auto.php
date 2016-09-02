@@ -16,6 +16,13 @@ class Auto extends \yii\db\ActiveRecord
 {
 
     public $images;
+    
+    
+    public function behaviors(){
+        return [
+            'class' => 'app\behaviors\AccessLogBehavior',
+        ];
+    }
 
     public static function tableName()
     {

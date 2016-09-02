@@ -23,6 +23,7 @@ $this->registerJs($js, \yii\web\View::POS_READY);
 <?= $form->field($user, 'type')->radioList([
         'client' => Yii::t('app', 'Client'),
         'driver' => Yii::t('app', 'Driver'),
+        'manager' => Yii::t('app', 'Manager'),
     ], [
         'id' => 'user-type',
         'class' => 'btn-group form-group',

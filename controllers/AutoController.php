@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Auto;
 use yii\web\Response;
+use yii\helpers\Json;
 use app\models\Images;
 use app\models\AutoRate;
 use yii\web\UploadedFile;
@@ -15,7 +16,6 @@ use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 use app\models\search\Auto as AutoSearch;
-use yii\helpers\Json;
 
 
 class AutoController extends \yii\web\Controller
@@ -91,9 +91,9 @@ class AutoController extends \yii\web\Controller
     {
         $model = $this->findModel($id);
 
-        if($model->checked == '1'){
-            throw new ForbiddenHttpException(Yii::t('app', 'Auto is confirmed. You not allowed to change it'));
-        }
+        // if($model->checked == '1'){
+        //     throw new ForbiddenHttpException(Yii::t('app', 'Auto is confirmed. You not allowed to change it'));
+        // }
 
         if(!Yii::$app->user->can('manager') && $model->user_id != Yii::$app->user->identity->id){ 
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -101,7 +101,11 @@ class AutoController extends \yii\web\Controller
 
         $this->performAjaxValidation($model);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if(!Yii::$app->user->can('admin')){
+                $model->checked = '0';
+            }
+            $model->save(false);
 
             $this->saveImages(UploadedFile::getInstances($model, 'images'), $model->id);
 

@@ -32,17 +32,17 @@
 
 
 .select2-container--krajee .select2-selection--single {
-    height: 35px!important;
-    line-height: 1.428571429!important;
-    padding: 10px 15px!important;
+  height: 35px!important;
+  line-height: 1.428571429!important;
+  padding: 10px 15px!important;
 }
 
 .select2-container--krajee .select2-selection--single .select2-selection__arrow {
-    height: 33px!important;
+  height: 33px!important;
 }
 
 .select2-container--krajee .select2-selection {
-    border-radius: 0!important;
+  border-radius: 0!important;
 }
 
 label.control-label {
@@ -50,7 +50,7 @@ label.control-label {
 }
 
 .form-group.has-success label.btn {
-    color: white;
+  color: white;
 }
 
 .form-group .btn-group {
@@ -67,7 +67,7 @@ label.control-label {
 
 }
 #user-type .btn {
-  width: 50%;
+  width: 33%;
 }
 #bus-type .btn {
   width: 50%;
@@ -86,14 +86,14 @@ html { -ms-overflow-style: none; }
 html { overflow: -moz-scrollbars-none; }
 
 .form-group.has-error label.btn {
-    color: white;
+  color: white;
 }
 
 .footer {
-    background: #fff;
-    padding: 15px;
-    color: #444;
-    border-top: 1px solid #d2d6de;
+  background: #fff;
+  padding: 15px;
+  color: #444;
+  border-top: 1px solid #d2d6de;
 }
 
 h1,
@@ -128,18 +128,18 @@ ul.breadcrumb {
   ul.breadcrumb {
     top: 50px;
   }
-}*/
+  }*/
 
-@media screen and (max-width: 768px){
-  ul.breadcrumb {
+  @media screen and (max-width: 768px){
+    ul.breadcrumb {
+      display: none;
+    }
+  }
+
+  .delete-button {
+    position: absolute;
+  }
+
+  .field-register-form-partner {
     display: none;
   }
-}
-
-.delete-button {
-    position: absolute;
-}
-
-.field-register-form-partner {
-  display: none;
-}

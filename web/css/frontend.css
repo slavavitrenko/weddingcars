@@ -249,3 +249,22 @@ input[type="checkbox"] {
     height: 40px;
     padding: 10px;
 }
+.auth-clients li {
+    width: 25%;
+    padding: 0;
+    margin: 0;
+}
+a.auth-link {
+    width: 32px;
+    margin: 0 auto;
+    display: block;
+}
+
+.auth-clients {
+    padding: 0;
+}
+
+
+  .benefit__info {
+    margin-bottom: 30px;
+  }

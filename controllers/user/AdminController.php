@@ -33,7 +33,7 @@ class AdminController extends \dektrium\user\controllers\AdminController
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function () {
-                            return (Yii::$app->user->can('admin') or Yii::$app->user->can('manager'));
+                            return Yii::$app->user->can('manager');
                         },
                     ],
                 ],

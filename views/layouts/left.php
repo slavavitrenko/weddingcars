@@ -124,7 +124,18 @@ if(Yii::$app->user->can('manager')){
         ['label' => Yii::t('app', 'Orders'), 'url' => ['/orders'], 'icon' => 'fa fa-usd'],
         ['label' => Yii::t('app', 'Autos'), 'url' => ['/auto'], 'icon' => 'fa fa-car'],
     ]];
+
+}
+if(Yii::$app->user->can('manager') && !Yii::$app->user->can('admin')){
     $items[] = ['label' => Yii::t('user', 'Users'), 'url' => ['/user/admin'], 'icon' => 'fa fa-group'];
+}
+if(Yii::$app->user->can('admin')){
+    $items[] = ['label' => Yii::t('user', 'Users'), 'url' => '#', 'icon' => 'fa fa-group', 'items' => [
+        ['label' => Yii::t('user', 'Users'), 'url' => ['/user/admin'], 'icon' => 'fa fa-group'],
+        ['label' => Yii::t('app', 'Access Log'), 'url' => ['/access-log'], 'icon' => 'fa fa-history'],
+    ]];
+}
+if(Yii::$app->user->can('manager')){
     $items[] = ['icon' => 'fa fa-tachometer', 'label' => Yii::t('app', 'Settings'), 'url' => '#', 'items' => [
         ['label' => Yii::t('app', 'Pages'), 'url' => ['/pages'], 'icon' => 'fa fa-file-image-o'],
         ['label' => Yii::t('app', 'Categories'), 'url' => ['/categories'], 'icon' => 'fa fa-folder-open'],
@@ -134,6 +145,7 @@ if(Yii::$app->user->can('manager')){
         ['label' => Yii::t('app', 'Site Settings'), 'icon' => 'fa fa-cogs', 'url' => ['/settings']]
     ]];
 }
+
 if(Yii::$app->user->identity->type == 'driver'){
     $items[] = ['label' => yii::t('app', 'Dashboard'), 'icon' => 'fa fa-tachometer', 'url' => '#', 'items' => [
         ['label' => Yii::t('app', 'Orders'), 'icon' => 'fa fa-usd', 'url' => ['/orders']],

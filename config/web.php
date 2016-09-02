@@ -3,7 +3,7 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
-    'id' => 'basic',
+    'id' => 'weddingcars',
     'name' => Yii::t('app', 'Wedding Cars'),
     'language' => 'ru',
     'basePath' => dirname(__DIR__),
@@ -19,7 +19,7 @@ $config = [
             ],
         ],
         'user' => [
-            'identityClass' => 'dektrium\user\models\User',
+            'identityClass' => 'app\models\user\User',
             'returnUrl' => '/orders',
         ],
         'assetManager' => [
@@ -44,8 +44,8 @@ $config = [
             'cookieValidationKey' => 'TIcpcFSiaR9JfHjSJdiW61fms30Fze7F',
         ],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
-            // 'class' => 'yii\caching\DummyCache',
+            // 'class' => 'yii\caching\FileCache',
+            'class' => 'yii\caching\DummyCache',
             // 'class' => 'yii\redis\Cache',
             // 'redis' => [
             //     'hostname' => 'localhost',
@@ -75,6 +75,7 @@ $config = [
                 'categories/all' => 'category/index',
                 'order/<id:\d+>' => 'order',
                 'page/<id:\d+>' => '/pages/view',
+                'orders/<id:\d+>' => '/orders/view',
                 'category/<id:\d+>' => 'category/list',
                 '/<id:\d+>' => 'category/view',
             ],
@@ -153,7 +154,7 @@ $config = [
             'admins' => ['admin'],
             'enableUnconfirmedLogin' => true,
             'enableRegistration' => true,
-            // 'enableConfirmation' => false,
+            'enableConfirmation' => false,
             'enableGeneratingPassword' => false,
             'controllerMap' => [
                 'settings' => 'app\controllers\user\SettingsController',
@@ -178,20 +179,20 @@ $config = [
 ];
 
 
-if (YII_ENV_DEV) {
+// if (YII_ENV_DEV) {
 
-    // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
-        'allowedIPs' => ['127.0.0.1', '192.168.0.*', '93.78.238.18', '188.163.35.131']
-    ];
+//     // configuration adjustments for 'dev' environment
+//     $config['bootstrap'][] = 'debug';
+//     $config['modules']['debug'] = [
+//         'class' => 'yii\debug\Module',
+//         'allowedIPs' => ['127.0.0.1', '192.168.0.*', '93.78.238.18', '188.163.35.131']
+//     ];
 
-    $config['bootstrap'][] = 'gii';
-    $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
-        'allowedIPs' => ['127.0.0.1', '192.168.0.*', '93.78.238.18', '188.163.35.131'],
-    ];
-}
+//     $config['bootstrap'][] = 'gii';
+//     $config['modules']['gii'] = [
+//         'class' => 'yii\gii\Module',
+//         'allowedIPs' => ['127.0.0.1', '192.168.0.*', '93.78.238.18', '188.163.35.131'],
+//     ];
+// }
 
 return $config;

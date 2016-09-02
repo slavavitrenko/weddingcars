@@ -219,7 +219,8 @@ About Company
         </div>
         <div class="row">
             <div class="col-md-offset-1 col-md-10">
-                <p class="about__info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit suscipit officiis velit dignissimos tempora pariatur dolorum nihil culpa nobis atque reprehenderit laboriosam officia illum necessitatibus, mollitia voluptates alias, in vel.</p>
+                <p class="about__info">Weddingcars - это первый в Полтаве и Украине открытый сервис поиска свадебных автомобилей. Мы выступаем в качестве посредника между водителями и клиентами. Водители, желающие предоставлять услуги свадебной перевозки, проходят проверку и регистрируются на нашей онлайн-площадке. 
+Клиенты, в свою очередь, имеют возможность самостоятельно выбрать свадебный автомобиль на любой вкус и цвет из обширного перечня представленных вариантов.</p>
             </div>
         </div>
         <div class="row">
@@ -230,7 +231,7 @@ About Company
                         Большой парк авто
                     </h4>
                     <div class="benefit__info">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Огромный выбор автомобилей на любой вкус и цвет
                     </div>
                 </div>
             </div>
@@ -241,7 +242,7 @@ About Company
                         Опытние водители
                     </h4>
                     <div class="benefit__info">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Благодаря профессионализму водителей комфортность и удобство поездки Вам обеспечены
                     </div>
                 </div>
             </div>
@@ -252,7 +253,7 @@ About Company
                         Пунктуальность
                     </h4>
                     <div class="benefit__info">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Авто подаются точно в срок, с учетом необходимого времени для украшения
                     </div>
                 </div>
             </div>

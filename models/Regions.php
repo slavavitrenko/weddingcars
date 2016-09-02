@@ -7,6 +7,12 @@ use Yii;
 
 class Regions extends \yii\db\ActiveRecord
 {
+    
+    public function behaviors(){
+        return [
+            'class' => 'app\behaviors\AccessLogBehavior',
+        ];
+    }
 
     public static function tableName()
     {

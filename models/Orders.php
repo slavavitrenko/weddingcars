@@ -14,6 +14,13 @@ class Orders extends \yii\db\ActiveRecord
 {
 
     public $terms;
+    
+    
+    public function behaviors(){
+        return [
+            'class' => 'app\behaviors\AccessLogBehavior',
+        ];
+    }
 
     public static function tableName()
     {

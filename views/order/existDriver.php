@@ -34,6 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
 			    <div class="row">
 			    	<div class="col-md-6">
 
+				        <?=$form->field($model, 'car_number', ['options' => ['class' => 'form-group--noicon']])->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Car Number')])->label(false);?>
+
 				        <?php echo $form->field($model, 'brand', ['options' => ['class' => 'form-group--noicon']])->widget(Select2::className(), [
 				            'data' => ArrayHelper::map(Brands::find()->all(), 'id', 'name'),
 				            'options' => [
@@ -54,11 +56,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				            ]
 				        ])->label(false); ?>
 
-				        <?php echo $form->field($model, 'year', ['options' => ['class' => 'form-group--noicon']])->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Year')])->label(false) ?>
-
 			    	</div>
 			    	<div class="col-md-6">
-
 				        <?php echo$form->field($model, 'category_id', ['options' => ['class' => 'form-group--noicon']])->widget(Select2::className(), [
 				            'data' => ArrayHelper::map(Categories::find()->all(), 'id', 'name'),
 				            'options' => ['placeholder' => Yii::t('app', 'Category')],
@@ -67,7 +66,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
 				        <?php echo $form->field($model, 'color', ['options' => ['class' => 'form-group--noicon']])->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Color')])->label(false) ?>
 
-		                <?php echo$form->field($model, 'pass_count', ['options' => ['class' => 'form-group--noicon']])->input('number', ['min' => 1, 'placeholder' => Yii::t('app', 'Pass Count')])->label(false); ?>
+				        <div class="row">
+				        	<div class="col-sm-6">
+				        		<?php echo $form->field($model, 'year', ['options' => ['class' => 'form-group--noicon']])->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Year')])->label(false) ?>
+				        	</div>
+				        	<div class="col-sm-6">
+		                		<?php echo$form->field($model, 'pass_count', ['options' => ['class' => 'form-group--noicon']])->input('number', ['min' => 1, 'placeholder' => Yii::t('app', 'Pass Count')])->label(false); ?>
+				        	</div>
+				        </div>
+
 
 			    	</div>
 			    </div>
@@ -90,7 +97,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 			        <?php echo$form->field($model, 'few_hours_cost', ['options' => ['class' => 'form-group--noicon']])->textInput(['placeholder' => Yii::t('app', 'Cost Per Few Hours')])->label(false); ?>
 
-			        <?php echo$form->field($model, 'outside_cost', ['options' => ['class' => 'form-group--noicon']])->textInput(['placeholder' => Yii::t('app', 'Outside Cost')])->label(false); ?>
+			        <?php echo$form->field($model, 'outside_cost', ['options' => ['class' => 'form-group--noicon']])->textInput(['placeholder' => Yii::t('app', 'Outside Cost per km')])->label(false); ?>
 
 		        	</div>
 		        </div>

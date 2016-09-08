@@ -83,4 +83,17 @@ class SiteController extends \yii\web\Controller
         return $this->render('terms', ['text' => Settings::get('terms')]);
     }
 
+    public function actionDriver(){
+        return $this->render('driver');
+    }
+
+    public function actionContact(){
+        $model = new ContactForm;
+        if($model->load(Yii::$app->request->post()) && $model->contact(Settings::get('email'))){
+            Yii::$app->session->setFlash('success', Yii::t('app', 'Contact form submtted'));
+            return $this->refresh();
+        }
+        return $this->render('contact', ['model' => $model]);
+    }
+
 }

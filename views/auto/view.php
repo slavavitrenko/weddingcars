@@ -47,20 +47,30 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'id',
                     // 'user_id',
                     // 'name',
+                    // [
+                    //     'attribute' => 'type',
+                    //     'value' => Yii::t('app', ucfirst($model->type)),
+                    //     'visible' => $model->type != 'bus'
+                    // ],
+                    // [
+                    //     'attribute' => 'bus_type',
+                    //     'value' => Yii::t('app', ucfirst($model->bus_type)),
+                    //     'visible' => $model->type == 'bus'
+                    // ],
+                    // [
+                    //     'attribute' => 'body',
+                    //     'value' => Yii::t('app', ucfirst($model->body)),
+                    //     'visible' => $model->type != 'bus'
+                    // ],
                     [
-                        'attribute' => 'type',
-                        'value' => Yii::t('app', ucfirst($model->type)),
-                        'visible' => $model->type != 'bus'
+                        'attribute' => Yii::t('app', 'Check Status'),
+                        'value' => Html::tag('span', Yii::t('app', $model->checked ? 'Checked' : 'Not Checked'), ['class' => 'label' . ($model->checked ? ' label-success ' : ' label-danger')]),
+                        'format' => 'raw',
                     ],
                     [
-                        'attribute' => 'bus_type',
-                        'value' => Yii::t('app', ucfirst($model->bus_type)),
-                        'visible' => $model->type == 'bus'
-                    ],
-                    [
-                        'attribute' => 'body',
-                        'value' => Yii::t('app', ucfirst($model->body)),
-                        'visible' => $model->type != 'bus'
+                        'attribute' => Yii::t('app', 'Category'),
+                        'value' => $model->category->name,
+                        'header' => Yii::t('app', 'Category')
                     ],
                     [
                         'attribute' => 'brand',

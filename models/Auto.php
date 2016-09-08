@@ -34,7 +34,9 @@ class Auto extends \yii\db\ActiveRecord
         return [
             // ['bus_type', 'required', 'when' => function($model){return $model->type == 'bus';},
             // 'whenClient' => 'function(attribute, value){ return $("input[name=\'Auto[type]\']:checked").val() == "bus";}'],
-            [[/*'type', */'brand', 'model', 'year', 'color'/*, 'retro'*/, 'hour_cost', 'few_hours_cost', 'outside_cost', 'pass_count', 'category_id', 'decor'], 'required'],
+            [['car_number', 'brand', 'model', 'year', 'color'/*, 'retro'*/, 'hour_cost', 'few_hours_cost', 'outside_cost', 'pass_count', 'category_id', 'decor'], 'required'],
+            [['car_number'], 'unique', 'message' => Yii::t('app', 'Selected auto already exist')],
+            [['car_number'], 'string', 'max' => 8, 'min' => 5],
             [['user_id', 'retro', 'brand', 'model', 'category_id'], 'integer'],
             [['name', 'type', 'color', 'description'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -79,6 +81,7 @@ class Auto extends \yii\db\ActiveRecord
             'hour_cost' => Yii::t('app', 'Cost Per Hour'),
             'few_hours_cost' => Yii::t('app', 'Cost Per Few Hours'),
             'outside_cost' => Yii::t('app', 'Outside Cost per km'),
+            'car_number' => Yii::t('app', 'Car Number'),
         ];
     }
 
@@ -120,6 +123,13 @@ class Auto extends \yii\db\ActiveRecord
             $this->user_id = Yii::$app->user->identity->id;
         }
         return parent::beforeSave($insert);
+    }
+
+    public function beforeValidate(){
+        if($this->car_number){
+            $this->car_number = str_replace(' ', '', $this->car_number);
+        }
+        return parent::beforeValidate();
     }
 
     public function beforeDelete(){

@@ -22,7 +22,7 @@
         "dmstr/yii2-adminlte-asset": "*",
         "kartik-v/yii2-widget-select2": "@dev",
         "kartik-v/yii2-widget-depdrop": "@dev",
-        "kartik-v/yii2-checkbox-x": "@dev",
+        "kartik-v/yii2-checkbox-x": "^1.0.3",
         "yiisoft/yii2-imagine": "*",
         "kartik-v/yii2-widget-fileinput": "@dev",
         "2amigos/yii2-gallery-widget": "~1.0",

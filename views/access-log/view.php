@@ -14,6 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <?php print_r(json_decode($model->changed)); die();?>
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -21,7 +23,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'action',
             'user_id',
             'item_id',
-            'changed:ntext',
+            [
+                'attribute' => 'changed',
+                'value' => function($model){
+                    return json_decode($model->changed);
+                }
+            ],
             'attributes:ntext',
             'model_class',
             'created_at',

@@ -34,6 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             <h3 class="checkout__title checkout__title--regist">
                                 Даные для регистрации:
                             </h3>
+                            <div class="hidden">
+                            <?=$form->field($user, 'type')->hiddenInput(['value' => 'client'])->label(false);?>
+                            </div>
                             <?=$form->field($user, 'fio', ['options' => ['class' => 'form-group--noicon']])->textInput(['placeholder' => Yii::t('app', 'Fio')])->label(false); ?>
                             <?=$form->field($user, 'phone', ['options' => ['class' => 'form-group--noicon']])->widget(MaskedInput::className(), [
                                 'mask' => '+380999999999',

@@ -40,7 +40,7 @@ class ContactForm extends Model
         if ($this->validate()) {
             Yii::$app->mailer->compose()
                 ->setTo($email)
-                ->setFrom([$this->email => $this->name])
+                ->setFrom([Yii::$app->params['adminEmail'] => $this->name . '(' . $this->email . ')'])
                 ->setSubject('Сообщение с формы сайта WeddingCars.pl.ua')
                 ->setTextBody($this->body)
                 ->send();

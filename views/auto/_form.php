@@ -42,6 +42,8 @@ $this->registerJs($js, \yii\web\View::POS_READY);
                 <div class="row">
                     <div class="col-md-6">
 
+                        <?=$form->field($model, 'car_number'); ?>
+
                         <?php echo $form->field($model, 'brand')->widget(Select2::className(), [
                             'data' => ArrayHelper::map(Brands::find()->all(), 'id', 'name'),
                             'options' => [
@@ -63,8 +65,6 @@ $this->registerJs($js, \yii\web\View::POS_READY);
                             ]
                         ]); ?>
 
-                        <?php echo $form->field($model, 'year') ?>
-
                     </div>
                     <div class="col-md-6">
 
@@ -76,7 +76,15 @@ $this->registerJs($js, \yii\web\View::POS_READY);
 
                         <?php echo $form->field($model, 'color') ?>
 
-                        <?php echo$form->field($model, 'pass_count')->input('number', ['min' => 1]); ?>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <?php echo $form->field($model, 'year') ?>
+                            </div>
+                            <div class="col-sm-6">
+                                <?php echo$form->field($model, 'pass_count')->input('number', ['min' => 1]); ?>
+                            </div>
+                        </div>
+
 
                     </div>
                 </div>

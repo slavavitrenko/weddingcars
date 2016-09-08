@@ -37,7 +37,12 @@ $config = [
                     'basePath' => '@webroot',
                     'baseUrl' => '@web',
                     'js' => ['js/authchoice.js'],
-                ]
+                ],
+                'kartik\datetime\DateTimePickerAsset' => [
+                    'sourcePath' => null,
+                    'basePath' => '@webroot/datetimepicker-fix/',
+                    'baseUrl' => '@web/datetimepicker-fix',
+                ],
             ],
         ],
         'request' => [

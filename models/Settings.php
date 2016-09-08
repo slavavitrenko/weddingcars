@@ -12,7 +12,7 @@ class Settings extends \yii\db\ActiveRecord
     
     public function behaviors(){
         return [
-            'class' => 'app\behaviors\AccessLogBehavior',
+            // 'class' => 'app\behaviors\AccessLogBehavior',
         ];
     }
 

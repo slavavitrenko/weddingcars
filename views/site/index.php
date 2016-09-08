@@ -25,7 +25,7 @@ function initMap() {
     var myLatLng = {lat: ' . (Settings::get("latitude") ? Settings::get("latitude") : "49.574519") . ', lng: ' . (Settings::get("longitude") ? Settings::get("longitude") : "34.507636") . '};
 
     var map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 16,
+        zoom: 15,
         center: myLatLng,
         scrollwheel: false
     });
@@ -304,12 +304,16 @@ Contact
                         Контакты
                     </h3>
                     <span><?=SettingS::get('address'); ?></span>
-                    <a href="tel:<?=Settings::get('phone1'); ?>" class="contact__phone">
-                        <?=Settings::get('phone1'); ?>
-                    </a>
-                    <a href="tel:<?=Settings::get('phone2'); ?>" class="contact__phone">
-                        <?=Settings::get('phone2'); ?>
-                    </a>
+                    <p>
+                        <a href="tel:<?=Settings::get('phone1'); ?>" class="contact__phone">
+                            <?=Settings::get('phone1'); ?>
+                        </a>
+                    </p>
+                    <p>
+                        <a href="tel:<?=Settings::get('phone2'); ?>" class="contact__phone">
+                            <?=Settings::get('phone2'); ?>
+                        </a>
+                    </p>
                     <a href="mailto:<?=Settings::get('email'); ?>" class="contact__email">
                         <?=Settings::get('email'); ?>
                     </a>

@@ -33,6 +33,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h3 class="checkout__title checkout__title--regist">
                     Даные для регистрации:
                 </h3>
+                <div class="hidden">
+                <?=$form->field($user, 'type')->hiddenInput(['value' => 'driver'])->label(false);?>
+                </div>
                 <?=$form->field($user, 'fio', ['options' => ['class' => 'form-group--noicon']])->textInput(['placeholder' => Yii::t('app', 'Fio')])->label(false); ?>
                 <?=$form->field($user, 'phone', ['options' => ['class' => 'form-group--noicon']])->widget(MaskedInput::className(), [
                 	'mask' => '+380999999999',
@@ -51,6 +54,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 </h3>
 			    <div class="row">
 			    	<div class="col-md-6">
+
+				        <?=$form->field($auto, 'car_number', ['options' => ['class' => 'form-group--noicon']])->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Car Number')])->label(false); ?>
 
 				        <?php echo $form->field($auto, 'brand', ['options' => ['class' => 'form-group--noicon']])->widget(Select2::className(), [
 				            'data' => ArrayHelper::map(Brands::find()->all(), 'id', 'name'),
@@ -72,8 +77,6 @@ $this->params['breadcrumbs'][] = $this->title;
 				            ]
 				        ])->label(false); ?>
 
-				        <?php echo $form->field($auto, 'year', ['options' => ['class' => 'form-group--noicon']])->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Year')])->label(false) ?>
-
 			    	</div>
 			    	<div class="col-md-6">
 
@@ -85,7 +88,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
 				        <?php echo $form->field($auto, 'color', ['options' => ['class' => 'form-group--noicon']])->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Color')])->label(false) ?>
 
-		                <?php echo$form->field($auto, 'pass_count', ['options' => ['class' => 'form-group--noicon']])->input('number', ['min' => 1, 'placeholder' => Yii::t('app', 'Pass Count')])->label(false); ?>
+
+						<div class="row">
+							<div class="col-sm-6">
+				        		<?php echo $form->field($auto, 'year', ['options' => ['class' => 'form-group--noicon']])->textInput(['maxlength' => true, 'placeholder' => Yii::t('app', 'Year')])->label(false) ?>
+							</div>
+							<div class="col-sm-6">
+		                		<?php echo$form->field($auto, 'pass_count', ['options' => ['class' => 'form-group--noicon']])->input('number', ['min' => 1, 'placeholder' => Yii::t('app', 'Pass Count')])->label(false); ?>
+							</div>
+						</div>
 
 			    	</div>
 			    </div>
@@ -108,7 +119,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 			        <?php echo$form->field($auto, 'few_hours_cost', ['options' => ['class' => 'form-group--noicon']])->textInput(['placeholder' => Yii::t('app', 'Cost Per Few Hours')])->label(false); ?>
 
-			        <?php echo$form->field($auto, 'outside_cost', ['options' => ['class' => 'form-group--noicon']])->textInput(['placeholder' => Yii::t('app', 'Outside Cost')])->label(false); ?>
+			        <?php echo$form->field($auto, 'outside_cost', ['options' => ['class' => 'form-group--noicon']])->textInput(['placeholder' => Yii::t('app', 'Outside Cost per km')])->label(false); ?>
 
 		        	</div>
 		        </div>

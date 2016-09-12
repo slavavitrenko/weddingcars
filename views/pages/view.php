@@ -17,8 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <div class="pages-view col-md-10 col-md-offset-1">
 
-                <h1>
+            <div class="col-lg-offset-4 col-lg-4 col-md-offset-2 col-md-8 text-center">
+                <h3 class='ourcars__title ourcars__title--page'>
                     <?php if(Yii::$app->user->can('manager')): ?>
+                        <?= Html::a('<i class="glyphicon glyphicon-new-window"></i> ' . Yii::t('app', 'In New Window'), ['view', 'id' => $model->id], ['class' => 'btn btn-warning', 'target' => '_blank']); ?>
                         <?= Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
                         <?= Html::a('<i class="glyphicon glyphicon-remove"></i>', ['delete', 'id' => $model->id], [
                             'class' => 'btn btn-danger',
@@ -27,13 +29,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             'method' => 'post',
                             ],
                             ]) ?>
-                        <?=Yii::t('app', 'Page')?> "<?= Html::encode($this->title) ?>"
+                        "<?= Html::encode($this->title) ?>"
                         <?php else: ?>
                             <?=Html::encode($this->title); ?>
                         <?php endif; ?>
-                    </h1>
-                    
+                    </h3>
+                </div>
+                <div class="col-md-12">
                     <?=$model->text; ?>
+                </div>
 
                 </div>
             </div>

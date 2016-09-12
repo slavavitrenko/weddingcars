@@ -119,7 +119,7 @@ class Auto extends \yii\db\ActiveRecord
     }
 
     public function beforeSave($insert){
-        if($this->isNewRecord){
+        if($this->isNewRecord && !Yii::$app->user->can('manager')){
             $this->user_id = Yii::$app->user->identity->id;
         }
         return parent::beforeSave($insert);

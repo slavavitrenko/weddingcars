@@ -20,7 +20,7 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\models\user\User',
-            'returnUrl' => '/orders',
+            'returnUrl' => ['/orders'],
         ],
         'assetManager' => [
             'class' => 'yii\web\AssetManager',
@@ -75,6 +75,7 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'suffix' => '.html',
             'rules' => [
                 '/' => 'site/index',
                 'categories/all' => 'category/index',

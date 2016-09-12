@@ -32,8 +32,8 @@ class AccessLogBehavior extends Behavior
 	public function updateAction($event){
 		$this->loadData('update');
 		$this->calculateChanges($event->changedAttributes, $this->owner->getAttributes());
-		$this->entry->changed = json_encode($this->changed);
-		$this->entry->attributes = json_encode($this->attributes);
+		$this->entry->changed = json_encode($this->changed, true);
+		$this->entry->attributes = json_encode($this->attributes, true);
 		if($this->changed && $this->attributes){
 			$this->entry->save(false);
 		}
@@ -41,7 +41,7 @@ class AccessLogBehavior extends Behavior
 
 	public function deleteAction($event){
 		$this->loadData('delete');
-		$this->entry->attributes = json_encode($this->owner->getAttributes());
+		$this->entry->attributes = json_encode($this->owner->getAttributes(), true);
 		$this->entry->save(false);
 	}
 

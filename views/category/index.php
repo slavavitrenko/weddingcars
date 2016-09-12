@@ -20,12 +20,12 @@ $this->title = Yii::t('app', 'Categories');
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-offset-4 col-lg-4 col-md-offset-2 col-md-8 text-center">
-				<h3 class="ourcars__title">Наши автомобили</h3>
+				<h3 class="ourcars__title ourcars__title--page">Наши автомобили</h3>
 			</div>
 		</div>
 		<div class="row categories">
+				<?php if($categories): ?>
 			<?php foreach($categories as $category): ?>
-				<?php if($category->cars): ?>
 				<div class="col-lg-3 col-md-4 col-sm-6 ourcars__border">
 					<a href="<?=Url::to(['/category/list', 'id' => $category->id]); ?>" class="ourcars__car">
 						<div class="ourcars__image" style='background: url(<?=$category->src; ?>) no-repeat; background-position: center center; background-size: contain;' alt="car"></div>
@@ -44,8 +44,10 @@ $this->title = Yii::t('app', 'Categories');
 
 					</a>
 				</div>
-			<?php endif; ?>
 			<?php endforeach; ?>
+			<?php else: ?>
+				<h2 class='text-center'>Автомобили проходят верификацию. Они скоро здесь появятся</h2>
+			<?php endif; ?>
 		</div>
 	</div>
 </section>

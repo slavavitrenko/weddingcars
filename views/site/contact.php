@@ -19,7 +19,7 @@ Question
 	<div class="container">
 		<div class="row">
 			<div class="col-md-5 col-md-offset-1 text-center">
-				<h3 class="popularcars__title popularcars__title--question">
+				<h3 class="ourcars__title ourcars__title--page">
 					Связаться с нами
 				</h3>
 				<div class="without-icons">
@@ -38,7 +38,7 @@ Question
 			</div>
             <div class="col-md-5">
                 <div class="contact__info">
-                    <h3 class="popularcars__title popularcars__title--contact">
+                    <h3 class="ourcars__title ourcars__title--page">
                         Контакты
                     </h3>
                     <span><?=SettingS::get('address'); ?></span>

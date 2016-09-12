@@ -22,8 +22,8 @@ foreach($pages as $page){
   $items[] = ['label' => $page->title, 'url' => ['/pages/view', 'id' =>  $page->id]];
 }
 
-$items[] = ['label' => Yii::t('app', 'Contact'), 'url' => ['/site/contact']];
 $items[] = ['label' => Yii::t('app', 'For Drivers'), 'url' => ['/site/driver']];
+$items[] = ['label' => Yii::t('app', 'Contact'), 'url' => ['/site/contact']];
 
 $items[] = ['label' => '<div class="nav__social hidden-sm  hidden-md  hidden-lg">' . 
         "<a target='_blank' href='" . (Settings::get('vk_link') ? Settings::get('vk_link') : '#') . "' class='header__icon header__icon--vk'></a>".

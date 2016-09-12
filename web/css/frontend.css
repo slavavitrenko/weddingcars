@@ -243,3 +243,12 @@ a.auth-link {
 .btn-group > .btn:last-child:not(:first-child), .btn-group > .dropdown-toggle:not(:first-child) {
     border-left: 1px solid white;
 }
+
+.text-center {
+	text-align: center!important;
+}
+
+ .ourcars__title--page {
+ 	    margin-top: 36px;
+    margin-bottom: 60px;
+ }

@@ -24,7 +24,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'action',
             'user_id',
             'item_id',
-            'changed:ntext',
+            [
+                'attribute' => 'changed',
+                'value' => function($model){
+                    return mb_substr($model->changed, 0, 300, 'utf-8');
+                }
+            ],
             // 'attributes:ntext',
             // 'model_class',
             // 'created_at',

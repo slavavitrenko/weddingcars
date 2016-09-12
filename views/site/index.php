@@ -55,8 +55,8 @@ Our Cars
             </div>
         </div>
         <div class="row">
+            <?php if($categories): ?>
             <?php foreach($categories as $category): ?>
-                <?php if ($category->cars): ?>
                 <div class="col-lg-3 col-md-4 col-sm-6 ourcars__border">
                     <a href="<?=Url::to(['/category/' . $category->id]); ?>" class="ourcars__car">
                         <div class="ourcars__image" style='background: url(<?=$category->src; ?>) no-repeat; background-position: center center; background-size: contain;' alt="car"></div>
@@ -74,8 +74,10 @@ Our Cars
                         <span>от <?=$statData['min_per_hour']; ?> грн/час</span>
                     </a>
                 </div>
-            <?php endif; ?>
             <?php endforeach; ?>
+            <?php else: ?>
+                <h2 class='text-center'>Автомобили проходят верификацию. Они скоро здесь появятся</h2>
+            <?php endif; ?>
         </div>
         <div class="row">
             <div class="col-md-offset-3 col-md-6 text-center">

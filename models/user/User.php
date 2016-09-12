@@ -62,6 +62,7 @@ class User extends \dektrium\user\models\User implements IdentityInterface
         $labels['role'] = Yii::t('app', 'Role');
         $labels['partner'] = Yii::t('app', 'Partner');
         $labels['score'] = Yii::t('app', 'Score');
+        $labels['user_id'] = Yii::t('app', 'User');
 		return $labels;
 	}
 

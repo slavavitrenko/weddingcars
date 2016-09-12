@@ -11,6 +11,8 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use kartik\checkbox\CheckboxX;
 use kartik\file\FileInput;
+use app\models\user\User;
+
 
 $js = '
     if(' . ($model->type == "bus" ? "true" : "false") . '){
@@ -40,6 +42,15 @@ $this->registerJs($js, \yii\web\View::POS_READY);
                     'enableClientValidation' => false,
                 ]); ?>
                 <div class="row">
+
+                <?php if(Yii::$app->user->can('manager')): ?>
+                    <div class="col-md-12">
+                        <?=$form->field($model, 'user_id')->widget(Select2::className(), [
+                            'data' => ArrayHelper::map(User::find()->joinWith('assignment')->where(['item_name' => ['driver', 'partner']])->all(), 'id', 'fio')
+                        ])->label(Yii::t('app', 'Owner')); ?>
+                    </div>
+                <?php endif; ?>
+
                     <div class="col-md-6">
 
                         <?=$form->field($model, 'car_number'); ?>

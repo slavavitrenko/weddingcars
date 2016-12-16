@@ -18,11 +18,16 @@ $items = [];
 $items[] = ['template' => '{label}', 'label' => '<img src="/images/header__logo-min.png" class="header__logo  hidden-sm  hidden-md  hidden-lg" alt="logo">'];
 $items[] = ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']];
 $items[] = ['label' => Yii::t('app', 'Cars'), 'url' => ['/category/index']];
+$items[] = ['label' => Yii::t('app', 'For Clients'), 'url' => ['/site/clients']];
+$items[] = ['label' => Yii::t('app', 'For Drivers'), 'url' => ['/site/driver']];
+
+$items[] = ['label' => Yii::t('app', 'Advanced Services'), 'url' => ['/site/advanced']];
+
+
 foreach($pages as $page){
   $items[] = ['label' => $page->title, 'url' => ['/pages/view', 'id' =>  $page->id]];
 }
 
-$items[] = ['label' => Yii::t('app', 'For Drivers'), 'url' => ['/site/driver']];
 $items[] = ['label' => Yii::t('app', 'Contact'), 'url' => ['/site/contact']];
 
 $items[] = ['label' => '<div class="nav__social hidden-sm  hidden-md  hidden-lg">' . 
@@ -55,7 +60,7 @@ $items[] = ['label' => '<div class="nav__social hidden-sm  hidden-md  hidden-lg"
         <a href="tel:<?=Settings::get('phone1')?>" class="header__info header__info--phone">
           <?=Settings::get('phone1')?>
       </a>
-      <a href="tel:<?=Settings::get('phone2'); ?>" class="header__info  header__info--marker">
+      <a href="tel:<?=Settings::get('phone2'); ?>" class="header__info  header__info--phone">
          <?=Settings::get('phone2'); ?>
      </a>
  </div>
@@ -70,7 +75,7 @@ $items[] = ['label' => '<div class="nav__social hidden-sm  hidden-md  hidden-lg"
 </div>
 </div>
 <div class="row">
-    <div class="col-lg-offset-1 col-lg-10 header__navbar">
+    <div class="col-lg-offset-1 col-lg-10 col-md-10-end header__navbar">
       <nav class="navbar navbar-default">
         <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
@@ -102,7 +107,7 @@ $items[] = ['label' => '<div class="nav__social hidden-sm  hidden-md  hidden-lg"
           Прокат свадебных автомобилей  в Полтаве
       </h1>
       <h3 class="header__subtitle">
-          Подберите себе автомобиль по цене oт 250 грн/час
+          Подберите себе автомобиль по цене oт 100 грн/час
       </h3>
       <button data-href="<?=Url::to(['/category']); ?>" class="header__button">Подобрать Авто</button>
   </div>

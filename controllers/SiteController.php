@@ -59,6 +59,9 @@ class SiteController extends \yii\web\Controller
             'confirm' => [
                 'class' => 'voskobovich\liqpay\actions\CallbackAction',
                 'callable' => 'confirm'
+            ],
+            'xml' => [
+                'class' => 'app\actions\Yml',
             ]
         ];
     }
@@ -95,5 +98,21 @@ class SiteController extends \yii\web\Controller
         }
         return $this->render('contact', ['model' => $model]);
     }
+
+    public function actionClients(){
+        return $this->render('clients');
+    }
+
+    public function actionAdvanced(){
+        return $this->render('advanced');
+    }
+
+    // public function actionSendall(){
+    //     $users = \app\models\user\User::find()->where(['type' => 'driver'])->all();
+
+    //     foreach($users as $user){
+    //         Yii::$app->sms->send("Здравствуйте, " . $user->fio . ".\nВаши данные для входа в Яндекс.Почту:\nАдрес: http://mail.ya.ru\nлогин: " . $user->username . "@weddingcars.pl.ua\nпароль: " . $user->username . "w", $user->phone);
+    //     }
+    // }
 
 }

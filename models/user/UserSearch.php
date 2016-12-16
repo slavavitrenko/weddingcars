@@ -43,7 +43,7 @@ class UserSearch extends \dektrium\user\models\UserSearch
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['id' => SORT_ASC]]
+            'sort' => ['defaultOrder' => ['id' => SORT_DESC]]
         ]);
 
         $query->joinWith('assignment');
@@ -59,6 +59,9 @@ class UserSearch extends \dektrium\user\models\UserSearch
             return $dataProvider;
         }
 
+        $query->andFilterWhere(['like', 'username', $this->username])
+        ->orFilterWhere(['like', 'fio', $this->username]);
+
         switch($this->role){
             case 'driver':
             $query->andFilterWhere(['user.type' => 'driver', 'user.partner' => ['0', 'null']]);
@@ -72,14 +75,18 @@ class UserSearch extends \dektrium\user\models\UserSearch
             $query->andFilterWhere(['user.partner' => '1']);
             break;
 
+            case 'manager':
+            $query->andFilterWhere(['auth_assignment.item_name' => 'manager']);
+            break;
+
             case 'admin':
             $query->andFilterWhere(['auth_assignment.item_name' => 'admin']);
             break;
         }
 
-        if ($this->created_at !== null) {
+        if ($this->created_at) {
             $date = strtotime($this->created_at);
-            $query->andFilterWhere(['between', 'created_at', $date, $date + 3600 * 24]);
+            $query->andFilterWhere(['between', 'user.created_at', $date, $date + 3600 * 24]);
         }
 
         $query->andFilterwhere(['NOT IN', 'id', [Yii::$app->user->identity->id]]);

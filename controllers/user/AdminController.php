@@ -68,6 +68,9 @@ class AdminController extends \dektrium\user\controllers\AdminController
         if(!in_array($role, ['admin', 'manager', 'client', 'driver'])){
             throw new NotFoundHttpException(Yii::t('app', 'Selected role doesn` exist'));
         }
+        
+        \app\models\user\User::findOne($id)->updateAttributes(['type' => $role]);
+
         if($assignment = Role::find()->where(['user_id' => $id])->one()){
             $assignment->item_name = $role;
             return $assignment->save() ? 1 : $role->errors;

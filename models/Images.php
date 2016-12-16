@@ -28,7 +28,8 @@ class Images extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'car_id' => Yii::t('app', 'Car ID'),
-            'path' => Yii::t('app', 'Path'),
+            'image' => Yii::t('app', 'Image'),
+            'car_id' => Yii::t('app', 'Auto'),
         ];
     }
 

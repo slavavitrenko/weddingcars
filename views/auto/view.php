@@ -1,10 +1,11 @@
 <?php
 
 use yii\helpers\Html;
-use yii\helpers\uRl;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 use yii\grid\GridView;
 use yii\bootstrap\Modal;
+use yii\widgets\Pjax;
 
 
 $this->title = $model->name;
@@ -30,6 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
+        <?php Pjax::begin(['id' => 'auto-container']); ?>
+    <?php
+        $canChange = Yii::$app->user->can('manager');
+        echo Html::a((Yii::t('app', $model->checked ? 'Checked' : 'Not checked')), false, ['class' => ('pjax-btn btn ' . ($canChange ? ' ' : ' disabled ')) . ($model->checked ? 'btn-success' : 'btn-danger'), 'value' => Url::to([($model->checked ? 'uncheck' : 'check'), 'id' => $model->id]), 'data-container' => 'auto-container', 'data-pjax' => 0]);
+    ?>
         <?=Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']); ?>
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -64,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     // ],
                     [
                         'attribute' => Yii::t('app', 'Check Status'),
-                        'value' => Html::tag('span', Yii::t('app', $model->checked ? 'Checked' : 'Not Checked'), ['class' => 'label' . ($model->checked ? ' label-success ' : ' label-danger')]),
+                        'value' => Html::tag('span', Yii::t('app', $model->checked ? 'Checked' : 'Not checked'), ['class' => 'label' . ($model->checked ? ' label-success ' : ' label-danger')]),
                         'format' => 'raw',
                     ],
                     [
@@ -102,4 +108,5 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php endif; ?>
         </div>
     </div>
+    <?php Pjax::end();?>
 </div>

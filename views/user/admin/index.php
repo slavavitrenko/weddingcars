@@ -42,7 +42,12 @@ $this->registerJs($js, \yii\web\View::POS_END);
     'filterModel'  	=> $searchModel,
     'layout'  		=> "{items}\n{pager}\n{summary}",
     'columns' => [
-        'username',
+        [
+            'attribute' => 'username',
+            'value' => function($model){
+                return $model->username . " (" . $model->fio . ")";
+            }
+        ],
         'email:email',
         [
             'attribute' => 'role',
@@ -79,24 +84,24 @@ $this->registerJs($js, \yii\web\View::POS_END);
         //     },
         //     'format' => 'html',
         // ],
-        // [
-        //     'attribute' => 'created_at',
-        //     'value' => function ($model) {
-        //         if (extension_loaded('intl')) {
-        //             return Yii::t('user', '{0, date, MMMM dd, YYYY HH:mm}', [$model->created_at]);
-        //         } else {
-        //             return date('Y-m-d G:i:s', $model->created_at);
-        //         }
-        //     },
-        //     'filter' => DatePicker::widget([
-        //         'model'      => $searchModel,
-        //         'attribute'  => 'created_at',
-        //         'dateFormat' => 'php:Y-m-d',
-        //         'options' => [
-        //             'class' => 'form-control',
-        //         ],
-        //     ]),
-        // ],
+        [
+            'attribute' => 'created_at',
+            'value' => function ($model) {
+                if (extension_loaded('intl')) {
+                    return Yii::t('user', '{0, date, MMMM dd, YYYY HH:mm}', [$model->created_at]);
+                } else {
+                    return date('Y-m-d G:i:s', $model->created_at);
+                }
+            },
+            'filter' => DatePicker::widget([
+                'model'      => $searchModel,
+                'attribute'  => 'created_at',
+                'dateFormat' => 'php:Y-m-d',
+                'options' => [
+                    'class' => 'form-control',
+                ],
+            ]),
+        ],
         // [
         //     'header' => Yii::t('user', 'Confirmation'),
         //     'value' => function ($model) {

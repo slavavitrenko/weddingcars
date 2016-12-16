@@ -44,4 +44,9 @@ class Models extends \yii\db\ActiveRecord
     public function getBrandname(){
         return $this->brand->name;
     }
+
+    public static function find(){
+        return parent::find()->orderBy(['models.name' => SORT_ASC]);
+    }
+    
 }

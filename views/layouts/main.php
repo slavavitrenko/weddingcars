@@ -22,7 +22,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
     <link rel="icon" href="/favicon.png" type="image/png" /><link rel="shortcut icon" href="/favicon.png" type="image/png" />
     <?php $this->head() ?>
 </head>
-<body class="hold-transition skin-green layout-boxed sidebar-mini">
+<body class="hold-transition skin-blue layout-boxed sidebar-mini">
 <?php $this->beginBody() ?>
 <div class="wrapper">
 

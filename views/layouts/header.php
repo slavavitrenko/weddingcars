@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 <header class="main-header">
 
-    <?= Html::a('<span class="logo-mini">W</span><span class="logo-lg"><i class="glyphicon glyphicon-chevron-left"></i> ' . Yii::t('app', 'To Frontend') . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <?= Html::a('<span class="logo-mini"><i class="glyphicon glyphicon-arrow-left"></i></span><span class="logo-lg"><i class="glyphicon glyphicon-arrow-left"></i> ' . Yii::t('app', 'To Frontend') . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
     <nav class="navbar navbar-static-top" role="navigation">
 
@@ -42,6 +42,7 @@ use yii\helpers\Html;
                             <div class="pull-left">
                                 <?=Html::a(Yii::t('app', 'My settings'), ['/user/settings/account'], ['class' => 'btn btn-default btn-flat'])?>
                             </div>
+                            <div class="pull-left"><a class="change-layout btn btn-default btn-flat"><i class="glyphicon glyphicon-arrow-left"></i><i class="glyphicon glyphicon-arrow-right"></i></a></div>
                             <div class="pull-right">
                                 <?= Html::a(
                                     Yii::t('app', 'Logout'),

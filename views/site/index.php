@@ -11,7 +11,7 @@ use kartik\rating\StarRating;
 
 $categories = Yii::$app->cache->get('categories');
 if(!$categories){
-    $categories = Categories::find()->joinWith(['cars'])->all();
+    $categories = Categories::find()/*->joinWith(['cars'])*/->all();
     Yii::$app->cache->set('categories', $categories);
 }
 
@@ -70,8 +70,14 @@ Our Cars
                                 Yii::$app->cache->set('stat_category_' . $category->id, $statData);
                             }
                         ?>
-                        <span><?=$statData['min_pass_count']; ?>-<?=$statData['max_pass_count']; ?> мест</span>
-                        <span>от <?=$statData['min_per_hour']; ?> грн/час</span>
+                        <div class="category-description">
+                            <?php if($statData['min_pass_count']): ?>
+                                <span>от <?=$statData['min_pass_count']; ?> до <?=$statData['max_pass_count']; ?> мест</span>
+                            <?php endif; ?>
+                            <?php if($statData['min_per_hour']): ?>
+                                <span>от <?=$statData['min_per_hour']; ?> грн/час</span>
+                            <?php endif; ?>
+                        </div>
                     </a>
                 </div>
             <?php endforeach; ?>
@@ -167,7 +173,7 @@ Popular Cars
                 <?php
                 $popular = Yii::$app->cache->get('popular');
                 if(!$popular){
-                    $popular = \app\models\Auto::getPopular();
+                    $popular = \app\models\Auto::getPopular(200);
                     Yii::$app->cache->set('popular', $popular);
                 }
                 ?>

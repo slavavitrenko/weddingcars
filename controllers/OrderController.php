@@ -38,6 +38,7 @@ class OrderController extends \yii\web\Controller
 			$orderModel->user_id = $userModel->id;
 			Yii::$app->getUser()->login(User::findOne($userModel->id, 0));
 			if($orderModel->save()){
+				$orderModel->notify();
 				Yii::$app->session->setFlash('success', Yii::t('app', 'Your order accepted. Thank you.'));
 				return $this->redirect(['/orders']);
 			}
@@ -55,6 +56,7 @@ class OrderController extends \yii\web\Controller
 		$model->car_id = $id;
 		$this->performAjaxValidation($model);
 		if($model->load(Yii::$app->request->post()) && $model->save()){
+			$model->notify();
 			Yii::$app->session->setFlash('success', Yii::t('app', 'Your order accepted. Thank you.'));
 			return $this->redirect(['/orders']);
 		}

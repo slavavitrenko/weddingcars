@@ -142,5 +142,9 @@ class Orders extends \yii\db\ActiveRecord
         // }
         return parent::afterSave($insert, $changedattributes);
     }
+
+    public function notify(){
+        Yii::$app->sms->send("Новый заказ на Ваш автомобиль. Детали: http://weddingcars.pl.ua/orders", [$this->car->owner->phone]);
+    }
     
 }

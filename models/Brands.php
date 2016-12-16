@@ -49,4 +49,9 @@ class Brands extends \yii\db\ActiveRecord
             'picture' => Yii::t('app', 'Picture'),
         ];
     }
+
+    public static function find(){
+        return parent::find()->orderBy(['brands.name' => SORT_ASC]);
+    }
+    
 }

@@ -17,7 +17,7 @@ class Auto extends BaseAuto
     {
         return [
             [['id', 'user_id', 'retro', 'bus_type'], 'integer'],
-            [['name', 'type', 'year', 'color', 'body', 'fio', 'brand', 'model'], 'safe'],
+            [['name', 'type', 'year', 'color', 'body', 'fio', 'brand', 'model', 'checked', 'created_at'], 'safe'],
         ];
     }
 
@@ -50,7 +50,13 @@ class Auto extends BaseAuto
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'checked' => $this->checked,
         ]);
+
+        if ($this->created_at) {
+            $date = strtotime($this->created_at);
+            $query->andFilterWhere(['between', 'auto.created_at', $date, $date + 3600 * 24]);
+        }
 
         $query->andFilterWhere(['like', 'models.name', $this->model]);
         $query->andFilterWhere(['like', 'brands.name', $this->brand]);

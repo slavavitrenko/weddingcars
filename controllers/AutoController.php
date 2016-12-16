@@ -77,6 +77,14 @@ class AutoController extends \yii\web\Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
+            if(!Yii::$app->user->can('manager')){
+                $model->checked = '0';
+            }
+            else{
+                $model->checked = '1';
+            }
+            $model->save(false);
+
             $this->saveImages(UploadedFile::getInstances($model, 'images'), $model->id);
 
             return $this->redirect(['view', 'id' => $model->id]);
@@ -91,10 +99,6 @@ class AutoController extends \yii\web\Controller
     {
         $model = $this->findModel($id);
 
-        // if($model->checked == '1'){
-        //     throw new ForbiddenHttpException(Yii::t('app', 'Auto is confirmed. You not allowed to change it'));
-        // }
-
         if(!Yii::$app->user->can('manager') && $model->user_id != Yii::$app->user->identity->id){ 
             throw new NotFoundHttpException('The requested page does not exist.');
         }
@@ -102,8 +106,11 @@ class AutoController extends \yii\web\Controller
         $this->performAjaxValidation($model);
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if(!Yii::$app->user->can('admin')){
+            if(!Yii::$app->user->can('manager')){
                 $model->checked = '0';
+            }
+            else{
+                $model->checked = '1';
             }
             $model->save(false);
 
@@ -141,7 +148,7 @@ class AutoController extends \yii\web\Controller
 
     public function actionCheck($id){
         Yii::$app->response->format = 'json';
-        if(!Yii::$app->user->can('admin')){return false;}
+        if(!Yii::$app->user->can('manager')){return false;}
         $model = $this->findModel($id);
         $model->checked = 1;
         return $model->save(false);
@@ -149,7 +156,7 @@ class AutoController extends \yii\web\Controller
 
     public function actionUncheck($id){
         Yii::$app->response->format = 'json';
-        if(!Yii::$app->user->can('admin')){return false;}
+        if(!Yii::$app->user->can('manager')){return false;}
         $model = $this->findModel($id);
         $model->checked = 0;
         return $model->save(false);

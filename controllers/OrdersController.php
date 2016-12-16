@@ -69,6 +69,7 @@ class OrdersController extends Controller
             $model->confirmed = '0';
             $model->paid = '0';
             $model->save(false);
+            Yii::$app->sms->send("Ваш заказ автомобиля принят. Детали:" . Url::to(['/orders/view', 'id' => $model->id], true), $model->user->phone);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -99,6 +100,8 @@ class OrdersController extends Controller
         $model->updateAttributes([
                 'confirmed' => '1'
             ]);
+
+        Yii::$app->sms->send("Ваша заявка на аренду автомобила принята водителем. Ожидается оплата заказа. Детали: " . Url::to(['/orders/view', 'id' => $model->id], true), $model->user->phone);
 
         Yii::$app->mailer->compose()
                         ->setTo($model->user->email)

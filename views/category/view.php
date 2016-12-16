@@ -30,8 +30,8 @@ foreach($model->pictures as $picture){
 $commentModel->rating = 5;
 
 ?>
-
-<script src='http://vk.com/js/api/share.js?93' charset='windows-1251'></script>
+<!-- 
+<script src='http://vk.com/js/api/share.js?93' charset='windows-1251'></script> -->
 
 
   <!-- ------------------------------------
@@ -54,6 +54,13 @@ $commentModel->rating = 5;
         <div class="col-md-5">
           <h3 class="order__title">
             <?=$model->autoBrand->name; ?> <?=$model->autoModel->name; ?>
+        <?php if(!Yii::$app->user->isGuest): ?>
+          <?php if(in_array(Yii::$app->user->identity->type, ['admin', 'manager'])): ?>
+          <?=Html::a('<i class="glyphicon glyphicon-pencil"></i>', ['/auto/update', 'id' => $model->id], ['class' => 'btn btn-sm btn-primary']); ?>
+          <br>
+          (<span class='small'><?=$model->user->username; ?>, <?=$model->user->phone; ?></span>)
+        <?php endif; ?>
+        <?php endif; ?>
           </h3>
           <div class="slider__rating">
             Рейтинг:
@@ -83,6 +90,11 @@ $commentModel->rating = 5;
             <li>
               <span>Согласие на декор:</span> <strong><?=Yii::t('app', $model->client_decor ? 'Yeap' : 'Nope'); ?></strong>
             </li>
+            <?php if($model->minimum_hours > 0): ?>
+            <li>
+              <span>Минимальный заказ:</span> <strong><?=$model->minimum_hours; ?> часа</strong>
+            </li>
+          <?php endif; ?>
           </ul>
           <div class="rent">
             <h4 class="rent__title">Стоимость аренды:</h4>
@@ -90,14 +102,18 @@ $commentModel->rating = 5;
               <span>1 час</span>
               <b><?=round($model->hour_cost, 0); ?> грн</b>
             </div>
+            <?php if(round($model->few_hours_cost, 0) > 0.1): ?>
             <div class="rent__price rent__price--mid">
-              <span>от 5 часов</span>
-              <b><?=round($model->few_hours_cost, 0); ?> грн</b>
+              <span>от 4-х часов</span>
+              <b><?=round($model->few_hours_cost, 0); ?> грн/час</b>
             </div>
+          <?php endif; ?>
+          <?php if(round($model->outside_cost, 0) > 0.1): ?>
             <div class="rent__price">
               <span>за городом</span>
-              <b><?=round($model->outside_cost, 0); ?> грн\км</b>
+              <b><?=round($model->outside_cost, 0); ?> грн/км</b>
             </div>
+          <?php endif; ?>
           </div>
           <div class="row">
             <div class="col-md-6">

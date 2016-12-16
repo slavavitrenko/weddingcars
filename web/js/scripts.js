@@ -16,14 +16,15 @@ $(function() {
   $('.slider').slick({
     infinite: true,
     slidesToShow: 4,
-    slidesToScroll: 3,
+    slidesToScroll: 1,
+    autoplay: true,
     responsive: [{
       breakpoint: 1268,
       settings: {
         slidesToShow: 3,
         slidesToScroll: 3,
         infinite: true,
-        arrows: false
+        arrows: true
       }
     }, {
       breakpoint: 1070,
@@ -100,7 +101,7 @@ $(function() {
   runMenuBehaviour();
 
   //Check to see if the window is top if not then display button
-  
+
   // function runScroll() {
   //   if ($(window).width() > 768) {
   //     if (mainScroll.isTop) return;
@@ -120,13 +121,13 @@ $(function() {
   // function toggleScroll(direction) {
   //   if (direction.isTop == true) {
   //     console.log('show!');
-      $(window).scroll(function() {
-        if ($(this).scrollTop() > 2200) {
-          scroll.fadeIn();
-        } else {
-          scroll.fadeOut();
-        }
-      });
+  $(window).scroll(function() {
+    if ($(this).scrollTop() > 2200) {
+      scroll.fadeIn();
+    } else {
+      scroll.fadeOut();
+    }
+  });
   //   } else {
   //     console.log('hide!');
   //     scroll.hide();
@@ -134,6 +135,14 @@ $(function() {
   // }
 
   // runScroll();
+
+  $('.radial-progress').on('click', function() {
+    var body = $("html, body");
+    body.stop().animate({
+      scrollTop: 374
+    }, '700', 'swing');
+  })
+
 
   //Click event to scroll to top
   scroll.click(function() {

@@ -34,4 +34,9 @@ class Regions extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
         ];
     }
+
+    public static function find(){
+        return parent::find()->orderBy(['name' => SORT_ASC]);
+    }
+
 }

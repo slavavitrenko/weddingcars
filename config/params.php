@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'adminEmail' => 'mxuser@ya.ru',
+    'adminEmail' => 'info@weddingcars.pl.ua',
     'siteName' => 'WeddingCars',
 ];

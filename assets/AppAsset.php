@@ -1,18 +1,10 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
 namespace app\assets;
 
 use yii\web\AssetBundle;
 
-/**
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
- */
+
 class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
@@ -23,6 +15,7 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/pace.js',
         'js/main.js',
+        // 'https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.0/jquery.slimscroll.min.js',
     ];
     public $depends = [
         // 'yii\web\YiiAsset',

@@ -15,7 +15,7 @@ class Categories extends BaseCategories
     {
         return [
             [['id'], 'integer'],
-            [['name', 'picture'], 'safe'],
+            [['name'/*, 'picture'*/], 'safe'],
         ];
     }
 
@@ -31,6 +31,8 @@ class Categories extends BaseCategories
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        // $dataProvider->sort->attributes['picture'] = [];
 
         $this->load($params);
 

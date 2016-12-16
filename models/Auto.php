@@ -16,13 +16,12 @@ class Auto extends \yii\db\ActiveRecord
 {
 
     public $images;
-    
-    
-    public function behaviors(){
-        return [
-            'class' => 'app\behaviors\AccessLogBehavior',
-        ];
-    }
+
+    // public function behaviors(){
+    //     return [
+    //         'class' => 'app\behaviors\AccessLogBehavior',
+    //     ];
+    // }
 
     public static function tableName()
     {
@@ -34,10 +33,11 @@ class Auto extends \yii\db\ActiveRecord
         return [
             // ['bus_type', 'required', 'when' => function($model){return $model->type == 'bus';},
             // 'whenClient' => 'function(attribute, value){ return $("input[name=\'Auto[type]\']:checked").val() == "bus";}'],
-            [['car_number', 'brand', 'model', 'year', 'color'/*, 'retro'*/, 'hour_cost', 'few_hours_cost', 'outside_cost', 'pass_count', 'category_id', 'decor'], 'required'],
+            [['user_id'], 'default', 'value' => Yii::$app->user->id],
+            [['car_number', 'brand', 'model', 'year',/*, 'retro'*/ 'hour_cost', 'pass_count', 'category_id', 'decor'], 'required'],
             [['car_number'], 'unique', 'message' => Yii::t('app', 'Selected auto already exist')],
             [['car_number'], 'string', 'max' => 8, 'min' => 5],
-            [['user_id', 'retro', 'brand', 'model', 'category_id'], 'integer'],
+            [['user_id', 'retro', 'brand', 'model', 'category_id', 'minimum_hours'], 'integer'],
             [['name', 'type', 'color', 'description'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             [['type'], 'match', 'pattern' => '/^(car|limousine|bus)$/', 'message' => Yii::t('app', 'Please select car, limousine or bus')],
@@ -53,35 +53,39 @@ class Auto extends \yii\db\ActiveRecord
             [['category_id', 'popularity'], 'default', 'value' => '0'],
             ['popularity', 'safe'],
             [['pass_count'], 'integer', 'min' => 1, 'max' => 200],
-            [['hour_cost', 'few_hours_cost', 'outside_cost'], 'number', 'min' => 0.01, 'max' => 100000, 'tooSmall' => Yii::t('app', 'Auto must don`t be free)')]
+            [['hour_cost', 'few_hours_cost', 'outside_cost'], 'number', 'min' => 0.01, 'max' => 100000, 'tooSmall' => Yii::t('app', 'Auto must don`t be free)')],
+            [['created_at'], 'default', 'value' => time()],
         ];
     }
 
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'name' => Yii::t('app', 'Name'),
-            'type' => Yii::t('app', 'Type'),
-            'brand' => Yii::t('app', 'Brand'),
-            'model' => Yii::t('app', 'Model'),
-            'year' => Yii::t('app', 'Year'),
-            'color' => Yii::t('app', 'Color'),
             'body' => Yii::t('app', 'Body'),
-            'retro' => Yii::t('app', 'Retro'),
+            'brand' => Yii::t('app', 'Brand'),
             'bus_type' => Yii::t('app', 'Bus Type'),
-            'images' => Yii::t('app', 'Images'),
-            'fio' => Yii::t('app', 'Fio'),
-            'decor' => Yii::t('app', 'Decor'),
-            'client_decor' => Yii::t('app', 'Client Decor'),
-            'pass_count' => Yii::t('app', 'Pass Count'),
-            'category_id' => Yii::t('app', 'Category'),
-            'description' => Yii::t('app', 'Description'),
-            'hour_cost' => Yii::t('app', 'Cost Per Hour'),
-            'few_hours_cost' => Yii::t('app', 'Cost Per Few Hours'),
-            'outside_cost' => Yii::t('app', 'Outside Cost per km'),
             'car_number' => Yii::t('app', 'Car Number'),
+            'category_id' => Yii::t('app', 'Category'),
+            'checked' => Yii::t('app', 'Check Status'),
+            'client_decor' => Yii::t('app', 'Client Decor'),
+            'color' => Yii::t('app', 'Color'),
+            'created_at' => Yii::t('app', 'Register Time'),
+            'decor' => Yii::t('app', 'Decor'),
+            'description' => Yii::t('app', 'Description'),
+            'few_hours_cost' => Yii::t('app', 'Cost Per Few Hours'),
+            'fio' => Yii::t('app', 'Fio'),
+            'hour_cost' => Yii::t('app', 'Cost Per Hour'),
+            'id' => Yii::t('app', 'ID'),
+            'images' => Yii::t('app', 'Images'),
+            'minimum_hours' => Yii::t('app', 'Minimum Hours'),
+            'model' => Yii::t('app', 'Model'),
+            'name' => Yii::t('app', 'Name'),
+            'outside_cost' => Yii::t('app', 'Outside Cost per km'),
+            'pass_count' => Yii::t('app', 'Pass Count'),
+            'retro' => Yii::t('app', 'Retro'),
+            'type' => Yii::t('app', 'Type'),
+            'user_id' => Yii::t('app', 'User ID'),
+            'year' => Yii::t('app', 'Year'),
         ];
     }
 
@@ -100,6 +104,10 @@ class Auto extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function getOwner(){
+        return $this->getUser();
     }
 
     public function getFio(){
@@ -153,7 +161,7 @@ class Auto extends \yii\db\ActiveRecord
     }
 
     public static function getPopular($count=10){
-        return self::find()->orderBy(['popularity' => SORT_DESC])->joinWith(['autoBrand', 'autoModel', 'picture', 'comments'])->limit($count)->all();
+        return self::find()->where(['checked' => '1'])/*->orderBy(['popularity' => SORT_DESC])->joinWith(['autoBrand', 'autoModel', 'picture', 'comments'])*/->joinWith('pictures')->limit($count)->all();
     }
 
 }

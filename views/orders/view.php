@@ -25,6 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
         </p>
     <?php endif; ?>
+            <?php
+            if(Yii::$app->user->identity->type == 'client' && !in_array($model->paid, ['success', 'sandbox', 'wait_accept'])){
+                echo Html::a(Yii::t('app', 'Pay'), ['/site/pay', 'id' => $model->id], ['class' => 'btn btn-lg btn-success']);
+            }
+            ?>
     <?php if($model->car->user_id == Yii::$app->user->identity->id && $model->confirmed == '0'): ?>
         <p>
             <?=Html::a(Yii::t('app', 'Confirm'), ['confirm', 'id' => $model->id], [
@@ -48,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'visible' =>
                 Yii::$app->user->can('manager')
                 or
-                ($model->car->user_id == Yii::$app->user->identity->id && $model->confirmed == '1')
+                ($model->car->user_id == Yii::$app->user->identity->id && in_array($model->paid, ['success', 'sandbox', 'wait_accept']))
             ],
             [
                 'attribute' => 'car_id',

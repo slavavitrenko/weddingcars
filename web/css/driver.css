@@ -1,15 +1,17 @@
 .step-nav {
   height: 80px;
   position: relative;
-  width: 680px;
-  margin: 30px auto 70px;
+  width: 900px;
+  margin: 10px auto 54px;
 }
+
 .step-nav .step {
   position: relative;
   float: left;
   width: 200px;
   height: 80px;
 }
+
 .step-nav .step p {
   width: 80px;
   height: 80px;
@@ -24,10 +26,12 @@
   -webkit-transition: font-size 0.3s, color 0.3s;
   transition: font-size 0.3s, color 0.3s;
 }
+
 .step-nav .step p.active {
   font-size: 46px;
   color: #fafafa;
 }
+
 .step-nav .step .line {
   position: absolute;
   top: 50%;
@@ -36,11 +40,13 @@
   height: 6px;
   background: #d6dadc;
 }
+
 .step-nav .step .line .progress {
   width: 0%;
   height: 6px;
   background: #27cbc0;
 }
+
 .step-nav .step .radial-progress {
   width: 80px;
   height: 80px;
@@ -52,6 +58,7 @@
   transform: rotate(-90deg);
   cursor: pointer;
 }
+
 .step-nav .step .radial-progress .circle .mask,
 .step-nav .step .radial-progress .circle .fill,
 .step-nav .step .radial-progress .circle .shadow {
@@ -60,17 +67,21 @@
   position: absolute;
   border-radius: 50%;
 }
+
 .step-nav .step .radial-progress .circle .mask,
 .step-nav .step .radial-progress .circle .fill {
   -webkit-backface-visibility: hidden;
 }
+
 .step-nav .step .radial-progress .circle .mask {
   clip: rect(0px, 80px, 80px, 40px);
 }
+
 .step-nav .step .radial-progress .circle .mask .fill {
   clip: rect(0px, 40px, 80px, 0px);
   background-color: #27cbc0;
 }
+
 .step-nav .step .radial-progress .inset {
   width: 70px;
   height: 70px;
@@ -80,6 +91,7 @@
   background-color: #27cbc0;
   border-radius: 50%;
 }
+
 .step-nav .step .radial-progress .inset .inner-circle {
   position: absolute;
   top: 0;
@@ -89,31 +101,38 @@
   background: #fafafa;
   border-radius: 50%;
 }
+
 .step-nav .step.first {
   width: 80px;
 }
+
 .step-nav .step.first .radial-progress {
   -webkit-transform: matrix(0, 1.3, -1.3, 0, 0, 0);
-          transform: matrix(0, 1.3, -1.3, 0, 0, 0);
+  transform: matrix(0, 1.3, -1.3, 0, 0, 0);
   z-index: 10;
 }
+
 .step-nav .step.first .circle .fill,
 .step-nav .step.first .circle .mask.full {
   -webkit-transform: rotate(180deg);
-          transform: rotate(180deg);
+  transform: rotate(180deg);
 }
+
 .step-nav .step.first .circle .fill.fix {
   -webkit-transform: rotate(360deg);
-          transform: rotate(360deg);
+  transform: rotate(360deg);
 }
+
 .step-nav .step.first .radial-progress.active .inner-circle {
   -webkit-transform: matrix(0, 0, 0, 0, 0, 0);
-          transform: matrix(0, 0, 0, 0, 0, 0);
+  transform: matrix(0, 0, 0, 0, 0, 0);
 }
+
 .step-nav .step.first p {
   color: #fafafa;
   font-size: 46px;
 }
+
 .copy-holder {
   position: relative;
   width: 80%;
@@ -125,53 +144,67 @@
   padding: 20px;
   color: #666666;
 }
+
 .copy-holder div {
   width: 100%;
   /*position: absolute;*/
-	text-align: center;
+  text-align: center;
 }
+
 .copy-holder div p {
   display: block;
   text-align: center;
 }
+
 .copy-holder div.active {
   opacity: 1;
   visibility: visible;
 }
+
 .copy-holder .steps-item {
-	display: none!important;
-}
-.copy-holder .steps-item img {
-	margin: 0 auto;
-	width: 80%;
-}
-.copy-holder .active {
-	display: block!important;
+  display: none!important;
 }
 
+.copy-holder .steps-item img {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.copy-holder .active {
+  display: block!important;
+}
 
 
 /*==========  Desktop First Method  ==========*/
 
-/* Large Devices, Wide Screens */
-@media only screen and (max-width : 1200px) {
 
-}
+/* Large Devices, Wide Screens */
+
+@media only screen and (max-width: 1200px) {}
+
 
 /* Medium Devices, Desktops */
-@media only screen and (max-width : 992px) {
 
+@media only screen and (max-width: 992px) and (min-width: 767px) {
+  .step-nav {
+    width: 680px;
+  }
+  .step-nav .step {
+    width: 140px;
+  }
 }
 
+
 /* Small Devices, Tablets */
-@media only screen and (max-width : 768px) {
+
+@media only screen and (max-width: 767px) {
   .step-nav {
     height: 60px;
-    width: 440px;
+    width: 480px;
     margin: 30px auto 60px;
   }
   .step-nav .step {
-    width: 125px;
+    width: 104px;
     height: 60px;
   }
   .step-nav .step p {
@@ -180,7 +213,7 @@
     line-height: 60px;
   }
   .step-nav .step .line {
-    width: 120px;
+    width: 100px;
   }
   .step-nav .step .radial-progress {
     width: 60px;
@@ -205,17 +238,36 @@
   .step-nav .step.first {
     width: 60px;
   }
+  
+  .copy-holder {
+    padding: 10px;
+    width: 90%;
+  }
+  
+  .copy-holder .steps-item img {
+        min-width: 380px;
+        min-height: 380px;
+  }
+  
+  .order__layout--steps {
+    margin-top: 0px !important;
+}
+  
+
+  
 }
 
+
 /* Extra Small Devices, Phones */
-@media only screen and (max-width : 480px) {
+
+@media only screen and (max-width: 480px) {
   .step-nav {
     height: 40px;
     width: 295px;
-    margin: 30px auto 40px;
+    margin: 0px auto 60px;
   }
   .step-nav .step {
-    width: 85px;
+    width: 62px;
     height: 40px;
   }
   .step-nav .step p {
@@ -224,7 +276,7 @@
     line-height: 40px;
   }
   .step-nav .step .line {
-    width: 80px;
+    width: 60px;
   }
   .step-nav .step .radial-progress {
     width: 40px;
@@ -249,41 +301,82 @@
   .step-nav .step.first {
     width: 40px;
   }
+  .copy-holder .steps-item img {
+    min-width: 250px;
+    min-height: 340px;
+  }
+  
+  .copy-holder {
+    width: 94%;
+  }
+  
 }
+
 
 /* Custom, iPhone Retina */
-@media only screen and (max-width : 320px) {
 
-}
+@media only screen and (max-width: 320px) {}
 
 
 /*==========  Mobile First Method  ==========*/
 
-/* Custom, iPhone Retina */
-@media only screen and (min-width : 320px) {
 
-}
+/* Custom, iPhone Retina */
+
+@media only screen and (min-width: 320px) {}
+
 
 /* Extra Small Devices, Phones */
-@media only screen and (min-width : 480px) {
 
-}
+@media only screen and (min-width: 480px) {}
+
 
 /* Small Devices, Tablets */
-@media only screen and (min-width : 768px) {
 
-}
+@media only screen and (min-width: 768px) {}
+
 
 /* Medium Devices, Desktops */
-@media only screen and (min-width : 992px) {
 
-}
+@media only screen and (min-width: 992px) {}
+
 
 /* Large Devices, Wide Screens */
-@media only screen and (min-width : 1200px) {
 
-}
+@media only screen and (min-width: 1200px) {}
 
 .order__layout--steps {
   min-height: 900px;
 }
+
+.about__info--justify {
+  margin-left: 0;
+  text-align: justify;
+  text-indent: 50px;
+}
+
+.addserv__title {
+ font-family: Museo-Cyrl ,sans-serif;  
+ font-size: 28px;
+ margin-top: 48px;
+}
+
+.addserv__img {
+    border: 2px solid #27cbc0;
+    border-radius: 50%;
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+.addserv {
+      margin-top: 20px;
+}
+
+/*.ourcars__title--serv {
+  margin-bottom: 80px;
+}*/
+
+/*.ourcars__title--page {
+	margin-top: 36px;
+	margin-bottom: 60px;
+}*/

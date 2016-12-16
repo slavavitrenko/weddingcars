@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fc0128aa11c8ec7d5433493a4ff1a58f",
-    "content-hash": "af1132784f26914380793be3dfa22265",
+    "hash": "0ec31f7fe2c9b1cf883cad1b5fb7d294",
+    "content-hash": "746d0df0f5fa8b0103d37d2c928baffa",
     "packages": [
         {
             "name": "2amigos/yii2-gallery-widget",
@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/2amigos/yii2-gallery-widget.git",
-                "reference": "e6f59a14b6c2f44fe8960432e245bd3368ead7d6"
+                "reference": "e9b3b0819385bf905e64f017c16be197fec81e99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/2amigos/yii2-gallery-widget/zipball/e6f59a14b6c2f44fe8960432e245bd3368ead7d6",
-                "reference": "e6f59a14b6c2f44fe8960432e245bd3368ead7d6",
+                "url": "https://api.github.com/repos/2amigos/yii2-gallery-widget/zipball/e9b3b0819385bf905e64f017c16be197fec81e99",
+                "reference": "e9b3b0819385bf905e64f017c16be197fec81e99",
                 "shasum": ""
             },
             "require": {
@@ -66,7 +66,7 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2016-07-11 07:21:53"
+            "time": "2016-09-10 19:18:19"
         },
         {
             "name": "almasaeed2010/adminlte",
@@ -107,6 +107,49 @@
                 "web"
             ],
             "time": "2016-08-04 23:22:06"
+        },
+        {
+            "name": "avator/yii2-turbosms",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AVATOR/yii2-turbosms.git",
+                "reference": "dfef9c25d216c4cb5182af4476ca818e08b87d6e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AVATOR/yii2-turbosms/zipball/dfef9c25d216c4cb5182af4476ca818e08b87d6e",
+                "reference": "dfef9c25d216c4cb5182af4476ca818e08b87d6e",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "avator\\turbosms\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Oleksii Golub",
+                    "email": "sclub2018@yandex.ua"
+                }
+            ],
+            "description": "Yii2 turbosms",
+            "keywords": [
+                "extension",
+                "helpers",
+                "sms",
+                "turbosms",
+                "yii2"
+            ],
+            "time": "2016-07-26 06:25:23"
         },
         {
             "name": "bower-asset/blueimp-gallery",
@@ -203,6 +246,31 @@
                 "jquery",
                 "library"
             ]
+        },
+        {
+            "name": "bower-asset/jquery-ui",
+            "version": "1.11.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/jqueryui.git",
+                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/jqueryui/zipball/c34f8dbf3ba57b3784b93f26119f436c0e8288e1",
+                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.6"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "jquery-ui.js"
+                ],
+                "bower-asset-ignore": []
+            }
         },
         {
             "name": "bower-asset/jquery.inputmask",
@@ -367,12 +435,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cebe/markdown.git",
-                "reference": "04bfcaa26356cf86c6c4a2420eb95857a86e03ab"
+                "reference": "c30eb5e01fe021cc5bba2f9ee0eeef96d4931166"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cebe/markdown/zipball/04bfcaa26356cf86c6c4a2420eb95857a86e03ab",
-                "reference": "04bfcaa26356cf86c6c4a2420eb95857a86e03ab",
+                "url": "https://api.github.com/repos/cebe/markdown/zipball/c30eb5e01fe021cc5bba2f9ee0eeef96d4931166",
+                "reference": "c30eb5e01fe021cc5bba2f9ee0eeef96d4931166",
                 "shasum": ""
             },
             "require": {
@@ -419,7 +487,7 @@
                 "markdown",
                 "markdown-extra"
             ],
-            "time": "2016-06-20 21:09:53"
+            "time": "2016-09-14 20:40:20"
         },
         {
             "name": "cebe/yii2-gravatar",
@@ -834,12 +902,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
-                "reference": "d870e37aa0828241c379543f464451af121bdc57"
+                "reference": "d540f7b823212a761cec195382f86be715f13272"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/d870e37aa0828241c379543f464451af121bdc57",
-                "reference": "d870e37aa0828241c379543f464451af121bdc57",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/d540f7b823212a761cec195382f86be715f13272",
+                "reference": "d540f7b823212a761cec195382f86be715f13272",
                 "shasum": ""
             },
             "type": "library",
@@ -879,7 +947,7 @@
                 "progress",
                 "upload"
             ],
-            "time": "2016-08-11 05:54:49"
+            "time": "2016-09-16 06:27:30"
         },
         {
             "name": "kartik-v/bootstrap-star-rating",
@@ -1072,12 +1140,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-datetimepicker.git",
-                "reference": "f5e57943ed36c43817a12f666a420a3e0e117ebd"
+                "reference": "f89a7875bb439e0f003726954a7cb0b421b61f13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datetimepicker/zipball/f5e57943ed36c43817a12f666a420a3e0e117ebd",
-                "reference": "f5e57943ed36c43817a12f666a420a3e0e117ebd",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datetimepicker/zipball/f89a7875bb439e0f003726954a7cb0b421b61f13",
+                "reference": "f89a7875bb439e0f003726954a7cb0b421b61f13",
                 "shasum": ""
             },
             "require": {
@@ -1113,7 +1181,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-07-09 15:37:07"
+            "time": "2016-09-09 10:26:34"
         },
         {
             "name": "kartik-v/yii2-widget-depdrop",
@@ -1329,6 +1397,171 @@
             "time": "2016-08-30 13:16:04"
         },
         {
+            "name": "pastuhov/php-exec-command",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pastuhov/php-exec-command.git",
+                "reference": "c6bde169979315822213d3cdf0a78ad9eee355ac"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pastuhov/php-exec-command/zipball/c6bde169979315822213d3cdf0a78ad9eee355ac",
+                "reference": "c6bde169979315822213d3cdf0a78ad9eee355ac",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "~1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "pastuhov\\Command\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill Pastukhov",
+                    "email": "kirill@pastukhov.su",
+                    "homepage": "https://github.com/pastuhov/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Simple php command executor with param binding.",
+            "homepage": "https://github.com/pastuhov/php-exec-command",
+            "keywords": [
+                "command",
+                "exec",
+                "system"
+            ],
+            "time": "2016-08-27 19:12:26"
+        },
+        {
+            "name": "pastuhov/php-file-stream",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pastuhov/php-file-stream.git",
+                "reference": "b8a5ac4852e3e6307789c673c830402bd4be8a1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pastuhov/php-file-stream/zipball/b8a5ac4852e3e6307789c673c830402bd4be8a1a",
+                "reference": "b8a5ac4852e3e6307789c673c830402bd4be8a1a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "~1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "pastuhov\\FileStream\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill Pastukhov",
+                    "email": "kirill@pastukhov.su",
+                    "homepage": "https://github.com/pastuhov/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Big file creation helper. May be used for sitemap.xml or YML files creation.",
+            "homepage": "https://github.com/pastuhov/php-file-stream",
+            "keywords": [
+                "Sitemap",
+                "export.yml",
+                "stream",
+                "yml"
+            ],
+            "time": "2016-06-03 13:12:47"
+        },
+        {
+            "name": "pastuhov/yii2-yml-catalog",
+            "version": "v0.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pastuhov/yii2-yml-catalog.git",
+                "reference": "a9622e3e6ed51bee7e9e48961c1b9573e6d94509"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pastuhov/yii2-yml-catalog/zipball/a9622e3e6ed51bee7e9e48961c1b9573e6d94509",
+                "reference": "a9622e3e6ed51bee7e9e48961c1b9573e6d94509",
+                "shasum": ""
+            },
+            "require": {
+                "pastuhov/php-exec-command": "1.0.*",
+                "pastuhov/php-file-stream": "1.0.*",
+                "php": ">=5.3.0",
+                "yiisoft/yii2": ">=2.0.4"
+            },
+            "require-dev": {
+                "phpunit/dbunit": "~1.0",
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "~1.1"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "pastuhov\\ymlcatalog\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill Pastukhov",
+                    "email": "kirill@pastukhov.su",
+                    "homepage": "https://github.com/pastuhov/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "YML (Yandex Market Language) generator.",
+            "homepage": "https://github.com/pastuhov/yii2-yml-catalog",
+            "keywords": [
+                "e-commerce",
+                "generator",
+                "yandex",
+                "yml"
+            ],
+            "time": "2016-09-15 13:15:38"
+        },
+        {
             "name": "pistol88/yii2-liqpay",
             "version": "dev-master",
             "source": {
@@ -1433,12 +1666,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "0b3e60404c3e398f521e9f366555678178695d91"
+                "reference": "de19df332219d73a2704525ba75aabd7dfaa303b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/0b3e60404c3e398f521e9f366555678178695d91",
-                "reference": "0b3e60404c3e398f521e9f366555678178695d91",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/de19df332219d73a2704525ba75aabd7dfaa303b",
+                "reference": "de19df332219d73a2704525ba75aabd7dfaa303b",
                 "shasum": ""
             },
             "require": {
@@ -1478,7 +1711,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2016-08-19 20:47:22"
+            "time": "2016-09-07 22:19:22"
         },
         {
             "name": "voskobovich/yii2-liqpay",
@@ -1577,12 +1810,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "3a6bc3b2a8a422f20caa6dfb28da0a955fcb54cd"
+                "reference": "fa2bc223f9a4056bf74e785dad06b37adc5daf1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/3a6bc3b2a8a422f20caa6dfb28da0a955fcb54cd",
-                "reference": "3a6bc3b2a8a422f20caa6dfb28da0a955fcb54cd",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/fa2bc223f9a4056bf74e785dad06b37adc5daf1e",
+                "reference": "fa2bc223f9a4056bf74e785dad06b37adc5daf1e",
                 "shasum": ""
             },
             "require": {
@@ -1663,7 +1896,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2016-09-05 11:49:16"
+            "time": "2016-09-19 08:47:56"
         },
         {
             "name": "yiisoft/yii2-authclient",
@@ -1906,6 +2139,56 @@
             "time": "2016-09-04 15:16:50"
         },
         {
+            "name": "yiisoft/yii2-jui",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-jui.git",
+                "reference": "86e922d0860473a5d63c092f832b5f8cf649abce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-jui/zipball/86e922d0860473a5d63c092f832b5f8cf649abce",
+                "reference": "86e922d0860473a5d63c092f832b5f8cf649abce",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery-ui": "1.11.*@stable",
+                "yiisoft/yii2": "~2.0.4"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                },
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\jui\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Qiang Xue",
+                    "email": "qiang.xue@gmail.com"
+                }
+            ],
+            "description": "The Jquery UI extension for the Yii framework",
+            "keywords": [
+                "jQuery UI",
+                "yii2"
+            ],
+            "time": "2016-09-05 11:32:45"
+        },
+        {
             "name": "yiisoft/yii2-redis",
             "version": "dev-master",
             "source": {
@@ -1959,12 +2242,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-swiftmailer.git",
-                "reference": "c2dd16f28eb0736f4101fbf48f03f94033f0a47c"
+                "reference": "8e3e92f032e7400c2593fe26e1832c4d0a832b65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-swiftmailer/zipball/c2dd16f28eb0736f4101fbf48f03f94033f0a47c",
-                "reference": "c2dd16f28eb0736f4101fbf48f03f94033f0a47c",
+                "url": "https://api.github.com/repos/yiisoft/yii2-swiftmailer/zipball/8e3e92f032e7400c2593fe26e1832c4d0a832b65",
+                "reference": "8e3e92f032e7400c2593fe26e1832c4d0a832b65",
                 "shasum": ""
             },
             "require": {
@@ -2001,7 +2284,7 @@
                 "swiftmailer",
                 "yii2"
             ],
-            "time": "2016-09-05 12:00:56"
+            "time": "2016-09-09 11:48:36"
         }
     ],
     "packages-dev": [
@@ -2038,12 +2321,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "8a2908f4ba8d5b4cab8b9f956fe10205d75ace48"
+                "reference": "4e81236d14da84c86f3e96561d689845bcf559ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/8a2908f4ba8d5b4cab8b9f956fe10205d75ace48",
-                "reference": "8a2908f4ba8d5b4cab8b9f956fe10205d75ace48",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/4e81236d14da84c86f3e96561d689845bcf559ef",
+                "reference": "4e81236d14da84c86f3e96561d689845bcf559ef",
                 "shasum": ""
             },
             "require": {
@@ -2080,7 +2363,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2016-09-05 08:33:15"
+            "time": "2016-09-13 12:22:34"
         },
         {
             "name": "phpspec/php-diff",

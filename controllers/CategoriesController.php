@@ -8,6 +8,7 @@ use app\models\search\Categories as CategoriesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
 // Image manipulation
 use yii\imagine\Image;
 use Imagine\Image\Box;

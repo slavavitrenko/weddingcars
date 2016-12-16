@@ -10,6 +10,13 @@ $config = [
     'bootstrap' => ['log'],
     'defaultRoute' => 'site/index',
     'components' => [
+        'sms' => [
+            'class' => 'avator\turbosms\Turbosms',
+            'sender' => 'WeddingCars',
+            'login' => 'weddingcars',
+            'password' => 'neiron22',
+            'debug' => YII_DEBUG,
+        ],
         'view' => [
             'theme' => [
                 'pathMap' => [
@@ -75,8 +82,9 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'suffix' => '.html',
+            // 'suffix' => '.html',
             'rules' => [
+                '/ceo.xml' => '/site/xml',
                 '/' => 'site/index',
                 'categories/all' => 'category/index',
                 'order/<id:\d+>' => 'order',
@@ -185,20 +193,20 @@ $config = [
 ];
 
 
-// if (YII_ENV_DEV) {
+if (YII_ENV_DEV) {
 
-//     // configuration adjustments for 'dev' environment
-//     $config['bootstrap'][] = 'debug';
-//     $config['modules']['debug'] = [
-//         'class' => 'yii\debug\Module',
-//         'allowedIPs' => ['127.0.0.1', '192.168.0.*', '93.78.238.18', '188.163.35.131']
-//     ];
+    // configuration adjustments for 'dev' environment
+    $config['bootstrap'][] = 'debug';
+    $config['modules']['debug'] = [
+        'class' => 'yii\debug\Module',
+        'allowedIPs' => ['127.0.0.1', '192.168.0.*', '93.78.238.18', '188.163.35.131']
+    ];
 
-//     $config['bootstrap'][] = 'gii';
-//     $config['modules']['gii'] = [
-//         'class' => 'yii\gii\Module',
-//         'allowedIPs' => ['127.0.0.1', '192.168.0.*', '93.78.238.18', '188.163.35.131'],
-//     ];
-// }
+    $config['bootstrap'][] = 'gii';
+    $config['modules']['gii'] = [
+        'class' => 'yii\gii\Module',
+        'allowedIPs' => ['127.0.0.1', '192.168.0.*', '93.78.238.18', '188.163.35.131'],
+    ];
+}
 
 return $config;

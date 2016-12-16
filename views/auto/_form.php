@@ -12,6 +12,13 @@ use yii\helpers\Url;
 use kartik\checkbox\CheckboxX;
 use kartik\file\FileInput;
 use app\models\user\User;
+use app\models\Auto;
+
+
+if(Yii::$app->user->can('manager') && $model->isNewRecord){
+    $model->car_number =Auto::find()->orderBy(['id' => SORT_DESC])->one()->car_number + 1;
+    $model->car_number = '0000' . $model->car_number;
+}
 
 
 $js = '
@@ -46,7 +53,8 @@ $this->registerJs($js, \yii\web\View::POS_READY);
                 <?php if(Yii::$app->user->can('manager')): ?>
                     <div class="col-md-12">
                         <?=$form->field($model, 'user_id')->widget(Select2::className(), [
-                            'data' => ArrayHelper::map(User::find()->joinWith('assignment')->where(['item_name' => ['driver', 'partner']])->all(), 'id', 'fio')
+                            'data' => ArrayHelper::map(User::find()->joinWith('assignment')->where(['item_name' => ['driver', 'partner']])->orderBy(['user.id' => SORT_DESC])->all(), 'id', 'fullName'),
+                            'options' => ['placeholder' => Yii::t('app', 'Choose...')]
                         ])->label(Yii::t('app', 'Owner')); ?>
                     </div>
                 <?php endif; ?>
@@ -79,7 +87,7 @@ $this->registerJs($js, \yii\web\View::POS_READY);
                     </div>
                     <div class="col-md-6">
 
-                        <?php echo$form->field($model, 'category_id')->widget(Select2::className(), [
+                        <?= $form->field($model, 'category_id')->widget(Select2::className(), [
                             'data' => ArrayHelper::map(Categories::find()->all(), 'id', 'name'),
                             'options' => ['placeholder' => Yii::t('app', 'Choose...')],
                             'pluginOptions' => ['allowClear' => true],
@@ -92,7 +100,7 @@ $this->registerJs($js, \yii\web\View::POS_READY);
                                 <?php echo $form->field($model, 'year') ?>
                             </div>
                             <div class="col-sm-6">
-                                <?php echo$form->field($model, 'pass_count')->input('number', ['min' => 1]); ?>
+                                <?= $form->field($model, 'pass_count')->input('number', ['min' => 1]); ?>
                             </div>
                         </div>
 
@@ -100,37 +108,48 @@ $this->registerJs($js, \yii\web\View::POS_READY);
                     </div>
                 </div>
 
-                <?php echo$form->field($model, 'description')->textArea(['rows' => 3]); ?>
+                <?= $form->field($model, 'description')->textArea(['rows' => 3]); ?>
 
                 <div class="row">
-                    <div class="col-md-3">
 
-                        <?php echo $form->field($model, 'retro')->widget(CheckboxX::className(), ['pluginOptions'=>['threeState'=>false]]) ?>
+                <div class="col-sm-4">
+                    <?php echo $form->field($model, 'retro')->widget(CheckboxX::className(), ['pluginOptions'=>['threeState'=>false]]) ?>
+                </div>
+                <div class="col-sm-4">
+                    <?php echo $form->field($model, 'decor')->widget(CheckboxX::className(), ['pluginOptions'=>['threeState'=>false]]) ?>
+                </div>
+                <div class="col-sm-4">
+                    <?php echo $form->field($model, 'client_decor')->widget(CheckboxX::className(), ['pluginOptions'=>['threeState'=>false]]) ?>
+                </div>
 
-                        <?php echo $form->field($model, 'decor')->widget(CheckboxX::className(), ['pluginOptions'=>['threeState'=>false]]) ?>
 
-                        <?php echo $form->field($model, 'client_decor')->widget(CheckboxX::className(), ['pluginOptions'=>['threeState'=>false]]) ?>
 
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <?= $form->field($model, 'hour_cost'); ?>
                     </div>
-                    <div class="col-md-9">
-
-                    <?php echo$form->field($model, 'hour_cost'); ?>
-
-                    <?php echo$form->field($model, 'few_hours_cost') ?>
-
-                    <?php echo$form->field($model, 'outside_cost'); ?>
-
+                    <div class="col-sm-3">
+                        <?= $form->field($model, 'few_hours_cost') ?>
+                    </div>
+                    <div class="col-sm-3">
+                        <?= $form->field($model, 'outside_cost'); ?>
+                    </div>
+                    <div class="col-sm-3">
+                        <?= $form->field($model, 'minimum_hours'); ?>
                     </div>
                 </div>
 
-                <?php echo$form->field($model, 'images[]')->widget(FileInput::className(), [
+                <?= $form->field($model, 'images[]')->widget(FileInput::className(), [
                     'model' => $model,
                     'attribute' => 'images[]',
                     'options'=>[
                         'multiple'=>true
                     ],
                     'pluginOptions' => [
-                        'maxFileCount' => 10
+                        'maxFileCount' => 10,
+                        'showUpload' => false,
                     ]
                 ]); ?>
 

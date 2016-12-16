@@ -83,7 +83,7 @@ label.control-label {
 
 html::-webkit-scrollbar { width: 0; }
 html { -ms-overflow-style: none; }
-html { overflow: -moz-scrollbars-none; }
+/*html { overflow: -moz-scrollbars-none; }*/
 
 .form-group.has-error label.btn {
   color: white;
@@ -110,40 +110,23 @@ thead > tr > th {
   padding: 0px!important;
   text-align: center;
 }
-/*
-ul.breadcrumb {
-    position: absolute;
-    right: 0;
-    margin-bottom: 0;
-    padding: 8px 15x 0;
-}
-
-@media screen and (min-width: 767px){
-  ul.breadcrumb {
-    top: 59px;
-  }
-}
-
 @media screen and (max-width: 768px){
   ul.breadcrumb {
-    top: 50px;
-  }
-  }*/
-
-  @media screen and (max-width: 768px){
-    ul.breadcrumb {
-      display: none;
-    }
-  }
-
-  .delete-button {
-    position: absolute;
-  }
-
-  .field-register-form-partner {
     display: none;
   }
+}
 
-  a.label {
-    cursor: default!important;
-  }
+.delete-button {
+  position: absolute;
+}
+
+.field-register-form-partner {
+  display: none;
+}
+
+a.label {
+  cursor: default!important;
+}
+section.content {
+  overflow: auto;
+}

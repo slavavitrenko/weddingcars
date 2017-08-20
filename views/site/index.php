@@ -173,7 +173,7 @@ Popular Cars
                 <?php
                 $popular = Yii::$app->cache->get('popular');
                 if(!$popular){
-                    $popular = \app\models\Auto::getPopular(200);
+                    $popular = \app\models\Auto::getPopular(50);
                     Yii::$app->cache->set('popular', $popular);
                 }
                 ?>

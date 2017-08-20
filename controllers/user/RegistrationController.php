@@ -17,6 +17,13 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
 
     use \app\traits\AjaxTrait;
 
+    public function __construct($id, $module, Finder $finder, $config = [])
+    {
+        $this->finder = $finder;
+        $this->module = $module;
+        parent::__construct($id, $module, $finder, $config);
+    }
+
 	public function init(){
 		$this->layout = '@app/views/layouts/frontend/frontend';
 		return parent::init();
@@ -68,9 +75,9 @@ class RegistrationController extends \dektrium\user\controllers\RegistrationCont
         return $this->render('connect', [
             'model'   => $user,
             'account' => $account,
+            'module'  => $this->module,
         ]);
     }
-
 
     protected function performAjaxValidation(Model $model, $stop=true, $errors=[])
     {

@@ -19,7 +19,7 @@ class FrontendAsset extends AssetBundle
     public $js = [
         'js/frontend.js',
         '//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js',
+        '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js',
         'js/scripts.js',
     ];
     public $depends = [

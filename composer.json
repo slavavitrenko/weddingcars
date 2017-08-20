@@ -36,7 +36,8 @@
         "yiisoft/yii2-redis": "^2.0",
         "avator/yii2-turbosms": "*",
         "yiisoft/yii2-jui": "^2.0",
-        "pastuhov/yii2-yml-catalog": "^0.3.3"
+        "pastuhov/yii2-yml-catalog": "^0.3.3",
+        "rmrevin/yii2-minify-view": "~1.14"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

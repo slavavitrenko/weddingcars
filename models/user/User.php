@@ -94,6 +94,7 @@ class User extends \dektrium\user\models\User implements IdentityInterface
     }
 
     public function afterSave($insert, $changedAttributes){
+        parent::afterSave($insert, $changedAttributes);
         // if(!Yii::$app->user->can('manager')){
             Role::deleteAll(['user_id' => $this->id]);
             $role = new Role;
@@ -102,7 +103,6 @@ class User extends \dektrium\user\models\User implements IdentityInterface
             $role->save(false);
         // }
 
-        return parent::afterSave($insert, $changedAttributes);
     }
 
     public function beforeDelete(){

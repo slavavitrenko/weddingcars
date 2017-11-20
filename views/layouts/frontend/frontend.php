@@ -52,7 +52,7 @@ FrontendAsset::register($this);
 		<div class="container">
 			<div class="row">
 				<div class="col-md-8">
-					<p class="footer__info">&copy; 2016  <a href="http://reactlogic.com.ua">React Logic</a>  | WeddingCars.pl.ua - Прокат свадебных автомобилей в Полтаве</p>
+					<p class="footer__info">&copy; 2016  <a href="http://reactlogic.com.ua">React Logic</a>  | WeddingCars.pl.ua - Прокат свадебных автомобилей</p>
 				</div>
 				<div class="col-md-4">
 				</div>

@@ -104,7 +104,7 @@ $items[] = ['label' => '<div class="nav__social hidden-sm  hidden-md  hidden-lg"
     <div class="row">
       <div class="col-md-offset-2 col-md-8 text-center">
         <h1 class="header__title">
-          Прокат свадебных автомобилей  в Полтаве
+          Прокат свадебных автомобилей
       </h1>
       <h3 class="header__subtitle">
           Подберите себе автомобиль по цене oт 100 грн/час
